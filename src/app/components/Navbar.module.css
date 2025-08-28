@@ -1,0 +1,120 @@
+/* Barra no topo */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 24px;
+    background: #000;
+    color: #fff;
+    box-shadow: 0 1px 0 rgba(0,0,0,.3);
+  }
+  
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-weight: 800;
+    font-size: 22px;
+  }
+  .logoMark { color: #fff; }
+  .logoMid  { color: #e30613; }
+  .logoEnd  { color: #fff; font-weight: 600; }
+  
+  /* Menu desktop */
+  .menuDesktop {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    padding: 0;
+    margin: 0;
+  }
+  .menuDesktop a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  /* Botão entrar (desktop) */
+  .btnLogin {
+    background: #e30613;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  /* Botão hamburger (mobile) */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Drawer lateral */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100dvh;
+    background: #c92e2e; /* vermelho mais próximo do Figma */
+    transition: right .3s ease;
+    z-index: 60;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .open { right: 0; }
+  
+  .closeBtn {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+  
+  .sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .sidebarNav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  /* Overlay quando o drawer abre */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    pointer-events: none;
+    transition: background .3s ease;
+    z-index: 55;
+  }
+  .overlayVisible {
+    background: rgba(0,0,0,.5);
+    pointer-events: auto;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 900px) {
+    .menuDesktop { display: none; }
+    .btnLogin { display: none; }
+    .hamburger { display: block; }
+  }
+  
