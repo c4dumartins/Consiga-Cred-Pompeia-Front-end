@@ -19,12 +19,14 @@ export default function Home() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [visibleCount, setVisibleCount] = useState(5); // número inicial de feedbacks visíveis
+  const increment = 5; // quantidade que aumenta ao clicar "Ler mais"
 
   // Gerar ou ler userId no cookie
   let userId = Cookies.get("userId");
   if (!userId) {
     userId = uuidv4();
-    Cookies.set("userId", userId, { expires: 365 }); // expira em 1 ano
+    Cookies.set("userId", userId, { expires: 365 });
   }
 
   const API_URL = "http://localhost:3001/feedbacks";
@@ -111,53 +113,72 @@ export default function Home() {
           <div className={styles.boxGrande}></div>
         </section>
 
-        {/* Feedbacks */}
         <section id="feedback" className={styles.feedbacks}>
-          <h2>Feedback</h2>
+  <h2>Feedback</h2>
 
-          {/* Cards */}
-          <div className={styles.feedbackGrid}>
-            {feedbacks.map((fb) => (
-              <div key={fb.id} className={styles.feedbackCard}>
-                <p>"{fb.message}"</p>
-                <small>{fb.name} - {fb.email}</small>
-                {fb.user_id === userId && (
-                  <button
-                    className={styles.deleteBtn}
-                    onClick={() => handleDelete(fb.id)}
-                  >
-                    Excluir
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+  {/* Cards */}
+  <div className={styles.feedbackGrid}>
+    {feedbacks.slice(0, visibleCount).map((fb) => (
+      <div key={fb.id} className={styles.feedbackCard}>
+        <div className={styles.cardHeader}>
+          <span className={styles.cardName}>{fb.name}</span>
+          <span className={styles.cardDate}>
+            {new Date(fb.created_at).toLocaleDateString("pt-BR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
+          </span>
+        </div>
+        <p className={styles.cardMessage}>{fb.message}</p>
+        {fb.user_id === userId && (
+          <button
+            className={styles.deleteBtn}
+            onClick={() => handleDelete(fb.id)}
+          >
+            Excluir
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
 
-          {/* Formulário */}
-          <form onSubmit={handleSubmit} className={styles.feedbackForm}>
-            <input
-              type="text"
-              placeholder="Seu nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Seu e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <textarea
-              placeholder="Digite seu feedback..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-            />
-            <button type="submit">Enviar</button>
-          </form>
-        </section>
+  {/* Botão Ler mais */}
+  {visibleCount < feedbacks.length && (
+    <button
+      className={styles.btnRed}
+      onClick={() => setVisibleCount(visibleCount + increment)}
+    >
+      Ler mais
+    </button>
+  )}
+
+  {/* Formulário */}
+  <form onSubmit={handleSubmit} className={styles.feedbackForm}>
+    <input
+      type="text"
+      placeholder="Seu nome"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+    />
+    <input
+      type="email"
+      placeholder="Seu e-mail"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+    <textarea
+      placeholder="Digite seu feedback..."
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      required
+    />
+    <button type="submit">Enviar</button>
+  </form>
+</section>
+
 
         {/* Bancos Parceiros */}
         <section id="parceiros" className={styles.parceiros}>

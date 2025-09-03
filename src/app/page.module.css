@@ -223,18 +223,312 @@
   font-size: 20px;
   text-decoration: none;
 }
-.feedbackCard button {
-  background: #e30613; /* vermelho parecido com seu tema */
+/* Container geral */
+.container {
+  min-height: 100vh;
+  background: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #000;
   color: #fff;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e30613;
+}
+
+.logoHighlight {
+  color: #fff;
+}
+
+.menu {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.btnLogin {
+  background: #e30613;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 32px;
+}
+
+.box {
+  background: #ddd;
+  height: 160px;
+  border-radius: 12px;
+}
+
+/* Simulação */
+.simulacao {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.btnBlack,
+.btnRed {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  margin: 8px;
+  cursor: pointer;
+}
+
+.btnBlack {
+  background: #000;
+  color: #fff;
+}
+
+.btnRed {
+  background: #e30613;
+  color: #fff;
+}
+
+/* Sobre Nós */
+.sobre {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.nos {
+  color: #e30613;
+  font-weight: bold;
+}
+
+.boxGrande {
+  margin: 24px auto 0;
+  background: #ddd;
+  width: 80%;
+  height: 200px;
+  border-radius: 12px;
+}
+
+/* Feedbacks */
+.feedbacks {
+  padding: 60px 20px;
+  text-align: center;
+  background: #fff;
+}
+
+.feedbacks h2 {
+  font-size: 28px;
+  color: #e30613;
+  margin-bottom: 20px;
+}
+
+/* Grid de feedbacks */
+.feedbackGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+/* Cards de feedback */
+.feedbackCard {
+  background-color: #e30613; /* vermelho forte */
+  color: #fff; /* texto branco */
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s;
+  word-wrap: break-word;
+}
+
+.feedbackCard:hover {
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.cardName {
+  font-weight: bold;
+}
+
+.cardDate {
+  font-style: italic;
+}
+
+.cardMessage {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* Botão de deletar dentro do card */
+.deleteBtn {
+  align-self: flex-end;
+  background: #fff;
+  color: #e30613;
   border: none;
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 12px;
-  margin-top: 8px;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.deleteBtn:hover {
+  background: #c10510;
+  color: #fff;
+}
+
+/* Botão Ler mais */
+.feedbacks .btnRed {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #e30613;
+  color: #fff;
+  cursor: pointer;
   transition: background 0.2s;
 }
 
-.feedbackCard button:hover {
-  background: #c10510; /* um pouco mais escuro ao passar o mouse */
+.feedbacks .btnRed:hover {
+  background: #c10510;
+}
+
+/* Formulário de feedback */
+.feedbackForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.feedbackForm input,
+.feedbackForm textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 300px;
+}
+
+.feedbackForm button {
+  background: #e30613;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.feedbackForm button:hover {
+  background: #c10510;
+}
+
+/* Parceiros */
+.parceiros {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.parceirosGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.parceiroBox {
+  background: #ddd;
+  height: 120px;
+  border-radius: 12px;
+}
+
+/* Footer */
+.footer {
+  background: #e30613;
+  color: #fff;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 40px 20px;
+  gap: 20px;
+}
+
+.footer h4 {
+  margin-bottom: 10px;
+}
+
+.socials a {
+  margin-right: 8px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+/* Responsividade */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feedbackGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* Celular */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .boxGrande {
+    width: 100%;
+  }
+
+  .feedbackGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedbackForm input,
+  .feedbackForm textarea {
+    width: 90%;
+  }
 }
