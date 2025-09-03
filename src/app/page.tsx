@@ -101,7 +101,7 @@ export default function Home() {
           <p>Simule aqui o seu empréstimo online</p>
           <div>
             <button className={styles.btnBlack}>Pré-Cadastro</button>
-            <button className={styles.btnRed}>Entre em contato</button>
+            <a href="https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!" className={styles.btnRed}>Entre em contato</a>
           </div>
         </section>
 
@@ -116,6 +116,31 @@ export default function Home() {
         <section id="feedback" className={styles.feedbacks}>
   <h2>Feedback</h2>
 
+     {/* Formulário */}
+  <form onSubmit={handleSubmit} className={styles.feedbackForm}>
+    <input
+      type="text"
+      placeholder="Seu nome"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+    />
+    <input
+      type="email"
+      placeholder="Seu e-mail"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+    <textarea
+      placeholder="Digite seu feedback..."
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      required
+    />
+    <button type="submit">Enviar</button>
+  </form>
+  
   {/* Cards */}
   <div className={styles.feedbackGrid}>
     {feedbacks.slice(0, visibleCount).map((fb) => (
@@ -153,30 +178,7 @@ export default function Home() {
     </button>
   )}
 
-  {/* Formulário */}
-  <form onSubmit={handleSubmit} className={styles.feedbackForm}>
-    <input
-      type="text"
-      placeholder="Seu nome"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      required
-    />
-    <input
-      type="email"
-      placeholder="Seu e-mail"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      required
-    />
-    <textarea
-      placeholder="Digite seu feedback..."
-      value={message}
-      onChange={(e) => setMessage(e.target.value)}
-      required
-    />
-    <button type="submit">Enviar</button>
-  </form>
+ 
 </section>
 
 

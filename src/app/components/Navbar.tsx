@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className={styles.logo}>
   <Link href="/">
     <Image
-      src="/logo.png"
+      src="/logos.jpg"
       alt="Consiga Cred"
       fill
       priority

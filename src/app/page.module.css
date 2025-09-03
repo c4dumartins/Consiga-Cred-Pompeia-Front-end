@@ -327,40 +327,96 @@
   border-radius: 12px;
 }
 
-/* Feedbacks */
 .feedbacks {
   padding: 60px 20px;
-  text-align: center;
-  background: #fff;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centraliza tudo */
 }
 
+/* Título */
 .feedbacks h2 {
   font-size: 28px;
+  font-weight: bold;
   color: #e30613;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Grid de feedbacks */
+/* Formulário */
+.feedbackForm {
+  background: #fff;
+  width: 100%;
+  max-width: 600px; /* largura fixa pra não ficar gigante */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 40px; /* espaço até os cards */
+}
+
+.feedbackForm input,
+.feedbackForm textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background: #fff; /* inputs claros */
+  color: #333;
+}
+
+.feedbackForm input:focus,
+.feedbackForm textarea:focus {
+  border-color: #e30613;
+  box-shadow: 0 0 0 2px rgba(227, 6, 19, 0.2);
+}
+
+.feedbackForm textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.feedbackForm button {
+  background: #e30613;
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.feedbackForm button:hover {
+  background: #c10510;
+}
+
+/* Grid de cards */
 .feedbackGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 30px;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px; /* impede que abra demais */
 }
 
-/* Cards de feedback */
 .feedbackCard {
-  background-color: #e30613; /* vermelho forte */
-  color: #fff; /* texto branco */
+  background: #fff;
   border-radius: 12px;
   padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s;
   word-wrap: break-word;
+  transition: transform 0.2s;
 }
 
 .feedbackCard:hover {
@@ -372,10 +428,12 @@
   justify-content: space-between;
   margin-bottom: 8px;
   font-size: 14px;
+  color: #777;
 }
 
 .cardName {
   font-weight: bold;
+  color: #e30613;
 }
 
 .cardDate {
@@ -383,71 +441,89 @@
 }
 
 .cardMessage {
-  font-size: 16px;
+  font-size: 15px;
+  color: #333;
   margin-bottom: 12px;
 }
 
-/* Botão de deletar dentro do card */
 .deleteBtn {
   align-self: flex-end;
-  background: #fff;
-  color: #e30613;
+  background: #e30613;
+  color: #fff;
   border: none;
   padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 
 .deleteBtn:hover {
   background: #c10510;
-  color: #fff;
 }
 
-/* Botão Ler mais */
-.feedbacks .btnRed {
-  margin-top: 12px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
-  background: #e30613;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.feedbacks .btnRed:hover {
-  background: #c10510;
-}
-
-/* Formulário de feedback */
-.feedbackForm {
+/* Card */
+.feedbackCard {
+  background: #fff;
+  color: #333;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 320px; /* não deixa esticar demais */
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.feedbackForm input,
-.feedbackForm textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 300px;
+.feedbackCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-.feedbackForm button {
+/* Cabeçalho */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #777;
+}
+
+.cardName {
+  font-weight: bold;
+  color: #e30613;
+}
+
+.cardDate {
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* Mensagem */
+.cardMessage {
+  font-size: 15px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+/* Botão de deletar */
+.deleteBtn {
+  align-self: flex-end;
   background: #e30613;
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 6px 14px;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 13px;
   transition: background 0.2s;
 }
 
-.feedbackForm button:hover {
+.deleteBtn:hover {
   background: #c10510;
 }
 
