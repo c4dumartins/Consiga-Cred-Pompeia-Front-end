@@ -3,6 +3,8 @@
 import { useState } from "react";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
+import Image from "next/image";
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -10,19 +12,27 @@ export default function Navbar() {
   return (
     <>
       <header className={styles.navbar}>
-        {/* Logo (use a imagem se tiver em /public, senão fica o texto) */}
-        <div className={styles.logo}>
-          {/* <img src="/logo.png" alt="Consiga Cred" /> */}
-          <span className={styles.logoMark}>con</span>
-          <span className={styles.logoMid}>siga</span>
-          <span className={styles.logoEnd}>Cred</span>
-        </div>
+      <div className={styles.logo}>
+  <Link href="/">
+    <Image
+      src="/logo.png"
+      alt="Consiga Cred"
+      fill
+      priority
+      className={styles.logoImg}
+    />
+  </Link>
+</div>
 
-        {/* Menu desktop */}
-        <ul className={styles.menuDesktop}>
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/produtos">Produtos</Link></li>
-        </ul>
+
+
+
+<ul className={styles.menuDesktop}>
+  <li><Link href="/">Home</Link></li>
+  <li><Link href="/produtos">Produtos</Link></li>
+  <li><a href="#feedback">Feedbacks</a></li>
+</ul>
+
 
         {/* Botão Entrar (desktop) */}
         <button className={styles.btnLogin}>Entrar</button>

@@ -117,4 +117,21 @@
     .btnLogin { display: none; }
     .hamburger { display: block; }
   }
+  .logo {
+    position: relative;
+    width: 140px;   /* tamanho inicial no desktop */
+    height: 50px;   /* altura da logo */
+  }
+  
+  .logoImg {
+    object-fit: contain; /* mantém proporção da imagem */
+  }
+  
+  @media (max-width: 768px) {
+    .logo {
+      width: 110px;  /* menor em telas pequenas */
+      height: 40px;
+    }
+  }
+ 
   
