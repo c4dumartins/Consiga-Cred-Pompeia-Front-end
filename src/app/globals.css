@@ -40,3 +40,12 @@ a {
     color-scheme: dark;
   }
 }
+/* No seu globals.css ou arquivo CSS global */
+.socialsTop, .socials {
+  flex-wrap: nowrap !important;
+}
+
+.socialsTop a, .socials a {
+  flex-shrink: 0 !important;
+  min-width: 36px !important;
+}
