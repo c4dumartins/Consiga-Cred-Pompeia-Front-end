@@ -40,27 +40,12 @@ a {
     color-scheme: dark;
   }
 }
-/* Modo claro (padrão) */
-body {
-  background: #f9f9f9;
-  color: #111;
-  transition: background 0.3s ease, color 0.3s ease;
+/* No seu globals.css ou arquivo CSS global */
+.socialsTop, .socials {
+  flex-wrap: nowrap !important;
 }
 
-/* Dark mode */
-body.dark-mode {
-  background: #111;
-  color: #f9f9f9;
-}
-
-body.dark-mode .navbar {
-  background: #222 !important;
-}
-
-body.dark-mode .btnLogin {
-  background: #e30613;
-}
-
-body.dark-mode a {
-  color: #f9f9f9;
+.socialsTop a, .socials a {
+  flex-shrink: 0 !important;
+  min-width: 36px !important;
 }

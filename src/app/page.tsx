@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
-import { FaUserPlus, FaWhatsapp, FaFileContract } from "react-icons/fa";
+import { FaUserPlus, FaWhatsapp, FaFileContract, FaFacebookF, FaInstagram } from "react-icons/fa";
+import { GoLocation } from "react-icons/go";
 
 interface Feedback {
   id: number;
@@ -126,7 +127,7 @@ export default function Home() {
       title: "Autocontratação",
       desc: "Contrate seu empréstimo online de forma rápida e segura.",
       icon: <FaFileContract size={40} />,
-      href: "/autocontratacao",
+      href: "https://auto-contratacao.nossafintech.com.br/home/RVFrUXY1cXozaHM1V1R0ZEF4M1FPbS9pNExYU3Bocm5LWHBCZmVORndMbVgxYW8vbHhTN0VLbW1ycTR3eFFGWmk2eXN0TUlxTXlqTjM1VTBPR21Zb1E9PQ==",
     },
   ];
 
@@ -136,26 +137,23 @@ export default function Home() {
       <main className={styles.container}>
         {/* Hero / Carrossel */}
         <section className={styles.hero}>
-          {slides.map((slide, idx) => (
-            <div
-              key={idx}
-              className={`${styles.heroSlide} ${
-                idx === currentSlide ? styles.active : ""
-              }`}
-              style={{ backgroundImage: `url(${slide.image})` }}
-            >
-              <h2 className={styles.heroText}>{slide.text}</h2>
-            </div>
-          ))}
-          <div className={styles.heroControls}>
-            <button className={styles.heroBtn} onClick={prevSlide}>
-              ◀
-            </button>
-            <button className={styles.heroBtn} onClick={nextSlide}>
-              ▶
-            </button>
-          </div>
-        </section>
+  {slides.map((slide, idx) => (
+    <div
+      key={idx}
+      className={`${styles.heroSlide} ${idx === currentSlide ? styles.active : ""}`}
+      style={{ backgroundImage: `url(${slide.image})` }}
+    />
+  ))}
+  <div className={styles.heroControls}>
+    <button className={styles.heroBtn} onClick={prevSlide}>
+      ◀
+    </button>
+    <button className={styles.heroBtn} onClick={nextSlide}>
+      ▶
+    </button>
+  </div>
+</section>
+
 
         {/* Simulação */}
         <section id="simulacao" className={styles.simulacao}>
@@ -254,31 +252,111 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Rodapé */}
-        <footer className={styles.footer}>
-          <div>
-            <h4>Fale com a gente</h4>
-            <p>bla blabla blablabla</p>
-            <p>bla bla bla bla</p>
-          </div>
-          <div>
-            <h4>Endereço</h4>
-            <p>Rua blablabla</p>
-            <p>Tal blablabla</p>
-          </div>
-          <div>
-            <h4>E-mail</h4>
-            <p>consigacred@gmail.com</p>
-          </div>
-          <div>
-            <h4>Redes Sociais</h4>
-            <div className={styles.socials}>
-              <a href="#">📷</a>
-              <a href="#">📘</a>
-              <a href="#">💬</a>
-            </div>
-          </div>
-        </footer>
+
+
+
+{/* Footer Premium */}
+<footer className={styles.footer}>
+  <div className={styles.footerContent}>
+    {/* Logo Section */}
+    <div className={styles.footerLogo}>
+      <img src="/FooterLogo.webp" alt="ConsigaCred - Empréstimos Consignados" />
+      <p className={styles.footerTagline}>
+        Soluções financeiras que transformam vidas
+      </p>
+    </div>
+
+    {/* Fale com a gente */}
+    <div className={styles.footerSection}>
+      <h4>Fale com a gente</h4>
+      <a href="tel:+5514998471839">📞 (14) 99847-1839</a>
+      <a href="mailto:consigapompeia@hotmail.com">consigapompeia@hotmail.com</a>
+      <a href="https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!">
+        💬 WhatsApp
+      </a>
+    </div>
+
+    {/* Endereço */}
+    <div className={styles.footerSection}>
+      <h4>Localização</h4>
+      <p>📍Rua Senador Rodolfo Miranda - 284 Centro</p>
+      <p>🏙️ Pompeia - SP</p>
+      <a href="https://www.instagram.com/consigacredpompeia/" target="_blank" rel="noopener noreferrer">
+        🗺️ Ver no mapa
+      </a>
+    </div>
+
+    {/* Links Rápidos */}
+    <div className={styles.footerSection}>
+      <h4>Links Rápidos</h4>
+      <a href="#simulacao">💰 Simulação</a>
+      <a href="#sobre">👥 Sobre Nós</a>
+      <a href="#feedback">💬 Feedback</a>
+      <a href="#parceiros">🤝 Parceiros</a>
+      <a href="https://auto-contratacao.nossafintech.com.br/home/RVFrUXY1cXozaHM1V1R0ZEF4M1FPbS9pNExYU3Bocm5LWHBCZmVORndMbVgxYW8vbHhTN0VLbW1ycTR3eFFGWmk2eXN0TUlxTXlqTjM1VTBPR21Zb1E9PQ==">📋 Autocontratação</a>
+    </div>
+
+    {/* Redes Sociais e Citação */}
+    <div className={`${styles.footerSection} ${styles.footerSpecial}`}>
+      <div className={styles.socialMedia}>
+
+        <a 
+          href="https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!"
+          className={styles.socialLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          title="Fale conosco no WhatsApp"
+        >
+          <FaWhatsapp size={24} />
+        </a>
+  
+        <a
+          href="https://www.facebook.com/consiga.credpompeia"
+          className={styles.socialLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          title="Siga-nos no Facebook"
+        >
+          <FaFacebookF size={24} />
+        </a>
+  
+        <a
+          href="https://www.instagram.com/consigacredpompeia/"
+          className={styles.socialLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          title="Siga-nos no Instagram"
+        >
+          <FaInstagram size={24} />
+        </a>
+  
+        <a
+          href="https://maps.app.goo.gl/J8P8znB27nohmm5FA"
+          className={styles.socialLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Google Maps"
+          title="Encontre-nos no Google Maps"
+        >
+          <GoLocation size={24} />
+        </a>
+      </div>
+      
+      
+      <p className={styles.footerCitation}>
+        Transformando sonhos em conquistas financeiras com a ConsigaCred de Pompeia!
+      </p>
+    </div>
+  </div>
+
+  {/* Rodapé inferior */}
+  <div className={styles.footerBottom}>
+    <p>© 2025 ConsigaCred Pompeia. Todos os direitos reservados.</p>
+  </div>
+</footer>
       </main>
     </>
   );
