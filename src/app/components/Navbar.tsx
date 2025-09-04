@@ -1,43 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
 
-
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Detecta scroll para adicionar classe .scrolled
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Scroll suave para seções internas
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setOpen(false); // fecha sidebar ao clicar
+  };
 
   return (
     <>
-      <header className={styles.navbar}>
-      <div className={styles.logo}>
-  <Link href="/">
-    <Image
-      src="/logos.jpg"
-      alt="Consiga Cred"
-      fill
-      priority
-      className={styles.logoImg}
-    />
-  </Link>
-</div>
+      <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+        {/* Logo */}
+        <div className={styles.logo}>
+          <Link href="/">
+            <Image
+              src="/MenuLogo.webp"
+              alt="Consiga Cred"
+              fill
+              priority
+              className={styles.logoImg}
+            />
+          </Link>
+        </div>
 
+        {/* Menu Desktop */}
+        <ul className={styles.menuDesktop}>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
+            <Link href="/produtos">Produtos</Link>
+          </li>
+          <li>
+            <a href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
+              Feedbacks
+            </a>
+          </li>
+        </ul>
 
-
-
-<ul className={styles.menuDesktop}>
-  <li><Link href="/">Home</Link></li>
-  <li><Link href="/produtos">Produtos</Link></li>
-  <li><a href="#feedback">Feedbacks</a></li>
-</ul>
-
-
-        {/* Botão Entrar (desktop) */}
+        {/* Botão Entrar */}
         <button className={styles.btnLogin}>Entrar</button>
 
-        {/* Botão hamburger (mobile) */}
+        {/* Hamburger Mobile */}
         <button
           className={styles.hamburger}
           aria-label="Abrir menu"
@@ -47,13 +72,13 @@ export default function Navbar() {
         </button>
       </header>
 
-      {/* Overlay escuro quando o menu abre */}
+      {/* Overlay */}
       <div
         className={`${styles.overlay} ${open ? styles.overlayVisible : ""}`}
         onClick={() => setOpen(false)}
       />
 
-      {/* Drawer lateral direito (mobile) */}
+      {/* Sidebar Mobile */}
       <aside className={`${styles.sidebar} ${open ? styles.open : ""}`}>
         <button
           className={styles.closeBtn}
@@ -64,12 +89,24 @@ export default function Navbar() {
         </button>
 
         <nav className={styles.sidebarNav}>
-          <Link href="#simulacao" onClick={() => setOpen(false)}>simulação</Link>
-          <Link href="#contato" onClick={() => setOpen(false)}>entre em contato</Link>
-          <Link href="#sobre" onClick={() => setOpen(false)}>sobre nós</Link>
-          <Link href="#feedback" onClick={() => setOpen(false)}>feedback</Link>
-          <Link href="#trabalhe" onClick={() => setOpen(false)}>trabalhe conosco</Link>
-          <Link href="#bancos" onClick={() => setOpen(false)}>bancos parceiros</Link>
+          <Link href="#simulacao" onClick={(e) => scrollToSection(e, "#simulacao")}>
+            Simulação
+          </Link>
+          <Link href="#contato" onClick={(e) => scrollToSection(e, "#contato")}>
+            Entre em contato
+          </Link>
+          <Link href="#sobre" onClick={(e) => scrollToSection(e, "#sobre")}>
+            Sobre nós
+          </Link>
+          <Link href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
+            Feedback
+          </Link>
+          <Link href="#trabalhe" onClick={(e) => scrollToSection(e, "#trabalhe")}>
+            Trabalhe conosco
+          </Link>
+          <Link href="#bancos" onClick={(e) => scrollToSection(e, "#bancos")}>
+            Bancos parceiros
+          </Link>
         </nav>
       </aside>
     </>

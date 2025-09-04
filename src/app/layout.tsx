@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ReactNode } from "react";
 
+
 export const metadata = {
   title: "Consiga Cred",
   description: "Projeto integrador Consiga Cred",
