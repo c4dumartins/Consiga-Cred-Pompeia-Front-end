@@ -1,58 +1,50 @@
-"use client";
-import React, { useState } from "react";
-import styles from "./login.module.css";
+import React, { useState } from 'react';
+import styles from './login.module.css';
 
-export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [mensagem, setMensagem] = useState('');
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const res = await fetch("/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const data = await res.json();
-    setMessage(data.message || data.error);
+    try {
+      const response = await fetch('http://localhost:3001/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+      });
+      const data = await response.json();
+      setMensagem(data.message || 'Usuário registrado!');
+    } catch (error) {
+      setMensagem('Erro ao registrar usuário.');
+    }
   };
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <img src="/logo.png" alt="Consiga Cred" className={styles.logo} />
-      </header>
-
-      <div className={styles.card}>
-        <h2 className={styles.title}>Login</h2>
-
-        <form className={styles.form} onSubmit={handleLogin}>
-          <label className={styles.label}>Nome:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className={styles.input}
-          />
-
-          <label className={styles.label}>Senha:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
-          />
-
-          <button type="submit" className={styles.button}>LOGIN</button>
-        </form>
-
-        {message && <p style={{ marginTop: "10px" }}>{message}</p>}
-
-        <a href="#" className={styles.link}>Não tenho cadastro</a>
-      </div>
+    <div>
+      <form onSubmit={handleRegister}>
+        <input
+          className={styles.input}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <input
+          className={styles.input}
+          type="password"
+          placeholder="Senha"
+          value={senha}
+          onChange={e => setSenha(e.target.value)}
+          required
+        />
+        <button className={styles.button} type="submit">
+          Registrar
+        </button>
+      </form>
+      {mensagem && <div>{mensagem}</div>}
     </div>
   );
 }
