@@ -205,7 +205,6 @@ export default function Home() {
             />
             <button type="submit">Enviar</button>
           </form>
-
           <div className={styles.feedbackGrid}>
             {feedbacks.slice(0, visibleCount).map((fb) => (
               <div key={fb.id} className={styles.feedbackCard}>
