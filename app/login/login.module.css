@@ -1,104 +1,109 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background: white;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Cabeçalho preto */
-  .header {
-    background: black;
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .logo {
-    height: 70px;
-    object-fit: contain;
-  }
-  
-  /* Card Vermelho */
-  .card {
-    background: #d62828;
-    color: white;
-    width: 90%;
-    max-width: 400px;
-    margin: 125px auto;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: white;
+  font-family: Arial, sans-serif;
+}
 
-  }
-  
-  .title {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Inputs e labels */
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .label {
-    text-align: left;
-    font-size: 16px;
-  }
-  
-  .input {
-    padding: 12px 14px;
-    border: none;
-    border-radius: 20px;
-    outline: none;
-  }
-  
-  /* Botão */
+/* Cabeçalho preto */
+.header {
+  background: black;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 70px;
+  object-fit: contain;
+}
+
+/* Card Vermelho */
+.card {
+  background: #d62828;
+  color: white;
+  width: 90%;
+  max-width: 400px;
+  margin: 125px auto;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Título */
+.title {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Formulário */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Labels */
+.label {
+  text-align: left;
+  font-size: 16px;
+}
+
+/* Inputs */
+.input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  background-color: white;
+  color: black;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Botão */
 .button {
-    margin: 15px auto 0 auto; /* centraliza no card */
-    background: white;
-    color: black;
-    border: none;
-    padding: 6px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s ease;
-    width: 80px;   /* mantém o tamanho menor */
-    display: block; /* necessário p/ margin auto funcionar */
+  margin: 15px auto 0 auto;
+  background: white;
+  color: black;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  width: 80px;
+  display: block;
+}
+
+.button:hover {
+  background: #c5c2c2;
+}
+
+/* Link */
+.link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .card {
+    padding: 20px;
+    margin: 60px auto;
   }
-  
-  
-  .button:hover {
-    background: #f1f1f1;
+
+  .title {
+    font-size: 20px;
   }
-  
-  /* Link */
-  .link {
-    display: block;
-    margin-top: 15px;
-    font-size: 14px;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsividade */
-  @media (max-width: 600px) {
-    .card {
-      padding: 20px;
-    }
-  
-    .title {
-      font-size: 20px;
-    }
-  }
-  
+}
