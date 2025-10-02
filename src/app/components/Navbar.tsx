@@ -1,114 +1,104 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import styles from "./Navbar.module.css";
 import Link from "next/link";
-import Image from "next/image";
+import { FaWhatsapp, FaBars, FaTimes } from "react-icons/fa";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Detecta scroll para adicionar classe .scrolled
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 50);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll suave para seções internas
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    setOpen(false); // fecha sidebar ao clicar
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const menuItems = [
+    { label: "Início", href: "#" },
+    { label: "Simulação", href: "#simulacao" },
+    { label: "Sobre Nós", href: "#sobre" },
+    { label: "Feedback", href: "#feedback" },
+    { label: "Parceiros", href: "#parceiros" },
+  ];
+
   return (
-    <>
-      <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}>
+    <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
+      <div className={styles.navContainer}>
         {/* Logo */}
-        <div className={styles.logo}>
-          <Link href="/">
-            <Image
-              src="/MenuLogo.webp"
-              alt="Consiga Cred"
-              fill
-              priority
-              className={styles.logoImg}
-            />
-          </Link>
-        </div>
+        <Link href="/" className={styles.logo}>
+          <img src="/logo.png" alt="ConsigaCred" />
+        </Link>
 
         {/* Menu Desktop */}
-        <ul className={styles.menuDesktop}>
+        <ul className={styles.menu}>
+          {menuItems.map((item, idx) => (
+            <li key={idx}>
+              <a href={item.href} className={styles.menuLink}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Botão WhatsApp */}
+        <a
+          href="https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!"
+          className={styles.whatsappBtn}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaWhatsapp /> Fale Conosco
+        </a>
+
+        {/* Botão Mobile Menu */}
+        <button 
+          className={styles.mobileMenuBtn} 
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+        >
+          {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* Menu Mobile */}
+      <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ""}`}>
+        <ul className={styles.mobileMenuList}>
+          {menuItems.map((item, idx) => (
+            <li key={idx}>
+              <a 
+                href={item.href} 
+                className={styles.mobileMenuLink}
+                onClick={closeMobileMenu}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
           <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/produtos">Produtos</Link>
-          </li>
-          <li>
-            <a href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
-              Feedbacks
+            <a
+              href="https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!"
+              className={styles.mobileWhatsappBtn}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMobileMenu}
+            >
+              <FaWhatsapp /> Fale Conosco
             </a>
           </li>
         </ul>
-
-        {/* Botão Entrar */}
-        <button className={styles.btnLogin}>Entrar</button>
-
-        {/* Hamburger Mobile */}
-        <button
-          className={styles.hamburger}
-          aria-label="Abrir menu"
-          onClick={() => setOpen(true)}
-        >
-          ☰
-        </button>
-      </header>
-
-      {/* Overlay */}
-      <div
-        className={`${styles.overlay} ${open ? styles.overlayVisible : ""}`}
-        onClick={() => setOpen(false)}
-      />
-
-      {/* Sidebar Mobile */}
-      <aside className={`${styles.sidebar} ${open ? styles.open : ""}`}>
-        <button
-          className={styles.closeBtn}
-          aria-label="Fechar menu"
-          onClick={() => setOpen(false)}
-        >
-          ←
-        </button>
-
-        <nav className={styles.sidebarNav}>
-          <Link href="#simulacao" onClick={(e) => scrollToSection(e, "#simulacao")}>
-            Simulação
-          </Link>
-          <Link href="#contato" onClick={(e) => scrollToSection(e, "#contato")}>
-            Entre em contato
-          </Link>
-          <Link href="#sobre" onClick={(e) => scrollToSection(e, "#sobre")}>
-            Sobre nós
-          </Link>
-          <Link href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
-            Feedback
-          </Link>
-          <Link href="#trabalhe" onClick={(e) => scrollToSection(e, "#trabalhe")}>
-            Trabalhe conosco
-          </Link>
-          <Link href="#bancos" onClick={(e) => scrollToSection(e, "#bancos")}>
-            Bancos parceiros
-          </Link>
-        </nav>
-      </aside>
-    </>
+      </div>
+    </nav>
   );
 }

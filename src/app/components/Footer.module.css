@@ -1,0 +1,600 @@
+/* =========================
+   Footer Profissional - ConsigaCred
+========================= */
+
+.footerContainer {
+    width: 100%;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    color: #fff;
+    padding: 70px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .footerContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e30613, transparent);
+    animation: glow 3s ease-in-out infinite;
+  }
+  
+  @keyframes glow {
+    0%, 100% { 
+      opacity: 0.4; 
+    }
+    50% { 
+      opacity: 1; 
+    }
+  }
+  
+  .footerWrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 50px;
+  }
+  
+  /* =========================
+     Logo Section
+  ========================= */
+  .footerLogoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .logoWrapper {
+    position: relative;
+    animation: fadeIn 1s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+  
+  .logoWrapper img {
+    max-width: 260px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 4px 15px rgba(227, 6, 19, 0.3));
+    transition: all 0.4s ease;
+  }
+  
+  .logoWrapper img:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 8px 25px rgba(227, 6, 19, 0.5));
+  }
+  
+  .footerTagline {
+    font-size: 14px;
+    color: #999;
+    font-style: italic;
+    line-height: 1.6;
+    animation: fadeIn 1s ease-out 0.3s both;
+    max-width: 280px;
+  }
+  
+  /* =========================
+     Footer Sections
+  ========================= */
+  .footerSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 1s ease-out 0.5s both;
+  }
+  
+  .footerTitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+    position: relative;
+    padding-bottom: 12px;
+  }
+  
+  .footerTitle::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 35px;
+    height: 2px;
+    background: #e30613;
+    transition: width 0.3s ease;
+  }
+  
+  .footerSection:hover .footerTitle::after {
+    width: 55px;
+  }
+  
+  /* =========================
+     Links and Text
+  ========================= */
+  .footerLinks {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .footerLink,
+  .footerText {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #aaa;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 6px 0;
+    position: relative;
+  }
+  
+  .footerLink {
+    cursor: pointer;
+  }
+  
+  .footerLink::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 0;
+    background: #e30613;
+    transition: height 0.3s ease;
+  }
+  
+  .footerLink:hover::before {
+    height: 100%;
+  }
+  
+  .footerLink:hover {
+    color: #fff;
+    padding-left: 8px;
+  }
+  
+  .linkIcon {
+    font-size: 15px;
+    color: #e30613;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  
+  .footerLink:hover .linkIcon {
+    transform: scale(1.15);
+  }
+  
+  .footerText {
+    cursor: default;
+  }
+  
+  .footerText span {
+    line-height: 1.6;
+  }
+  
+  .mapLink {
+    margin-top: 6px;
+    color: #e30613;
+    font-weight: 600;
+  }
+  
+  .mapLink:hover {
+    color: #ff1e2d;
+  }
+  
+  /* =========================
+     Social Media & Quote Wrapper
+  ========================= */
+  .footerSocialWrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 50px;
+  }
+  
+  .socialContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .socialGrid {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  
+  .socialBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(227, 6, 19, 0.3);
+    border-radius: 12px;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  
+  .socialBtn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(227, 6, 19, 0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .socialBtn:hover::before {
+    opacity: 1;
+  }
+  
+  .socialBtn:hover {
+    transform: translateY(-4px) scale(1.05);
+    border-color: #e30613;
+    box-shadow: 0 8px 20px rgba(227, 6, 19, 0.4);
+  }
+  
+  .socialBtn svg {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Social Media Colors */
+  .whatsapp:hover {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    border-color: #25D366;
+  }
+  
+  .facebook:hover {
+    background: linear-gradient(135deg, #1877F2, #0C63D4);
+    border-color: #1877F2;
+  }
+  
+  .instagram:hover {
+    background: linear-gradient(135deg, #E1306C, #C13584, #833AB4);
+    border-color: #E1306C;
+  }
+  
+  .maps:hover {
+    background: linear-gradient(135deg, #EA4335, #FBBC05);
+    border-color: #EA4335;
+  }
+  
+  /* =========================
+     Footer Quote
+  ========================= */
+  .footerQuote {
+    padding: 40px 45px;
+    background: linear-gradient(135deg, rgba(227, 6, 19, 0.12), rgba(255, 255, 255, 0.04));
+    border: 2px solid rgba(227, 6, 19, 0.5);
+    border-radius: 20px;
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    backdrop-filter: blur(15px);
+    max-width: 480px;
+    min-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footerQuote::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(227, 6, 19, 0.08), transparent);
+    border-radius: 20px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  
+  .footerQuote:hover::before {
+    opacity: 1;
+  }
+  
+  .footerQuote:hover {
+    background: linear-gradient(135deg, rgba(227, 6, 19, 0.18), rgba(255, 255, 255, 0.06));
+    border-color: rgba(227, 6, 19, 0.7);
+    transform: translateY(-5px);
+    box-shadow: 
+      0 15px 50px rgba(227, 6, 19, 0.5),
+      inset 0 2px 0 rgba(255, 255, 255, 0.15);
+  }
+  
+  .quoteIconLeft,
+  .quoteIconRight {
+    font-size: 60px;
+    font-weight: 700;
+    color: #e30613;
+    font-family: Georgia, serif;
+    line-height: 0.5;
+    text-shadow: 0 0 25px rgba(227, 6, 19, 0.8);
+    position: absolute;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  
+  .quoteIconLeft {
+    top: 15px;
+    left: 20px;
+  }
+  
+  .quoteIconRight {
+    bottom: 15px;
+    right: 20px;
+  }
+  
+  .quoteText {
+    font-size: 17px;
+    font-weight: 600;
+    font-style: italic;
+    color: #fff;
+    line-height: 1.8;
+    text-align: center;
+    margin: 0;
+    padding: 15px 10px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+  
+  /* =========================
+     Footer Bottom
+  ========================= */
+  .footerBottom {
+    padding: 28px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  
+  .footerBottom p {
+    color: #888;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  
+  /* =========================
+     RESPONSIVE DESIGN
+  ========================= */
+  
+  /* Tablets - Large */
+  @media (max-width: 1200px) {
+    .footerWrapper {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 45px;
+    }
+  
+    .footerLogoSection {
+      grid-column: 1 / -1;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footerTagline {
+      max-width: 100%;
+    }
+  
+    .footerSocialWrapper {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 35px;
+    }
+  
+    .socialContent {
+      align-items: center;
+    }
+  
+    .socialGrid {
+      justify-content: center;
+    }
+  
+    .footerQuote {
+      min-width: auto;
+      max-width: 500px;
+      width: 100%;
+    }
+  }
+  
+  /* Tablets - Small & Mobile - Large */
+  @media (max-width: 768px) {
+    .footerContainer {
+      padding: 50px 0 0;
+    }
+  
+    .footerWrapper {
+      grid-template-columns: 1fr;
+      gap: 35px;
+      padding: 0 25px;
+      margin-bottom: 40px;
+    }
+  
+    .footerSection {
+      align-items: center;
+      text-align: center;
+    }
+  
+    .footerTitle::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  
+    .footerLink::before {
+      display: none;
+    }
+  
+    .footerLink:hover {
+      padding-left: 0;
+    }
+  
+    .logoWrapper img {
+      max-width: 220px;
+    }
+  
+    .footerSocialWrapper {
+      padding: 0 25px;
+      margin-bottom: 40px;
+    }
+  
+    .socialGrid {
+      gap: 12px;
+    }
+  
+    .socialBtn {
+      width: 48px;
+      height: 48px;
+      font-size: 19px;
+    }
+  
+    .footerQuote {
+      font-size: 15px;
+      padding: 35px 32px;
+      max-width: 100%;
+      min-width: auto;
+    }
+  
+    .quoteIconLeft,
+    .quoteIconRight {
+      font-size: 50px;
+    }
+  
+    .quoteIconLeft {
+      top: 12px;
+      left: 15px;
+    }
+  
+    .quoteIconRight {
+      bottom: 12px;
+      right: 15px;
+    }
+  
+    .quoteText {
+      font-size: 15px;
+    }
+  }
+  
+  /* Mobile - Small */
+  @media (max-width: 480px) {
+    .footerContainer {
+      padding: 40px 0 0;
+    }
+  
+    .footerWrapper {
+      padding: 0 20px;
+      gap: 30px;
+      margin-bottom: 35px;
+    }
+  
+    .logoWrapper img {
+      max-width: 190px;
+    }
+  
+    .footerTitle {
+      font-size: 14px;
+    }
+  
+    .footerLink,
+    .footerText {
+      font-size: 13px;
+      gap: 8px;
+    }
+  
+    .linkIcon {
+      font-size: 14px;
+    }
+  
+    .footerSocialWrapper {
+      padding: 0 20px;
+      gap: 28px;
+      margin-bottom: 35px;
+    }
+  
+    .socialBtn {
+      width: 44px;
+      height: 44px;
+      font-size: 17px;
+    }
+  
+    .footerQuote {
+      font-size: 14px;
+      padding: 30px 28px;
+    }
+  
+    .quoteIconLeft,
+    .quoteIconRight {
+      font-size: 42px;
+    }
+  
+    .quoteIconLeft {
+      top: 10px;
+      left: 12px;
+    }
+  
+    .quoteIconRight {
+      bottom: 10px;
+      right: 12px;
+    }
+  
+    .quoteText {
+      font-size: 14px;
+      padding: 10px 8px;
+    }
+  
+    .footerBottom {
+      padding: 22px 0;
+    }
+  
+    .footerBottom p {
+      font-size: 12px;
+      padding: 0 15px;
+    }
+  }
