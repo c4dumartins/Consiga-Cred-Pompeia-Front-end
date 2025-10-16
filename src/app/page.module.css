@@ -171,16 +171,22 @@
   transform: translateY(-3px);
 }
 
-/* Controles do Hero */
+/* Controles do Hero - SUPER CORRIGIDO */
 .heroControls {
   position: absolute;
   bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   z-index: 10;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .heroBtn {
@@ -190,6 +196,8 @@
   border: 2px solid rgba(255, 255, 255, 0.3);
   width: 45px;
   height: 45px;
+  min-width: 45px;
+  min-height: 45px;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -197,6 +205,7 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  flex-shrink: 0;
 }
 
 .heroBtn:hover {
@@ -205,24 +214,39 @@
   transform: scale(1.1);
 }
 
+.heroBtn:active {
+  transform: scale(0.95);
+}
+
 .heroIndicators {
   display: flex;
   gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
 }
 
 .indicator {
   width: 12px;
   height: 12px;
+  min-width: 12px;
+  min-height: 12px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .indicatorActive {
   background: #e30613;
   width: 35px;
+  min-width: 35px;
   border-radius: 6px;
 }
 
@@ -448,6 +472,10 @@
   pointer-events: none;
 }
 
+.sobre .sectionTitle {
+  color: #fff;
+}
+
 .sobreContent {
   max-width: 1200px;
   margin: 0 auto;
@@ -603,7 +631,6 @@
   transform: translateY(0);
 }
 
-/* Grid de Feedbacks */
 .feedbackGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -818,12 +845,34 @@
   }
 
   .heroControls {
-    bottom: 20px;
+    bottom: 25px;
+    gap: 12px;
+    padding: 0 20px;
+    max-width: 90%;
   }
 
   .heroBtn {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 13px;
+  }
+
+  .heroIndicators {
+    gap: 7px;
+  }
+
+  .indicator {
+    width: 10px;
+    height: 10px;
+    min-width: 10px;
+    min-height: 10px;
+  }
+
+  .indicatorActive {
+    width: 30px;
+    min-width: 30px;
   }
 
   .diferenciaisContainer {
@@ -912,6 +961,37 @@
     font-size: 0.95rem;
   }
 
+  .heroControls {
+    bottom: 20px;
+    gap: 10px;
+    padding: 0 15px;
+    max-width: 95%;
+  }
+
+  .heroBtn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 12px;
+  }
+
+  .heroIndicators {
+    gap: 6px;
+  }
+
+  .indicator {
+    width: 9px;
+    height: 9px;
+    min-width: 9px;
+    min-height: 9px;
+  }
+
+  .indicatorActive {
+    width: 26px;
+    min-width: 26px;
+  }
+
   .diferenciais {
     padding: 40px 15px;
   }
@@ -976,6 +1056,4 @@
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-
-/* Estilos globais removidos - usar em globals.css se necessário */
+} 

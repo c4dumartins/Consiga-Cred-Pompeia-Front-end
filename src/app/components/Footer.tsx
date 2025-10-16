@@ -130,9 +130,9 @@ export default function Footer() {
         </div>
 
         <blockquote className={styles.footerQuote}>
-          <span className={styles.quoteIcon}>"</span>
-          Transformando sonhos em conquistas financeiras com dedicação e confiança
-          <span className={styles.quoteIcon}>"</span>
+          
+          "Transformando sonhos em conquistas financeiras com dedicação e confiança"
+   
         </blockquote>
       </div>
 
