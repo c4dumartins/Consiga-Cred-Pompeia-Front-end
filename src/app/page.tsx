@@ -290,8 +290,10 @@ export default function Home() {
                 </div>
               </div>
               <div className={styles.sobreImage}>
-                <div className={styles.imagePlaceholder}>
-                  {/* Aqui você pode adicionar uma imagem da empresa */}
+              <div className={styles.imagePlaceholder}>
+              <img src="/Ivana-Elaine-Beth.png" alt="Nossa Equipe" />
+
+
                 </div>
               </div>
             </div>
