@@ -11,6 +11,7 @@ import Hero from "./components/Hero";
 import SimulacaoSection from "./components/SimulacaoSection";
 import SobreSection from "./components/SobreSection";
 import FeedbackSection from "./components/FeedbackSection";
+import BancosParceiros from "./components/BancosParceiros";
 import Footer from "./components/Footer";
 
 import styles from "./page.module.css";
@@ -140,6 +141,9 @@ export default function Home() {
 
         {/* Sobre Nós Section */}
         <SobreSection />
+
+        {/* Bancos Parceiros Section */}
+        <BancosParceiros />
 
         {/* Feedback Section */}
         <FeedbackSection
