@@ -1,221 +1,348 @@
 /* =========================
    Navbar principal
    ========================= */
-   .navbar {
-    position: fixed;       /* sempre no topo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 18px 32px;
-    background: #111;      /* transparente ou sólido se quiser */
-    transition: all 0.3s ease;
-    z-index: 1200;         /* acima do overlay e sidebar */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Gradiente sutil no topo */
+.navbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(227, 6, 19, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.navbar:hover::before {
+  opacity: 1;
 }
 
 /* Efeito ao rolar */
 .navbar.scrolled {
-    background: #111;       /* cor sólida */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    padding: 12px 32px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid rgba(227, 6, 19, 0.2);
+  padding: 16px 40px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.navbar.scrolled::before {
+  opacity: 1;
 }
 
 /* =========================
    Logo
    ========================= */
-   .logo {
-    position: relative;   /* obrigatório para Image com fill */
-    width: 140px;         /* largura da logo */
-    height: 50px;         /* altura da logo */
+.logo {
+  position: relative;
+  width: 160px;
+  height: 56px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logoImg {
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(227, 6, 19, 0.3));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logo:hover .logoImg {
+  filter: drop-shadow(0 4px 16px rgba(227, 6, 19, 0.6));
+  transform: scale(1.03);
+}
+
+.navbar.scrolled .logo {
+  width: 140px;
+  height: 50px;
+}
+
+/* Logo responsiva */
+@media (max-width: 768px) {
+  .logo {
+    width: 120px;
+    height: 44px;
   }
   
-  .logoImg {
-    object-fit: contain;  /* mantém proporção da imagem */
+  .navbar.scrolled .logo {
+    width: 110px;
+    height: 40px;
   }
-  
-  /* Logo responsiva */
-  @media (max-width: 768px) {
-    .logo {
-      width: 110px;
-      height: 40px;
-    }
-  }
-  
+}
 
 /* =========================
    Menu desktop
    ========================= */
 .menuDesktop {
-    display: flex;
-    list-style: none;
-    gap: 32px;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  list-style: none;
+  gap: 40px;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+.menuDesktop li {
+  position: relative;
 }
 
 .menuDesktop a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.3px;
+  position: relative;
+  padding: 8px 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Botão login desktop */
-.btnLogin {
-    background: #e30613;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: 700;
-    cursor: pointer;
+/* Underline animado */
+.menuDesktop a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #e30613, #ff4757);
+  transform: translateX(-50%);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+.menuDesktop a:hover {
+  color: #fff;
+}
+
+.menuDesktop a:hover::after {
+  width: 100%;
+}
+
+/* Efeito de brilho no hover */
+.menuDesktop a::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  background: radial-gradient(circle, rgba(227, 6, 19, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.menuDesktop a:hover::before {
+  opacity: 1;
 }
 
 /* =========================
    Hamburger mobile
    ========================= */
 .hamburger {
-    display: none;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
+  display: none;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hamburger:hover {
+  background: rgba(227, 6, 19, 0.2);
+  border-color: rgba(227, 6, 19, 0.4);
+  transform: scale(1.05);
+}
+
+.hamburger:active {
+  transform: scale(0.95);
 }
 
 @media (max-width: 900px) {
-    .menuDesktop, .btnLogin { display: none; }
-    .hamburger { display: block; }
+  .menuDesktop { display: none; }
+  .hamburger { display: flex; }
 }
 
 /* =========================
    Sidebar drawer
    ========================= */
 .sidebar {
-    position: fixed;
-    top: 0;
-    right: -300px;
-    width: 280px;
-    height: 100dvh;
-    background: #c92e2e;
-    transition: right 0.3s ease;
-    z-index: 1300; /* acima da navbar e overlay */
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 300px;
+  height: 100dvh;
+  background: linear-gradient(180deg, #1a0000 0%, #0a0000 100%);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(227, 6, 19, 0.3);
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1300;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
 }
 
-.sidebar.open { right: 0; }
+.sidebar.open { 
+  right: 0; 
+}
+
+/* Header do Sidebar */
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(227, 6, 19, 0.2);
+}
+
+.sidebarTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
 
 .closeBtn {
-    align-self: flex-start;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 22px;
-    cursor: pointer;
-    margin-bottom: 16px;
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.3);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.closeBtn:hover {
+  background: rgba(227, 6, 19, 0.2);
+  transform: rotate(90deg);
+}
+
+/* Navegação do Sidebar */
 .sidebarNav {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .sidebarNav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  padding: 16px 20px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebarNav a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #e30613, #ff4757);
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 4px 4px 0;
+}
+
+.sidebarNav a:hover {
+  background: rgba(227, 6, 19, 0.15);
+  color: #fff;
+  padding-left: 28px;
+}
+
+.sidebarNav a:hover::before {
+  transform: translateX(0);
 }
 
 /* =========================
    Overlay
    ========================= */
 .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0);
-    pointer-events: none;
-    transition: background 0.3s ease;
-    z-index: 1250; /* entre navbar e sidebar */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1250;
+  backdrop-filter: blur(0px);
 }
 
 .overlay.overlayVisible {
-    background: rgba(0,0,0,0.5);
-    pointer-events: auto;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
 }
 
 /* =========================
-   Ações e botões
+   Responsivo
    ========================= */
-.actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 20px;
+  }
+
+  .navbar.scrolled {
+    padding: 12px 20px;
+  }
+
+  .sidebar {
+    width: 280px;
+    right: -280px;
+    padding: 24px 20px;
+  }
 }
 
-.toggleTheme {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #fff;
-    font-size: 20px;
-    transition: transform 0.2s ease;
+/* =========================
+   Animação de entrada
+   ========================= */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.toggleTheme:hover {
-    transform: scale(1.1);
-}
-/* Botão Entrar (desktop) */
-.btnLogin {
-  background: #e30613;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease; /* animação suave */
-}
-
-.btnLogin:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.btnLogin:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* Links do menu desktop */
-.menuDesktop a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.menuDesktop a::after {
-  content: '';
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  left: 0;
-  bottom: -2px;
-  background: #e30613;
-  transition: width 0.3s ease;
-}
-
-.menuDesktop a:hover::after {
-  width: 100%; /* underline animado */
-}
-
-.menuDesktop a:hover {
-  color: #e30613; /* muda a cor levemente */
-  transform: scale(1.05);
+.navbar {
+  animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }

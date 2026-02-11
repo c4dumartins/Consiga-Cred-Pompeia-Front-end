@@ -53,14 +53,21 @@ export default function Navbar() {
             <Link href="/produtos">Produtos</Link>
           </li>
           <li>
+            <a href="#simulacao" onClick={(e) => scrollToSection(e, "#simulacao")}>
+              Simulação
+            </a>
+          </li>
+          <li>
+            <a href="#sobre" onClick={(e) => scrollToSection(e, "#sobre")}>
+              Sobre Nós
+            </a>
+          </li>
+          <li>
             <a href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
               Feedbacks
             </a>
           </li>
         </ul>
-
-        {/* Botão Entrar */}
-        <button className={styles.btnLogin}>Entrar</button>
 
         {/* Hamburger Mobile */}
         <button
@@ -80,32 +87,32 @@ export default function Navbar() {
 
       {/* Sidebar Mobile */}
       <aside className={`${styles.sidebar} ${open ? styles.open : ""}`}>
-        <button
-          className={styles.closeBtn}
-          aria-label="Fechar menu"
-          onClick={() => setOpen(false)}
-        >
-          ←
-        </button>
+        <div className={styles.sidebarHeader}>
+          <h3 className={styles.sidebarTitle}>Menu</h3>
+          <button
+            className={styles.closeBtn}
+            aria-label="Fechar menu"
+            onClick={() => setOpen(false)}
+          >
+            ×
+          </button>
+        </div>
 
         <nav className={styles.sidebarNav}>
+          <Link href="/" onClick={() => setOpen(false)}>
+            Home
+          </Link>
+          <Link href="/produtos" onClick={() => setOpen(false)}>
+            Produtos
+          </Link>
           <Link href="#simulacao" onClick={(e) => scrollToSection(e, "#simulacao")}>
             Simulação
-          </Link>
-          <Link href="#contato" onClick={(e) => scrollToSection(e, "#contato")}>
-            Entre em contato
           </Link>
           <Link href="#sobre" onClick={(e) => scrollToSection(e, "#sobre")}>
             Sobre nós
           </Link>
           <Link href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
-            Feedback
-          </Link>
-          <Link href="#trabalhe" onClick={(e) => scrollToSection(e, "#trabalhe")}>
-            Trabalhe conosco
-          </Link>
-          <Link href="#bancos" onClick={(e) => scrollToSection(e, "#bancos")}>
-            Bancos parceiros
+            Feedbacks
           </Link>
         </nav>
       </aside>
