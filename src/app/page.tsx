@@ -39,8 +39,19 @@ export default function Home() {
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => setFeedbacks(data))
-      .catch((err) => console.error(err));
+      .then((data) => {
+        // Garante que data seja um array
+        if (Array.isArray(data)) {
+          setFeedbacks(data);
+        } else {
+          console.error("Resposta da API não é um array:", data);
+          setFeedbacks([]);
+        }
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar feedbacks:", err);
+        setFeedbacks([]);
+      });
   }, []);
 
   // Envia feedback
@@ -281,7 +292,7 @@ export default function Home() {
       <h4>Localização</h4>
       <p>📍Rua Senador Rodolfo Miranda - 284 Centro</p>
       <p>🏙️ Pompeia - SP</p>
-      <a href="https://www.instagram.com/consigacredpompeia/" target="_blank" rel="noopener noreferrer">
+      <a href="https://maps.app.goo.gl/J8P8znB27nohmm5FA" target="_blank" rel="noopener noreferrer">
         🗺️ Ver no mapa
       </a>
     </div>
