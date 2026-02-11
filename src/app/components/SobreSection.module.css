@@ -1,0 +1,358 @@
+.section {
+  position: relative;
+  padding: 120px 0;
+  background: linear-gradient(180deg, #111 0%, #0a0a0a 50%, #000 100%);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Conteúdo */
+.content {
+  animation: fadeInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.3);
+  border-radius: 100px;
+  color: #e30613;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  color: #e30613;
+  position: relative;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin: 48px 0;
+  padding: 40px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat {
+  text-align: center;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+.stat:nth-child(1) { animation-delay: 0.2s; }
+.stat:nth-child(2) { animation-delay: 0.3s; }
+.stat:nth-child(3) { animation-delay: 0.4s; }
+
+.statNumber {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #e30613, #ff4757);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* CTA Buttons */
+.cta {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.ctaButton,
+.ctaButtonSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.ctaButton {
+  background: linear-gradient(135deg, #e30613, #ff1e2d);
+  color: white;
+  border: none;
+  box-shadow: 0 10px 30px rgba(227, 6, 19, 0.4);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 40px rgba(227, 6, 19, 0.6);
+}
+
+.ctaButtonSecondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.ctaButtonSecondary:hover {
+  border-color: #e30613;
+  background: rgba(227, 6, 19, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Área de Imagem */
+.imageWrapper {
+  position: relative;
+  animation: fadeInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 600px;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imageFrame:hover .image {
+  transform: scale(1.05);
+}
+
+/* Placeholder para quando não há imagem */
+.imagePlaceholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  background: linear-gradient(135deg, rgba(227, 6, 19, 0.05), rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
+
+.imagePlaceholder svg {
+  opacity: 0.3;
+}
+
+.imagePlaceholder span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.placeholderHint {
+  font-size: 0.875rem !important;
+  opacity: 0.6;
+  font-family: monospace;
+}
+
+/* Quando a imagem carregar, esconde o placeholder */
+.imageFrame:has(img[src]:not([src=""])) .imagePlaceholder {
+  display: none;
+}
+
+/* Elementos Decorativos */
+.imageDecor1,
+.imageDecor2 {
+  position: absolute;
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.imageDecor1 {
+  top: -20px;
+  right: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  border: 2px solid rgba(227, 6, 19, 0.2);
+  animation: pulse 3s infinite;
+}
+
+.imageDecor2 {
+  top: -40px;
+  right: -40px;
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  border: 1px solid rgba(227, 6, 19, 0.1);
+  animation: pulse 3s infinite 0.5s;
+}
+
+/* Background Grid */
+.bgGrid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(227, 6, 19, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(227, 6, 19, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Animações */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.5;
+  }
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .section {
+    padding: 80px 0;
+  }
+
+  .grid {
+    gap: 60px;
+  }
+
+  .stats {
+    gap: 24px;
+  }
+
+  .imageContainer {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .container {
+    padding: 0 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 32px 0;
+    padding: 32px 0;
+  }
+
+  .statNumber {
+    font-size: 2.5rem;
+  }
+
+  .cta {
+    flex-direction: column;
+  }
+
+  .ctaButton,
+  .ctaButtonSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .imageContainer {
+    height: 400px;
+  }
+
+  .imageDecor1,
+  .imageDecor2 {
+    display: none;
+  }
+}
