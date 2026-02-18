@@ -35,7 +35,7 @@ export default function Home() {
     Cookies.set("userId", userId, { expires: 365 });
   }
 
-  const API_URL = "http://localhost:3001/feedbacks";
+  const API_URL = "http://localhost:3001";
 
   // Busca feedbacks do backend
   useEffect(() => {
