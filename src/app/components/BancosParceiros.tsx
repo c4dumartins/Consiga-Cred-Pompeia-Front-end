@@ -18,7 +18,7 @@ const bancos: Banco[] = [
     nome: 'Safra',
     cor: '#F37021',
     corSecundaria: '#D35E1A',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Banco_Safra_logo.svg/240px-Banco_Safra_logo.svg.png',
+    logo: 'https://img.logo.dev/safra.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Banco privado brasileiro focado em atendimento personalizado e soluções financeiras exclusivas para alta renda.',
   },
   {
@@ -26,7 +26,7 @@ const bancos: Banco[] = [
     nome: 'Caixa',
     cor: '#005CA9',
     corSecundaria: '#003D73',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Caixa_Economica_Federal_logo.svg',
+    logo: 'https://img.logo.dev/caixa.gov.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Maior banco público do Brasil, líder em crédito imobiliário e programas sociais do governo federal.',
   },
   {
@@ -34,7 +34,7 @@ const bancos: Banco[] = [
     nome: 'Santander',
     cor: '#EC0000',
     corSecundaria: '#C00000',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/Santander_2019.svg',
+    logo: 'https://img.logo.dev/santander.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Banco internacional com forte presença no Brasil, oferecendo produtos diversificados para pessoas e empresas.',
   },
   {
@@ -42,7 +42,7 @@ const bancos: Banco[] = [
     nome: 'Banco do Brasil',
     cor: '#F9D000',
     corSecundaria: '#D4B800',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/8/86/Banco_do_Brasil_logo.svg',
+    logo: 'https://img.logo.dev/bb.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Instituição financeira mais antiga do país, com ampla capilaridade e soluções completas para todos os públicos.',
   },
   {
@@ -50,7 +50,7 @@ const bancos: Banco[] = [
     nome: 'Bradesco',
     cor: '#CC092F',
     corSecundaria: '#A00726',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Bradesco_logo.svg',
+    logo: 'https://img.logo.dev/bradesco.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Um dos maiores bancos privados do Brasil, com forte atuação em seguros, capitalização e previdência.',
   },
   {
@@ -58,7 +58,7 @@ const bancos: Banco[] = [
     nome: 'Itaú',
     cor: '#FF6500',
     corSecundaria: '#E65A00',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Itau_logo.svg',
+    logo: 'https://img.logo.dev/itau.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Maior banco privado da América Latina, referência em inovação digital e atendimento multicanal.',
   },
   {
@@ -66,7 +66,7 @@ const bancos: Banco[] = [
     nome: 'Facta',
     cor: '#00A859',
     corSecundaria: '#008847',
-    logo: 'https://factafinanceira.com.br/wp-content/uploads/2021/03/logo-facta.png',
+    logo: 'https://img.logo.dev/factafinanceira.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
     descricao: 'Financeira especializada em crédito consignado e soluções de empréstimo para servidores públicos e aposentados.',
   },
 ];
@@ -87,7 +87,6 @@ export default function BancosParceiros() {
 
   return (
     <section className={styles.section}>
-      {/* Fundo */}
       <div className={styles.bgGlow1} aria-hidden />
       <div className={styles.bgGlow2} aria-hidden />
       <div className={styles.bgGrid} aria-hidden />
@@ -131,15 +130,12 @@ export default function BancosParceiros() {
                     onMouseEnter={() => setHoveredId(banco.id)}
                     onMouseLeave={() => setHoveredId(null)}
                   >
-                    {/* Glow colorido de fundo */}
                     <div className={styles.cardGlowBg} style={{ opacity: isHovered ? 1 : 0 }} />
-
-                    {/* Barra topo colorida */}
                     <div className={`${styles.topBar} ${isHovered ? styles.topBarActive : ''}`} />
 
                     {/* FRENTE */}
                     <div className={`${styles.cardFront} ${isHovered ? styles.hideFront : ''}`}>
-                      <div className={styles.logoRing} style={{ borderColor: isHovered ? banco.cor : undefined }}>
+                      <div className={styles.logoRing}>
                         {!logoFailed ? (
                           <img
                             src={banco.logo}
@@ -216,7 +212,6 @@ export default function BancosParceiros() {
             </div>
           </div>
 
-          {/* Botões nav */}
           <button className={`${styles.navBtn} ${styles.navLeft}`} onClick={() => scroll('left')} aria-label="Anterior">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
