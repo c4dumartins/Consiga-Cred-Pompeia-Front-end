@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid";
-import { FaUserPlus, FaWhatsapp, FaFileContract } from "react-icons/fa";
+import { FaUserPlus, FaWhatsapp, FaFileContract, FaCalculator } from "react-icons/fa";
 
 // Componentes
 import Navbar from "./components/Navbar";
@@ -114,6 +114,12 @@ export default function Home() {
       description: "Comece seu cadastro rapidamente e garanta sua análise inicial.",
       icon: <FaUserPlus size={40} />,
       href: "/precadastro",
+    },
+    {
+      title: "Simulação",
+      description: "Simule seu crédito agora e descubra as melhores condições para você.",
+      icon: <FaCalculator size={40} />,
+      href: "/simulacao",
     },
     {
       title: "Entre em contato",
