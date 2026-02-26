@@ -214,28 +214,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div className={styles.newsletter}>
-            <div className={styles.newsletterContent}>
-              <div className={styles.newsletterText}>
-                <h3>Fique por dentro</h3>
-                <p>Receba novidades e ofertas exclusivas</p>
-              </div>
-              <form onSubmit={handleNewsletterSubmit} className={styles.newsletterForm}>
-                <input
-                  type="email"
-                  placeholder="Seu melhor e-mail"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className={styles.newsletterInput}
-                />
-                <button type="submit" className={styles.newsletterBtn}>
-                  Inscrever
-                </button>
-              </form>
-            </div>
-          </div>
         </div>
 
         {/* Bottom Bar */}
@@ -243,9 +221,6 @@ export default function Footer() {
           <p className={styles.copyright}>
             © {currentYear} ConsigaCred Pompeia. Feito com{" "}
             <span className={styles.heartbeat}>❤️</span> para você
-          </p>
-          <p className={styles.quote}>
-            Transformando sonhos em conquistas financeiras
           </p>
         </div>
       </div>

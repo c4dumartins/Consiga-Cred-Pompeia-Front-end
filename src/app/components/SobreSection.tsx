@@ -84,7 +84,7 @@ export default function SobreSection() {
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </a>
-              <a href="#contato" className={styles.ctaButtonSecondary}>
+              <a href="https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!" className={styles.ctaButtonSecondary}>
                 Fale conosco
               </a>
             </div>

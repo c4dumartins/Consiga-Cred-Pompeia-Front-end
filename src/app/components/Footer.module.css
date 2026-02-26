@@ -496,4 +496,82 @@
   .quote::before {
     display: none;
   }
+}/* ... código anterior ... */
+
+/* Brand Section */
+.brand {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Adicionei display flex para alinhar a logo se necessário */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+}
+
+.logoWrapper {
+  margin-bottom: 28px;
+  position: relative;
+  /* Removemos restrições rígidas aqui se houver */
+}
+
+.logo {
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(227, 6, 19, 0.2));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* --- MUDANÇAS AQUI (Para a imagem não ficar esprimida) --- */
+  width: 200px; /* Define a largura fixa desejada */
+  height: auto; /* A altura se ajusta automaticamente para não distorcer */
+  object-fit: contain; /* Garante que a imagem caiba sem esticar */
+}
+
+/* ... código do meio ... */
+
+/* Bottom Bar */
+.bottom {
+  padding: 32px 0;
+  display: flex;
+  
+  /* --- MUDANÇAS AQUI (Para centralizar o Copyright) --- */
+  flex-direction: column; /* Coloca um item embaixo do outro */
+  align-items: center;    /* Centraliza horizontalmente */
+  justify-content: center;
+  text-align: center;     /* Garante que o texto fique centralizado */
+  
+  gap: 16px; /* Ajustei o gap para ficar bonito empilhado */
+  flex-wrap: wrap;
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s backwards;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Opcional: uma linha sutil separando */
+  margin-top: 20px;
+}
+
+.copyright {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Garante alinhamento do texto interno */
+  gap: 8px;
+  flex-wrap: wrap; /* Caso quebre linha em mobile */
+}
+
+.quote {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  position: relative;
+  /* Removi o padding-left fixo para centralizar melhor */
+  padding: 0; 
+}
+
+/* Opcional: Ajustar a aspa para ficar bonita centralizada */
+.quote::before {
+  content: '"';
+  margin-right: 4px; /* Espaço pequeno antes do texto */
+  font-size: 1.5rem;
+  color: #e30613;
+  font-family: Georgia, serif;
+  position: static; /* Remove o absolute para fluir com o texto */
+  vertical-align: middle;
 }
