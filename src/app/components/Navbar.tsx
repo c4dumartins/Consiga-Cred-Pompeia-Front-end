@@ -4,28 +4,35 @@ import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Detecta scroll para adicionar classe .scrolled
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll suave para seções internas
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const handleSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
     e.preventDefault();
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    setOpen(false);
+
+    if (pathname === "/") {
+      // Já está na home — só scrolla
+      const el = document.querySelector(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      // Em outra página — vai para a home com hash
+      router.push(`/${sectionId}`);
     }
-    setOpen(false); // fecha sidebar ao clicar
   };
 
   return (
@@ -46,30 +53,26 @@ export default function Navbar() {
 
         {/* Menu Desktop */}
         <ul className={styles.menuDesktop}>
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/produtos">Produtos</Link></li>
           <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/produtos">Produtos</Link>
-          </li>
-          <li>
-            <a href="#simulacao" onClick={(e) => scrollToSection(e, "#simulacao")}>
+            <a href="/#simulacao" onClick={(e) => handleSection(e, "#simulacao")}>
               Simulação
             </a>
           </li>
           <li>
-            <a href="#sobre" onClick={(e) => scrollToSection(e, "#sobre")}>
+            <a href="/#sobre" onClick={(e) => handleSection(e, "#sobre")}>
               Sobre Nós
             </a>
           </li>
           <li>
-            <a href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
+            <a href="/#feedback" onClick={(e) => handleSection(e, "#feedback")}>
               Feedbacks
             </a>
           </li>
         </ul>
 
-        {/* Hamburger Mobile */}
+        {/* Hamburger */}
         <button
           className={styles.hamburger}
           aria-label="Abrir menu"
@@ -99,21 +102,11 @@ export default function Navbar() {
         </div>
 
         <nav className={styles.sidebarNav}>
-          <Link href="/" onClick={() => setOpen(false)}>
-            Home
-          </Link>
-          <Link href="/produtos" onClick={() => setOpen(false)}>
-            Produtos
-          </Link>
-          <Link href="#simulacao" onClick={(e) => scrollToSection(e, "#simulacao")}>
-            Simulação
-          </Link>
-          <Link href="#sobre" onClick={(e) => scrollToSection(e, "#sobre")}>
-            Sobre nós
-          </Link>
-          <Link href="#feedback" onClick={(e) => scrollToSection(e, "#feedback")}>
-            Feedbacks
-          </Link>
+          <Link href="/" onClick={() => setOpen(false)}>Home</Link>
+          <Link href="/produtos" onClick={() => setOpen(false)}>Produtos</Link>
+          <a href="/#simulacao" onClick={(e) => handleSection(e, "#simulacao")}>Simulação</a>
+          <a href="/#sobre" onClick={(e) => handleSection(e, "#sobre")}>Sobre nós</a>
+          <a href="/#feedback" onClick={(e) => handleSection(e, "#feedback")}>Feedbacks</a>
         </nav>
       </aside>
     </>

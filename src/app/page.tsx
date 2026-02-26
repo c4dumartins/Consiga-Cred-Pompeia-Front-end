@@ -29,6 +29,21 @@ interface Feedback {
 export default function Home() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
+  // Scroll automático quando chega de outra página com hash (ex: /#simulacao)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const tryScroll = (attempts = 0) => {
+      const el = document.querySelector(hash);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+      } else if (attempts < 10) {
+        setTimeout(() => tryScroll(attempts + 1), 150);
+      }
+    };
+    tryScroll();
+  }, []);
+
   // Gera ou pega UserID
   let userId = Cookies.get("userId");
   if (!userId) {
