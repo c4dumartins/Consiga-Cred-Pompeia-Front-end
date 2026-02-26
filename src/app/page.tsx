@@ -14,6 +14,7 @@ import FeedbackSection from "./components/FeedbackSection";
 import BancosParceiros from "./components/BancosParceiros";
 import Footer from "./components/Footer";
 
+
 import styles from "./page.module.css";
 
 interface Feedback {
@@ -112,7 +113,7 @@ export default function Home() {
       title: "Pré-Cadastro",
       description: "Comece seu cadastro rapidamente e garanta sua análise inicial.",
       icon: <FaUserPlus size={40} />,
-      href: "#",
+      href: "/precadastro",
     },
     {
       title: "Entre em contato",
