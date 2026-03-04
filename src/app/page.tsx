@@ -20,29 +20,27 @@ interface Feedback {
   name: string;
   email: string;
   message: string;
-  user_id: string; // Mantido como string para evitar conflitos no Front
+  user_id: string;
   created_at: string;
 }
 
 export default function Home() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-  const [userId, setUserId] = useState<string>("1"); // Estado inicial como string
+  const [userId, setUserId] = useState<string>("1");
+  // NOVO: Estado para controlar a mensagem de agradecimento
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  // Endpoint correto do seu backend
   const API_URL = "http://localhost:3001/feedbacks";
 
-  // 1. Gerenciamento de Identidade do Usuário
   useEffect(() => {
     let savedId = Cookies.get("userId");
     if (!savedId) {
       savedId = "1"; 
       Cookies.set("userId", savedId, { expires: 365 });
     }
-    // CORREÇÃO: Removido o parseInt para manter como string
     setUserId(savedId);
   }, []);
 
-  // 2. Busca feedbacks do backend (GET)
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
@@ -54,7 +52,7 @@ export default function Home() {
       .catch((err) => console.error("Erro ao buscar feedbacks:", err));
   }, []);
 
-  // 3. Enviar feedback (POST)
+  // Handler para enviar feedback atualizado
   const handleSubmitFeedback = async (name: string, email: string, message: string) => {
     try {
       const res = await fetch(API_URL, {
@@ -66,14 +64,20 @@ export default function Home() {
       if (res.ok) {
         const newFb = await res.json();
         setFeedbacks((prev) => [newFb, ...prev]);
-        alert("Feedback enviado com sucesso!");
+        
+        // 1. Ativa a mensagem de sucesso
+        setShowSuccessMessage(true);
+        
+        // 2. Remove a mensagem automaticamente após 3 segundos
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 3000);
       }
     } catch (err) {
       console.error("Erro ao enviar:", err);
     }
   };
 
-  // 4. Deletar feedback (DELETE)
   const handleDeleteFeedback = async (id: number) => {
     try {
       const res = await fetch(`${API_URL}/${id}`, {
@@ -90,7 +94,6 @@ export default function Home() {
     }
   };
 
-  // Configurações visuais (Mantidas)
   const heroSlides = [{ image: "/Banner1.webp" }, { image: "/Banner2.webp" }, { image: "/Banner3.webp" }, { image: "/Banner4.webp" }];
   const simulacaoCards = [
     { title: "Pré-Cadastro", description: "Comece seu cadastro rapidamente.", icon: <FaUserPlus size={40} />, href: "/precadastro" },
@@ -102,6 +105,31 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <Navbar />
+      
+      {/* MENSAGEM DE SUCESSO FLUTUANTE */}
+      {showSuccessMessage && (
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: '#e30613', // Vermelho da sua marca
+          color: 'white',
+          padding: '20px 40px',
+          borderRadius: '12px',
+          zIndex: 9999,
+          boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          border: '2px solid rgba(255,255,255,0.2)',
+          fontSize: '1.2rem',
+          animation: 'fadeIn 0.2s ease-out'
+        }}>
+          <p>Obrigado pelo seu feedback! ❤️</p>
+          <small style={{ fontSize: '0.8rem', opacity: 0.8 }}>Sua opinião é muito importante para nós.</small>
+        </div>
+      )}
+
       <main className={styles.main}>
         <Hero slides={heroSlides} autoplayInterval={5000} />
         <SimulacaoSection cards={simulacaoCards} />
@@ -109,12 +137,20 @@ export default function Home() {
         <BancosParceiros />
         <FeedbackSection
           feedbacks={feedbacks}
-          currentUserId={userId} // Agora passa a string diretamente
+          currentUserId={userId}
           onSubmit={handleSubmitFeedback}
           onDelete={handleDeleteFeedback}
         />
       </main>
       <Footer />
+
+      {/* Estilo simples para a animação de entrada */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translate(-50%, -60%); }
+          to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+      `}</style>
     </div>
   );
 }
