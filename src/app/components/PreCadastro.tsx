@@ -371,11 +371,13 @@ export default function PreCadastro() {
                       required
                     >
                       <option value="">Selecione</option>
-                      <option value="imovel">Imóvel</option>
-                      <option value="veiculo">Veículo</option>
-                      <option value="moto">Moto</option>
-                      <option value="servicos">Serviços</option>
-                      <option value="outro">Outro</option>
+                      <option value="Antecipação do FGTS">Antecipação do FGTS</option>
+                      <option value="Crédito Consignado">Crédito Consignado</option>
+                      <option value="Crédito do Trabalhador">Crédito do Trabalhador</option>
+                      <option value="Empréstimo com Débito na Conta de Energia">Empréstimo com Débito na Conta de Energia</option>
+                      <option value="Empréstimo no Cartão de Crédito">Empréstimo no Cartão de Crédito</option>
+                      <option value="Financiamento de Veículos">Financiamento de Veículos</option>
+                      <option value="Crédito com Garantia de Veículo">Crédito com Garantia de Veículo</option>
                     </select>
                   </div>
                   <div className={styles.fieldGroup}>
@@ -388,10 +390,15 @@ export default function PreCadastro() {
                       required
                     >
                       <option value="">Selecione</option>
-                      <option value="ate50k">Até R$ 50.000</option>
-                      <option value="50k100k">R$ 50.000 – R$ 100.000</option>
-                      <option value="100k200k">R$ 100.000 – R$ 200.000</option>
-                      <option value="200k500k">R$ 200.000 – R$ 500.000</option>
+                      <option value="2k">R$ 2.000</option>
+                      <option value="5k">R$ 5.000</option>
+                      <option value="10k">R$ 10.000</option>
+                      <option value="15k">R$ 15.000</option>
+                      <option value="20k">R$ 20.000</option>
+                      <option value="30k">R$ 30.000</option>
+                      <option value="40k">R$ 40.000</option>
+                      <option value="50katé100k">R$ 50.000 até R$ 100.000</option>
+                      <option value="100katé500k">R$ 100.000 até R$ 500.000</option>
                       <option value="acima500k">Acima de R$ 500.000</option>
                     </select>
                   </div>
@@ -405,12 +412,14 @@ export default function PreCadastro() {
                       required
                     >
                       <option value="">Selecione</option>
+                      <option value="11">11 meses</option>
                       <option value="24">24 meses</option>
-                      <option value="36">36 meses</option>
-                      <option value="48">48 meses</option>
+                      <option value="46">46 meses</option>
+                      <option value="58">58 meses</option>
                       <option value="60">60 meses</option>
                       <option value="72">72 meses</option>
                       <option value="84">84 meses</option>
+                      <option value="96">96 meses</option>
                     </select>
                   </div>
                   <div className={styles.fieldGroup}>
