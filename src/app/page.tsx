@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { v4 as uuidv4 } from "uuid";
 import { FaUserPlus, FaWhatsapp, FaFileContract, FaCalculator } from "react-icons/fa";
 
 // Componentes
@@ -14,7 +13,6 @@ import FeedbackSection from "./components/FeedbackSection";
 import BancosParceiros from "./components/BancosParceiros";
 import Footer from "./components/Footer";
 
-
 import styles from "./page.module.css";
 
 interface Feedback {
@@ -22,61 +20,42 @@ interface Feedback {
   name: string;
   email: string;
   message: string;
-  user_id: string;
+  user_id: string; // Mantido como string para evitar conflitos no Front
   created_at: string;
 }
 
 export default function Home() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [userId, setUserId] = useState<string>("1"); // Estado inicial como string
 
-  // Scroll automático quando chega de outra página com hash (ex: /#simulacao)
+  // Endpoint correto do seu backend
+  const API_URL = "http://localhost:3001/feedbacks";
+
+  // 1. Gerenciamento de Identidade do Usuário
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const tryScroll = (attempts = 0) => {
-      const el = document.querySelector(hash);
-      if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
-      } else if (attempts < 10) {
-        setTimeout(() => tryScroll(attempts + 1), 150);
-      }
-    };
-    tryScroll();
+    let savedId = Cookies.get("userId");
+    if (!savedId) {
+      savedId = "1"; 
+      Cookies.set("userId", savedId, { expires: 365 });
+    }
+    // CORREÇÃO: Removido o parseInt para manter como string
+    setUserId(savedId);
   }, []);
 
-  // Gera ou pega UserID
-  let userId = Cookies.get("userId");
-  if (!userId) {
-    userId = uuidv4();
-    Cookies.set("userId", userId, { expires: 365 });
-  }
-
-  const API_URL = "http://localhost:3001";
-
-  // Busca feedbacks do backend
+  // 2. Busca feedbacks do backend (GET)
   useEffect(() => {
     fetch(API_URL)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
           setFeedbacks(data);
-        } else {
-          console.error("Resposta da API não é um array:", data);
-          setFeedbacks([]);
         }
       })
-      .catch((err) => {
-        console.error("Erro ao buscar feedbacks:", err);
-        setFeedbacks([]);
-      });
+      .catch((err) => console.error("Erro ao buscar feedbacks:", err));
   }, []);
 
-  // Handler para enviar feedback
-  const handleSubmitFeedback = async (
-    name: string,
-    email: string,
-    message: string
-  ) => {
+  // 3. Enviar feedback (POST)
+  const handleSubmitFeedback = async (name: string, email: string, message: string) => {
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -86,16 +65,15 @@ export default function Home() {
 
       if (res.ok) {
         const newFb = await res.json();
-        setFeedbacks([newFb, ...feedbacks]);
-      } else {
-        console.error("Erro ao enviar feedback");
+        setFeedbacks((prev) => [newFb, ...prev]);
+        alert("Feedback enviado com sucesso!");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Erro ao enviar:", err);
     }
   };
 
-  // Handler para deletar feedback
+  // 4. Deletar feedback (DELETE)
   const handleDeleteFeedback = async (id: number) => {
     try {
       const res = await fetch(`${API_URL}/${id}`, {
@@ -105,78 +83,37 @@ export default function Home() {
       });
 
       if (res.ok) {
-        setFeedbacks(feedbacks.filter((fb) => fb.id !== id));
-      } else {
-        console.error("Erro ao deletar feedback");
+        setFeedbacks((prev) => prev.filter((fb) => fb.id !== id));
       }
     } catch (err) {
-      console.error(err);
+      console.error("Erro ao deletar:", err);
     }
   };
 
-  // Slides do Hero
-  const heroSlides = [
-    { image: "/Banner1.webp" },
-    { image: "/Banner2.webp" },
-    { image: "/Banner3.webp" },
-    { image: "/Banner4.webp" },
-  ];
-
-  // Cards de Simulação
+  // Configurações visuais (Mantidas)
+  const heroSlides = [{ image: "/Banner1.webp" }, { image: "/Banner2.webp" }, { image: "/Banner3.webp" }, { image: "/Banner4.webp" }];
   const simulacaoCards = [
-    {
-      title: "Pré-Cadastro",
-      description: "Comece seu cadastro rapidamente e garanta sua análise inicial.",
-      icon: <FaUserPlus size={40} />,
-      href: "/precadastro",
-    },
-    {
-      title: "Simulação",
-      description: "Simule seu crédito agora e descubra as melhores condições para você.",
-      icon: <FaCalculator size={40} />,
-      href: "/simulacao",
-    },
-    {
-      title: "Entre em contato",
-      description: "Fale conosco via WhatsApp e tire todas as suas dúvidas.",
-      icon: <FaWhatsapp size={40} />,
-      href: "https://api.whatsapp.com/send?phone=5514998471839&text=Ol%C3%A1,%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es!",
-    },
-    {
-      title: "Autocontratação",
-      description: "Contrate seu empréstimo online de forma rápida e segura.",
-      icon: <FaFileContract size={40} />,
-      href: "https://auto-contratacao.nossafintech.com.br/home/RVFrUXY1cXozaHM1V1R0ZEF4M1FPbS9pNExYU3Bocm5LWHBCZmVORndMbVgxYW8vbHhTN0VLbW1ycTR3eFFGWmk2eXN0TUlxTXlqTjM1VTBPR21Zb1E9PQ==",
-    },
+    { title: "Pré-Cadastro", description: "Comece seu cadastro rapidamente.", icon: <FaUserPlus size={40} />, href: "/precadastro" },
+    { title: "Simulação", description: "Simule seu crédito agora.", icon: <FaCalculator size={40} />, href: "/simulacao" },
+    { title: "WhatsApp", description: "Fale conosco.", icon: <FaWhatsapp size={40} />, href: "https://wa.me/5514998471839" },
+    { title: "Contratação", description: "Contrate online.", icon: <FaFileContract size={40} />, href: "#" },
   ];
 
   return (
     <div className={styles.page}>
       <Navbar />
-      
       <main className={styles.main}>
-        {/* Hero Section */}
         <Hero slides={heroSlides} autoplayInterval={5000} />
-
-        {/* Simulação Section */}
         <SimulacaoSection cards={simulacaoCards} />
-
-        {/* Sobre Nós Section */}
         <SobreSection />
-
-        {/* Bancos Parceiros Section */}
         <BancosParceiros />
-
-        {/* Feedback Section */}
         <FeedbackSection
           feedbacks={feedbacks}
-          currentUserId={userId || ""}
+          currentUserId={userId} // Agora passa a string diretamente
           onSubmit={handleSubmitFeedback}
           onDelete={handleDeleteFeedback}
         />
       </main>
-
-      {/* Footer */}
       <Footer />
     </div>
   );
