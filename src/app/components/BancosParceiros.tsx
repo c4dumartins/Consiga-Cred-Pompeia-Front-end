@@ -64,11 +64,19 @@ const bancos: Banco[] = [
   {
     id: 7,
     nome: 'Facta',
-    cor: '#00A859',
-    corSecundaria: '#008847',
+    cor: '#FFFFFF', 
+    corSecundaria: '#F5F5F5', 
     logo: '/fracta.png',
     descricao: 'Financeira especializada em crédito consignado e soluções de empréstimo para servidores públicos e aposentados.',
   },
+  {
+    id: 8,
+    nome: 'iCred',
+    cor: '#00A859',
+    corSecundaria: '#008847',
+    logo: '/icred.png',
+    descricao: 'Fintech focada em desburocratizar o crédito consignado e antecipação de FGTS com processos 100% digitais e rápidos.',
+  }
 ];
 
 export default function BancosParceiros() {
