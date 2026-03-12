@@ -18,7 +18,7 @@ const bancos: Banco[] = [
     nome: 'Safra',
     cor: '#F37021',
     corSecundaria: '#D35E1A',
-    logo: 'https://img.logo.dev/safra.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/bancosafra.webp',
     descricao: 'Banco privado brasileiro focado em atendimento personalizado e soluções financeiras exclusivas para alta renda.',
   },
   {
@@ -26,7 +26,7 @@ const bancos: Banco[] = [
     nome: 'Caixa',
     cor: '#005CA9',
     corSecundaria: '#003D73',
-    logo: 'https://img.logo.dev/caixa.gov.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/caixa.png',
     descricao: 'Maior banco público do Brasil, líder em crédito imobiliário e programas sociais do governo federal.',
   },
   {
@@ -34,7 +34,7 @@ const bancos: Banco[] = [
     nome: 'Santander',
     cor: '#EC0000',
     corSecundaria: '#C00000',
-    logo: 'https://img.logo.dev/santander.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/santander.png',
     descricao: 'Banco internacional com forte presença no Brasil, oferecendo produtos diversificados para pessoas e empresas.',
   },
   {
@@ -42,7 +42,7 @@ const bancos: Banco[] = [
     nome: 'Banco do Brasil',
     cor: '#F9D000',
     corSecundaria: '#D4B800',
-    logo: 'https://img.logo.dev/bb.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/bancobrasil.png',
     descricao: 'Instituição financeira mais antiga do país, com ampla capilaridade e soluções completas para todos os públicos.',
   },
   {
@@ -50,7 +50,7 @@ const bancos: Banco[] = [
     nome: 'Bradesco',
     cor: '#CC092F',
     corSecundaria: '#A00726',
-    logo: 'https://img.logo.dev/bradesco.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/bradesco.png',
     descricao: 'Um dos maiores bancos privados do Brasil, com forte atuação em seguros, capitalização e previdência.',
   },
   {
@@ -58,7 +58,7 @@ const bancos: Banco[] = [
     nome: 'Itaú',
     cor: '#FF6500',
     corSecundaria: '#E65A00',
-    logo: 'https://img.logo.dev/itau.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/itau.png',
     descricao: 'Maior banco privado da América Latina, referência em inovação digital e atendimento multicanal.',
   },
   {
@@ -66,7 +66,7 @@ const bancos: Banco[] = [
     nome: 'Facta',
     cor: '#00A859',
     corSecundaria: '#008847',
-    logo: 'https://img.logo.dev/factafinanceira.com.br?token=pk_X-1ZO13GSgeOoUrIuJ6BeQ',
+    logo: '/fracta.png',
     descricao: 'Financeira especializada em crédito consignado e soluções de empréstimo para servidores públicos e aposentados.',
   },
 ];
