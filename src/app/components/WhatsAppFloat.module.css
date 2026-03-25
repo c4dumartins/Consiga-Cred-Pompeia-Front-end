@@ -1,0 +1,152 @@
+/* ============================================================
+   WHATSAPP FLOAT — Botão fixo que acompanha o scroll
+   ============================================================ */
+
+.btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 20px 14px 16px;
+  border-radius: 50px;
+
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: 0.01em;
+
+  box-shadow:
+    0 8px 32px rgba(37, 211, 102, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+
+  /* Escondido por padrão — aparece com scroll */
+  opacity: 0;
+  transform: translateY(24px) scale(0.9);
+  pointer-events: none;
+
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+
+  /* Overflow para o anel de pulse ficar contido */
+  overflow: visible;
+}
+
+/* Visível após scroll */
+.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Hover */
+.btn:hover {
+  background: linear-gradient(135deg, #2be574 0%, #1aad6b 100%);
+  box-shadow:
+    0 14px 44px rgba(37, 211, 102, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px) scale(1.04);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* ── Ícone ── */
+.icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+}
+
+/* ── Label ── */
+.label {
+  white-space: nowrap;
+}
+
+/* ── Anel animado de pulse ── */
+.ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50px;
+  border: 3px solid rgba(37, 211, 102, 0.55);
+  animation: ringPulse 1.8s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+/* ── Pulse no próprio botão ── */
+.pulse {
+  animation: btnPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+  0%, 100% {
+    box-shadow:
+      0 8px 32px rgba(37, 211, 102, 0.45),
+      0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 8px 40px rgba(37, 211, 102, 0.7),
+      0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ── Responsivo ── */
+@media (max-width: 600px) {
+  .btn {
+    bottom: 20px;
+    right: 20px;
+    padding: 13px 16px 13px 14px;
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  .label {
+    /* Mostra o label mesmo no mobile, mas reduz se necessário */
+    font-size: 0.82rem;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 360px) {
+  /* Em telas muito pequenas, esconde o label e vira só ícone */
+  .label {
+    display: none;
+  }
+
+  .btn {
+    padding: 14px;
+    border-radius: 50%;
+  }
+}

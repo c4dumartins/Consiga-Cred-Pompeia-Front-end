@@ -3,6 +3,44 @@
 import Image from "next/image";
 import styles from "./SobreSection.module.css";
 
+const missao = [
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 8V12L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    titulo: "Missão",
+    texto: "Solucionamos problemas financeiros, possibilitando a realização de sonhos com ética e transparência.",
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    titulo: "Propósito",
+    texto: "Existimos para transformar vidas trazendo a liberdade financeira e contribuindo para uma sociedade próspera e consciente.",
+  },
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+      </svg>
+    ),
+    titulo: "Visão",
+    texto: "Ser a principal referência em soluções de crédito da nossa região, reconhecida pela confiança e excelência no atendimento.",
+  },
+];
+
+const valores = [
+  "Honestidade", "Responsabilidade", "Proatividade", "Otimismo",
+  "Empatia", "Criatividade", "Ética", "Transparência",
+  "Excelência no Atendimento", "Coragem", "Gratidão", "Inovação",
+];
+
 export default function SobreSection() {
   return (
     <section id="sobre" className={styles.section}>
@@ -24,6 +62,34 @@ export default function SobreSection() {
               para garantir que você tenha acesso às melhores taxas e condições do mercado,
               sempre com total segurança e transparência.
             </p>
+
+            {/* ── MISSÃO / PROPÓSITO / VISÃO ── */}
+            <div className={styles.mvvGrid}>
+              {missao.map((item) => (
+                <div key={item.titulo} className={styles.mvvCard}>
+                  <div className={styles.mvvIcon}>{item.icon}</div>
+                  <div>
+                    <h4 className={styles.mvvTitulo}>{item.titulo}</h4>
+                    <p className={styles.mvvTexto}>{item.texto}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* ── VALORES ── */}
+            <div className={styles.valoresWrapper}>
+              <h4 className={styles.valoresTitulo}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
+                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Valores
+              </h4>
+              <div className={styles.valoresTags}>
+                {valores.map((v) => (
+                  <span key={v} className={styles.valorTag}>{v}</span>
+                ))}
+              </div>
+            </div>
 
             {/* Stats Cards com Ícones */}
             <div className={styles.stats}>
@@ -93,7 +159,6 @@ export default function SobreSection() {
           {/* Área de Imagem */}
           <div className={styles.imageWrapper}>
             <div className={styles.imageContainer}>
-              {/* Elementos decorativos */}
               <div className={styles.imageDecor1} />
               <div className={styles.imageDecor2} />
               <div className={styles.imageFrame}>
@@ -104,7 +169,6 @@ export default function SobreSection() {
                   className={styles.image}
                   priority
                 />
-                {/* Placeholder caso não tenha imagem ainda */}
                 <div className={styles.imagePlaceholder}>
                   <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
                     <path d="M4 16L8.586 11.414C9.367 10.633 10.633 10.633 11.414 11.414L16 16M14 14L15.586 12.414C16.367 11.633 17.633 11.633 18.414 12.414L20 14M14 8H14.01M6 20H18C19.105 20 20 19.105 20 18V6C20 4.895 19.105 4 18 4H6C4.895 4 4 4.895 4 6V18C4 19.105 4.895 20 6 20Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -117,7 +181,6 @@ export default function SobreSection() {
           </div>
         </div>
 
-        {/* Background Elements */}
         <div className={styles.bgGrid} />
       </div>
     </section>
