@@ -195,25 +195,28 @@
   }
 }
 
-/* ── MOBILE: imagem inteira, sem corte ── */
+/* ── TABLET / MOBILE ── */
 @media (max-width: 768px) {
   .hero {
     /*
-     * Trick do padding-top para criar altura proporcional à imagem.
-     * padding-top: 56.25% = proporção 16:9 (ex: banner 1920×1080)
-     * Ajuste conforme a proporção real dos seus banners:
-     *   2:1  → 50%
-     *   4:3  → 75%
-     *   16:9 → 56.25%
+     * Empurra o hero para baixo da navbar fixa (~80px).
+     * margin-top compensa o fixed header.
+     * height: auto + padding-top cria proporção 16:9 sem cortar.
      */
+    margin-top: 80px;
     height: auto;
     min-height: unset;
     max-height: unset;
+    /* 
+     * padding-top relativo à largura = proporção da imagem.
+     * Ajuste aqui conforme seus banners:
+     *   16:9  → 56.25%
+     *    2:1  → 50%
+     *    4:3  → 75%
+     */
     padding-top: 56.25%;
-    /* O hero vira um bloco com altura proporcional à largura */
   }
 
-  /* O slidesContainer precisa preencher o espaço criado pelo padding */
   .slidesContainer {
     position: absolute;
     top: 0;
@@ -223,7 +226,7 @@
   }
 
   .slide {
-    /* contain = mostra a imagem INTEIRA sem cortar nada */
+    /* contain = imagem inteira, sem crop */
     background-size: contain;
     background-position: center center;
   }
@@ -258,6 +261,7 @@
 
 @media (max-width: 480px) {
   .hero {
+    margin-top: 72px; /* navbar um pouco menor em telas pequenas */
     padding-top: 56.25%;
   }
 
@@ -274,6 +278,7 @@
 
 @media (max-width: 360px) {
   .hero {
+    margin-top: 68px;
     padding-top: 56.25%;
   }
 }
