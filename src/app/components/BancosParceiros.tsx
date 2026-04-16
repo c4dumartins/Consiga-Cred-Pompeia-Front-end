@@ -94,7 +94,7 @@ export default function BancosParceiros() {
   };
 
   return (
-    <section className={styles.section}>
+    <section id="bancosparceiros" className={styles.section}>
       <div className={styles.bgGlow1} aria-hidden />
       <div className={styles.bgGlow2} aria-hidden />
       <div className={styles.bgGrid} aria-hidden />
