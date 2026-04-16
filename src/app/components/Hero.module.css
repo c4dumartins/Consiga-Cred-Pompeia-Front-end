@@ -1,7 +1,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 100svh; /* svh para mobile (evita barra do browser cortar) */
+  height: 100svh;
   min-height: 500px;
   max-height: 900px;
   overflow: hidden;
@@ -41,9 +41,9 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.3) 0%,
-    rgba(0, 0, 0, 0.1) 50%,
-    rgba(0, 0, 0, 0.6) 100%
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.5) 100%
   );
 }
 
@@ -189,68 +189,48 @@
 
 /* ── RESPONSIVO ── */
 
-/* Tablet grande */
 @media (max-width: 1024px) {
   .hero {
     max-height: 700px;
   }
 }
 
-/* Tablet */
+/* ── MOBILE: imagem inteira, sem corte ── */
 @media (max-width: 768px) {
   .hero {
-    height: 100svh;
-    min-height: 480px;
-    max-height: 700px;
+    /*
+     * Trick do padding-top para criar altura proporcional à imagem.
+     * padding-top: 56.25% = proporção 16:9 (ex: banner 1920×1080)
+     * Ajuste conforme a proporção real dos seus banners:
+     *   2:1  → 50%
+     *   4:3  → 75%
+     *   16:9 → 56.25%
+     */
+    height: auto;
+    min-height: unset;
+    max-height: unset;
+    padding-top: 56.25%;
+    /* O hero vira um bloco com altura proporcional à largura */
   }
 
-  /* Foca no topo/centro das imagens em portrait */
-  .slide {
-    background-position: center top;
-  }
-
-  .navigation {
-    bottom: 80px;
-    right: 20px;
-  }
-
-  .navBtn {
-    width: 44px;
-    height: 44px;
-  }
-
-  .indicators {
-    bottom: 24px;
-  }
-
-  .scrollIndicator {
-    left: 20px;
-    bottom: 24px;
-  }
-
-  .scrollIndicator span {
-    font-size: 10px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  .hero {
-    height: 100svh;
-    min-height: 420px;
-    max-height: 650px;
+  /* O slidesContainer precisa preencher o espaço criado pelo padding */
+  .slidesContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 
   .slide {
-    /* Em mobile portrait a imagem não deve cortar os lados */
-    background-size: cover;
+    /* contain = mostra a imagem INTEIRA sem cortar nada */
+    background-size: contain;
     background-position: center center;
   }
 
   .navigation {
-    bottom: 72px;
-    right: 16px;
-    gap: 8px;
+    bottom: 10px;
+    right: 10px;
   }
 
   .navBtn {
@@ -258,14 +238,8 @@
     height: 40px;
   }
 
-  .navBtn svg {
-    width: 18px;
-    height: 18px;
-  }
-
   .indicators {
-    bottom: 20px;
-    gap: 8px;
+    bottom: 8px;
   }
 
   .indicator {
@@ -274,18 +248,32 @@
   }
 
   .indicatorActive {
-    width: 28px;
+    width: 22px;
   }
 
-  /* Esconde o scroll indicator em telas muito pequenas */
   .scrollIndicator {
     display: none;
   }
 }
 
-/* Mobile muito pequeno */
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 56.25%;
+  }
+
+  .navBtn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navBtn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
 @media (max-width: 360px) {
   .hero {
-    min-height: 380px;
+    padding-top: 56.25%;
   }
 }
