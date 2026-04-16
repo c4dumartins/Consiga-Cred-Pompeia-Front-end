@@ -89,10 +89,10 @@ export default function Home() {
   };
 
   const heroSlides = [
-    { image: "/Banner1.webp" },
-    { image: "/Banner2.webp" },
-    { image: "/Banner3.webp" },
-    { image: "/Banner4.webp" },
+    { image: "/Banner1.jpeg" },
+    { image: "/Banner2.jpeg" },
+    { image: "/Banner3.jpeg" },
+    { image: "/Banner4.jpeg" },
   ];
 
   const simulacaoCards = [

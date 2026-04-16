@@ -54,17 +54,23 @@ export default function Navbar() {
         {/* Menu Desktop */}
         <ul className={styles.menuDesktop}>
           <li><Link href="/">Home</Link></li>
+          <li>
+            <a href="/#sobre" onClick={(e) => handleSection(e, "#sobre")}>
+              Sobre Nós
+            </a>
+          </li>
+          <li>
+            <a href="/#bancosparceiros" onClick={(e) => handleSection(e, "#bancosparceiros")}>
+              Parceiros
+            </a>
+          </li>
           <li><Link href="/produtos">Produtos</Link></li>
           <li>
             <a href="/#simulacao" onClick={(e) => handleSection(e, "#simulacao")}>
               Simulação
             </a>
           </li>
-          <li>
-            <a href="/#sobre" onClick={(e) => handleSection(e, "#sobre")}>
-              Sobre Nós
-            </a>
-          </li>
+        
           <li>
             <a href="/#feedback" onClick={(e) => handleSection(e, "#feedback")}>
               Feedbacks
@@ -103,10 +109,11 @@ export default function Navbar() {
 
         <nav className={styles.sidebarNav}>
           <Link href="/" onClick={() => setOpen(false)}>Home</Link>
+          <a href="/#sobre" onClick={(e) => handleSection(e, "#sobre")}>Sobre nós</a>
           <Link href="/produtos" onClick={() => setOpen(false)}>Produtos</Link>
           <a href="/#simulacao" onClick={(e) => handleSection(e, "#simulacao")}>Simulação</a>
-          <a href="/#sobre" onClick={(e) => handleSection(e, "#sobre")}>Sobre nós</a>
           <a href="/#feedback" onClick={(e) => handleSection(e, "#feedback")}>Feedbacks</a>
+          <a href="#bancosparceiros" onClick={(e) => handleSection(e, "#bancosparceiros")}>Parceiros</a>
         </nav>
       </aside>
     </>
