@@ -20,7 +20,7 @@
   align-items: start;
 }
 
-/* Conteúdo */
+/* ── COLUNA ESQUERDA ── */
 .content {
   animation: fadeInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -58,104 +58,6 @@
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.8;
   margin-bottom: 24px;
-}
-
-/* ── MVV (Missão / Propósito / Visão) ── */
-.mvvGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 32px 0 28px;
-}
-
-.mvvCard {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 18px 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-left: 3px solid #e30613;
-  border-radius: 14px;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mvvCard:hover {
-  background: rgba(227, 6, 19, 0.05);
-  transform: translateX(4px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
-}
-
-.mvvIcon {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(227, 6, 19, 0.1);
-  border: 1px solid rgba(227, 6, 19, 0.25);
-  border-radius: 10px;
-  color: #e30613;
-  margin-top: 2px;
-}
-
-.mvvTitulo {
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #e30613;
-  margin: 0 0 5px;
-}
-
-.mvvTexto {
-  font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.72);
-  line-height: 1.65;
-  margin: 0;
-}
-
-/* ── Valores ── */
-.valoresWrapper {
-  margin-bottom: 36px;
-}
-
-.valoresTitulo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #e30613;
-  margin-bottom: 14px;
-}
-
-.valoresTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.valorTag {
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
-  transition: all 0.25s ease;
-  cursor: default;
-}
-
-.valorTag:hover {
-  background: rgba(227, 6, 19, 0.1);
-  border-color: rgba(227, 6, 19, 0.35);
-  color: #fff;
-  transform: translateY(-2px);
 }
 
 /* Stats Cards */
@@ -378,20 +280,24 @@
   transform: translateY(-2px);
 }
 
+/* ── COLUNA DIREITA ── */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  animation: fadeInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Área de Imagem */
 .imageWrapper {
   position: relative;
-  animation: fadeInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Sticky para acompanhar o scroll do conteúdo longo */
-  position: sticky;
-  top: 120px;
 }
 
 .imageContainer {
   position: relative;
   width: 100%;
   aspect-ratio: 4/3;
-  max-height: 500px;
+  max-height: 420px;
 }
 
 .imageFrame {
@@ -467,6 +373,104 @@
   animation: pulse 3s infinite 0.5s;
 }
 
+/* ── MVV (Missão / Propósito / Visão) ── */
+.mvvGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mvvCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-left: 3px solid #e30613;
+  border-radius: 14px;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mvvCard:hover {
+  background: rgba(227, 6, 19, 0.05);
+  transform: translateX(4px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+.mvvIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.25);
+  border-radius: 10px;
+  color: #e30613;
+  margin-top: 2px;
+}
+
+.mvvTitulo {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e30613;
+  margin: 0 0 5px;
+}
+
+.mvvTexto {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Valores ── */
+.valoresWrapper {
+  /* sem margin extra — gap do rightColumn controla */
+}
+
+.valoresTitulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e30613;
+  margin-bottom: 14px;
+}
+
+.valoresTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.valorTag {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.valorTag:hover {
+  background: rgba(227, 6, 19, 0.1);
+  border-color: rgba(227, 6, 19, 0.35);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Background grid */
 .bgGrid {
   position: absolute;
   inset: 0;
@@ -505,8 +509,7 @@
   .grid { gap: 60px; }
   .stats { gap: 20px; }
   .statCard { padding: 28px 20px; }
-  .imageContainer { max-height: 450px; }
-  .imageWrapper { position: relative; top: auto; }
+  .imageContainer { max-height: 380px; }
 }
 
 @media (max-width: 768px) {
@@ -517,8 +520,7 @@
   .statNumber { font-size: 2.5rem; }
   .cta { flex-direction: column; }
   .ctaButton, .ctaButtonSecondary { width: 100%; justify-content: center; }
-  .imageContainer { max-height: 400px; }
+  .imageContainer { max-height: 320px; }
   .imageDecor1, .imageDecor2 { display: none; }
-  .imageWrapper { position: relative; top: auto; }
   .mvvCard { flex-direction: column; gap: 10px; }
 }
