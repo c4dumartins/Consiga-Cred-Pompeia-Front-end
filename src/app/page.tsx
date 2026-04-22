@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { FaUserPlus, FaWhatsapp, FaFileContract, FaCalculator } from "react-icons/fa";
+import { FaWhatsapp, FaFileContract, FaCalculator } from "react-icons/fa";
 
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -79,7 +79,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Linha topo */}
         <div style={{
           position: "absolute",
           top: 0, left: 0, right: 0,
@@ -88,7 +87,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
           borderRadius: "24px 24px 0 0",
         }} />
 
-        {/* Header */}
         <div style={{ marginBottom: "32px", paddingRight: "40px" }}>
           <div style={{
             display: "inline-flex",
@@ -119,7 +117,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
           </p>
         </div>
 
-        {/* Botão fechar */}
         <button
           onClick={onClose}
           style={{
@@ -152,7 +149,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
           ×
         </button>
 
-        {/* Opções */}
         <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           {opcoes.map((op) => (
             <a
@@ -189,7 +185,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
                 el.style.boxShadow = "none";
               }}
             >
-              {/* Ícone */}
               <div style={{
                 width: "56px", height: "56px",
                 flexShrink: 0,
@@ -203,8 +198,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
               }}>
                 {op.icone}
               </div>
-
-              {/* Texto */}
               <div style={{ flex: 1 }}>
                 <p style={{ margin: "0 0 4px", fontWeight: 700, fontSize: "1rem", color: "#fff" }}>
                   {op.titulo}
@@ -213,8 +206,6 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
                   {op.descricao}
                 </p>
               </div>
-
-              {/* Seta */}
               <div style={{ color: "#e30613", flexShrink: 0 }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -313,23 +304,36 @@ export default function Home() {
     { image: "/Banner4.jpeg" },
   ];
 
+  // ── CARDS: Pré-Cadastro e Simulação unificados em UM único card "Simulação"
   const simulacaoCards = [
-    { title: "Pré-Cadastro", description: "Comece seu cadastro rapidamente.", icon: <FaUserPlus size={40} />, href: "/precadastro" },
-    { title: "Simulação", description: "Simule seu crédito agora.", icon: <FaCalculator size={40} />, href: "/simulacao" },
-    { title: "WhatsApp", description: "Fale conosco.", icon: <FaWhatsapp size={40} />, href: "https://wa.me/5514998471839" },
-    { title: "Contratação", description: "Contrate online.", icon: <FaFileContract size={40} />, href: "#contratacao" },
+    {
+      title: "Simulação",
+      description: "Simule seu crédito agora.",
+      icon: <FaCalculator size={40} />,
+      href: "/precadastro",
+    },
+    {
+      title: "WhatsApp",
+      description: "Fale conosco.",
+      icon: <FaWhatsapp size={40} />,
+      href: "https://wa.me/5514998471839",
+    },
+    {
+      title: "Contratação",
+      description: "Contrate online.",
+      icon: <FaFileContract size={40} />,
+      href: "#contratacao",
+    },
   ];
 
   return (
     <div className={styles.page}>
       <Navbar />
 
-      {/* Modal de Contratação */}
       {showContratacaoModal && (
         <ContratacaoModal onClose={() => setShowContratacaoModal(false)} />
       )}
 
-      {/* Toast de Sucesso */}
       {showSuccessMessage && (
         <div style={{
           position: "fixed",
