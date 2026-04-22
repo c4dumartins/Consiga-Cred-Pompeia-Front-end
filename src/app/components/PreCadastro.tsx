@@ -1,22 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styles from "./PreCadastro.module.css";
-import { FaCalculator, FaCheckCircle, FaArrowRight, FaArrowLeft, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaCalculator,
+  FaCheckCircle,
+  FaArrowRight,
+  FaArrowLeft,
+  FaExclamationCircle,
+} from "react-icons/fa";
 
 interface FormData {
-  nome: string; cpf: string; dataNascimento: string; telefone: string; email: string;
-  cep: string; logradouro: string; numero: string; complemento: string;
-  bairro: string; cidade: string; estado: string;
-  modalidade: string; renda: string;
-  comoConheceu: string; mensagem: string;
+  nome: string;
+  cpf: string;
+  dataNascimento: string;
+  telefone: string;
+  email: string;
+  cep: string;
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
+  modalidade: string;
+  renda: string;
+  comoConheceu: string;
+  mensagem: string;
 }
 
 const initialForm: FormData = {
-  nome: "", cpf: "", dataNascimento: "", telefone: "", email: "",
-  cep: "", logradouro: "", numero: "", complemento: "", bairro: "", cidade: "", estado: "",
-  modalidade: "", renda: "",
-  comoConheceu: "", mensagem: "",
+  nome: "",
+  cpf: "",
+  dataNascimento: "",
+  telefone: "",
+  email: "",
+  cep: "",
+  logradouro: "",
+  numero: "",
+  complemento: "",
+  bairro: "",
+  cidade: "",
+  estado: "",
+  modalidade: "",
+  renda: "",
+  comoConheceu: "",
+  mensagem: "",
 };
 
 const steps = [
@@ -25,7 +54,30 @@ const steps = [
   { label: "Simulação", number: 3 },
 ];
 
-// ── Modalidades (mesmas do simulador + novas) ─────────────────
+// Campos obrigatórios por etapa
+const REQUIRED_BY_STEP: Record<number, (keyof FormData)[]> = {
+  1: ["nome", "cpf", "dataNascimento", "telefone", "email"],
+  2: ["logradouro", "numero", "bairro", "cidade", "estado"],
+  3: ["modalidade", "renda", "comoConheceu"],
+};
+
+const FIELD_LABELS: Partial<Record<keyof FormData, string>> = {
+  nome: "Nome Completo",
+  cpf: "CPF",
+  dataNascimento: "Data de Nascimento",
+  telefone: "Telefone / WhatsApp",
+  email: "E-mail",
+  logradouro: "Logradouro",
+  numero: "Número",
+  bairro: "Bairro",
+  cidade: "Cidade",
+  estado: "Estado",
+  modalidade: "Modalidade",
+  renda: "Renda Líquida",
+  comoConheceu: "Como nos conheceu",
+};
+
+// Modalidades
 type Modalidade = {
   id: string;
   label: string;
@@ -131,15 +183,25 @@ const MODALIDADES: Modalidade[] = [
 
 // ── Máscaras ──────────────────────────────────────────────────
 function maskCPF(v: string) {
-  return v.replace(/\D/g,"").replace(/(\d{3})(\d)/,"$1.$2")
-    .replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d{1,2})$/,"$1-$2").slice(0,14);
+  return v
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+    .slice(0, 14);
 }
 function maskPhone(v: string) {
-  return v.replace(/\D/g,"").replace(/(\d{2})(\d)/,"($1) $2")
-    .replace(/(\d{5})(\d)/,"$1-$2").slice(0,15);
+  return v
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "($1) $2")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .slice(0, 15);
 }
 function maskCEP(v: string) {
-  return v.replace(/\D/g,"").replace(/(\d{5})(\d)/,"$1-$2").slice(0,9);
+  return v
+    .replace(/\D/g, "")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .slice(0, 9);
 }
 function maskMoney(v: string) {
   const digits = v.replace(/\D/g, "");
@@ -150,7 +212,7 @@ function maskMoney(v: string) {
   });
 }
 
-// ── Busca endereço pelo CEP (ViaCEP) ─────────────────────────
+// ── Busca endereço pelo CEP ───────────────────────────────────
 async function buscarCEP(cep: string): Promise<Partial<FormData> | null> {
   const clean = cep.replace(/\D/g, "");
   if (clean.length !== 8) return null;
@@ -164,27 +226,79 @@ async function buscarCEP(cep: string): Promise<Partial<FormData> | null> {
       cidade: data.localidade || "",
       estado: data.uf || "",
     };
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
+// ── Componente principal ──────────────────────────────────────
 export default function PreCadastro() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormData>(initialForm);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [cepLoading, setCepLoading] = useState(false);
 
+  // Refs para focar o primeiro campo com erro
+  const fieldRefs = useRef<Partial<Record<keyof FormData, HTMLElement | null>>>({});
+
+  // ── Validação de uma etapa ──────────────────────────────────
+  function validateStep(targetStep: number): Partial<Record<keyof FormData, string>> {
+    const errors: Partial<Record<keyof FormData, string>> = {};
+    for (const field of REQUIRED_BY_STEP[targetStep]) {
+      if (!form[field] || form[field].toString().trim() === "") {
+        errors[field] = `${FIELD_LABELS[field] ?? field} é obrigatório`;
+      }
+    }
+    return errors;
+  }
+
+  // ── Foca o primeiro campo com erro ─────────────────────────
+  function focusFirstError(errors: Partial<Record<keyof FormData, string>>) {
+    const firstKey = Object.keys(errors)[0] as keyof FormData | undefined;
+    if (!firstKey) return;
+    setTimeout(() => {
+      const el = fieldRefs.current[firstKey];
+      if (el) {
+        el.focus();
+        el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 80);
+  }
+
+  // ── Avançar etapa com validação ─────────────────────────────
+  const handleNext = () => {
+    const errors = validateStep(step);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors((prev) => ({ ...prev, ...errors }));
+      focusFirstError(errors);
+      return;
+    }
+    setFieldErrors({});
+    setStep((s) => s + 1);
+  };
+
+  const handleBack = () => {
+    setStep((s) => s - 1);
+  };
+
+  // ── Handlers de mudança ─────────────────────────────────────
   const handleChange = async (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
+    const key = name as keyof FormData;
     let masked = value;
-    if (name === "cpf")      masked = maskCPF(value);
+
+    if (name === "cpf") masked = maskCPF(value);
     if (name === "telefone") masked = maskPhone(value);
-    if (name === "renda")    masked = maskMoney(value);
+    if (name === "renda") masked = maskMoney(value);
     if (name === "cep") {
       masked = maskCEP(value);
       if (masked.replace(/\D/g, "").length === 8) {
@@ -193,52 +307,116 @@ export default function PreCadastro() {
         setCepLoading(false);
         if (endereco) {
           setForm((prev) => ({ ...prev, cep: masked, ...endereco }));
+          // Limpa erros dos campos preenchidos pelo CEP
+          setFieldErrors((prev) => {
+            const next = { ...prev };
+            (
+              Object.keys(endereco) as (keyof FormData)[]
+            ).forEach((k) => delete next[k]);
+            return next;
+          });
           return;
         }
       }
     }
-    setForm((prev) => ({ ...prev, [name]: masked }));
+
+    setForm((prev) => ({ ...prev, [key]: masked }));
+    // Limpa o erro do campo ao digitar
+    if (fieldErrors[key]) {
+      setFieldErrors((prev) => ({ ...prev, [key]: undefined }));
+    }
   };
 
   const handleModalidadeSelect = (id: string) => {
     setForm((prev) => ({ ...prev, modalidade: id }));
+    if (fieldErrors.modalidade) {
+      setFieldErrors((prev) => ({ ...prev, modalidade: undefined }));
+    }
   };
 
-  const handleNext = () => { if (step < 3) setStep((s) => s + 1); };
-  const handleBack = () => { if (step > 1) setStep((s) => s - 1); };
-
+  // ── Submit ──────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
+    setSubmitError("");
 
+    // Valida todas as etapas antes de enviar
+    let allErrors: Partial<Record<keyof FormData, string>> = {};
+    let firstStepWithError = 0;
+
+    for (let s = 1; s <= 3; s++) {
+      const errs = validateStep(s);
+      if (Object.keys(errs).length > 0) {
+        allErrors = { ...allErrors, ...errs };
+        if (firstStepWithError === 0) firstStepWithError = s;
+      }
+    }
+
+    if (Object.keys(allErrors).length > 0) {
+      setFieldErrors(allErrors);
+      setStep(firstStepWithError);
+      focusFirstError(
+        Object.fromEntries(
+          Object.entries(allErrors).filter(
+            ([k]) =>
+              REQUIRED_BY_STEP[firstStepWithError].includes(
+                k as keyof FormData
+              )
+          )
+        ) as Partial<Record<keyof FormData, string>>
+      );
+      return;
+    }
+
+    setLoading(true);
     try {
       const res = await fetch(`${API_URL}/precadastro`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Erro ao enviar cadastro.");
-
       setSubmitted(true);
     } catch (err: unknown) {
-      const message = err instanceof Error
-        ? err.message
-        : "Erro inesperado. Por favor, tente novamente.";
-      setError(message);
+      setSubmitError(
+        err instanceof Error
+          ? err.message
+          : "Erro inesperado. Por favor, tente novamente."
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  // ── Tela de Sucesso ──────────────────────────────────────────
+  // ── Helper: props de campo com erro ────────────────────────
+  function inputProps(name: keyof FormData) {
+    return {
+      name,
+      ref: (el: HTMLInputElement | null) => {
+        fieldRefs.current[name] = el;
+      },
+      className: `${styles.input} ${fieldErrors[name] ? styles.inputError : ""}`,
+    };
+  }
+
+  function selectProps(name: keyof FormData) {
+    return {
+      name,
+      ref: (el: HTMLSelectElement | null) => {
+        fieldRefs.current[name] = el;
+      },
+      className: `${styles.input} ${fieldErrors[name] ? styles.inputError : ""}`,
+    };
+  }
+
+  // ── Tela de sucesso ─────────────────────────────────────────
   if (submitted) {
     return (
       <div className={styles.page}>
         <div className={styles.successContainer}>
-          <div className={styles.successIcon}><FaCheckCircle /></div>
+          <div className={styles.successIcon}>
+            <FaCheckCircle />
+          </div>
           <h2 className={styles.successTitle}>Solicitação Enviada!</h2>
           <p className={styles.successText}>
             Em breve você receberá um retorno com a simulação em seu{" "}
@@ -253,11 +431,16 @@ export default function PreCadastro() {
           >
             💬 Falar no WhatsApp <FaArrowRight />
           </a>
-          <br/>
+          <br />
           <button
             className={styles.btnSecondary}
             style={{ marginTop: "12px" }}
-            onClick={() => { setSubmitted(false); setStep(1); setForm(initialForm); }}
+            onClick={() => {
+              setSubmitted(false);
+              setStep(1);
+              setForm(initialForm);
+              setFieldErrors({});
+            }}
           >
             Nova Simulação
           </button>
@@ -266,6 +449,7 @@ export default function PreCadastro() {
     );
   }
 
+  // ── Render ──────────────────────────────────────────────────
   return (
     <div className={styles.page}>
       <div className={styles.bgGlow} />
@@ -274,7 +458,9 @@ export default function PreCadastro() {
       <div className={styles.container}>
         {/* Header */}
         <div className={styles.header}>
-          <div className={styles.iconWrapper}><FaCalculator /></div>
+          <div className={styles.iconWrapper}>
+            <FaCalculator />
+          </div>
           <h1 className={styles.title}>Simulação de Crédito</h1>
           <p className={styles.subtitle}>
             Preencha o formulário abaixo e nossa equipe entrará em contato com
@@ -288,16 +474,28 @@ export default function PreCadastro() {
             <div key={s.number} className={styles.stepWrapper}>
               <div
                 className={`${styles.stepDot} ${
-                  step === s.number ? styles.stepActive : step > s.number ? styles.stepDone : ""
+                  step === s.number
+                    ? styles.stepActive
+                    : step > s.number
+                    ? styles.stepDone
+                    : ""
                 }`}
               >
                 {step > s.number ? <FaCheckCircle /> : s.number}
               </div>
-              <span className={`${styles.stepLabel} ${step === s.number ? styles.stepLabelActive : ""}`}>
+              <span
+                className={`${styles.stepLabel} ${
+                  step === s.number ? styles.stepLabelActive : ""
+                }`}
+              >
                 {s.label}
               </span>
               {i < steps.length - 1 && (
-                <div className={`${styles.stepLine} ${step > s.number ? styles.stepLineDone : ""}`} />
+                <div
+                  className={`${styles.stepLine} ${
+                    step > s.number ? styles.stepLineDone : ""
+                  }`}
+                />
               )}
             </div>
           ))}
@@ -305,102 +503,219 @@ export default function PreCadastro() {
 
         {/* Form Card */}
         <div className={styles.card}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
 
-            {/* STEP 1 — Dados Pessoais */}
+            {/* ── STEP 1 — Dados Pessoais ── */}
             {step === 1 && (
               <div className={styles.formStep}>
                 <h3 className={styles.stepTitle}>Dados Pessoais</h3>
                 <div className={styles.grid2}>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Nome Completo *</label>
-                    <input className={styles.input} type="text" name="nome" value={form.nome}
-                      onChange={handleChange} placeholder="Seu nome completo" required />
+                    <input
+                      {...inputProps("nome")}
+                      type="text"
+                      value={form.nome}
+                      onChange={handleChange}
+                      placeholder="Seu nome completo"
+                    />
+                    {fieldErrors.nome && (
+                      <span className={styles.fieldError}>{fieldErrors.nome}</span>
+                    )}
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>CPF *</label>
-                    <input className={styles.input} type="text" name="cpf" value={form.cpf}
-                      onChange={handleChange} placeholder="000.000.000-00" required />
+                    <input
+                      {...inputProps("cpf")}
+                      type="text"
+                      value={form.cpf}
+                      onChange={handleChange}
+                      placeholder="000.000.000-00"
+                    />
+                    {fieldErrors.cpf && (
+                      <span className={styles.fieldError}>{fieldErrors.cpf}</span>
+                    )}
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Data de Nascimento *</label>
-                    <input className={styles.input} type="date" name="dataNascimento"
-                      value={form.dataNascimento} onChange={handleChange} required />
+                    <input
+                      {...inputProps("dataNascimento")}
+                      type="date"
+                      value={form.dataNascimento}
+                      onChange={handleChange}
+                    />
+                    {fieldErrors.dataNascimento && (
+                      <span className={styles.fieldError}>{fieldErrors.dataNascimento}</span>
+                    )}
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Telefone / WhatsApp *</label>
-                    <input className={styles.input} type="text" name="telefone" value={form.telefone}
-                      onChange={handleChange} placeholder="(00) 00000-0000" required />
+                    <input
+                      {...inputProps("telefone")}
+                      type="text"
+                      value={form.telefone}
+                      onChange={handleChange}
+                      placeholder="(00) 00000-0000"
+                    />
+                    {fieldErrors.telefone && (
+                      <span className={styles.fieldError}>{fieldErrors.telefone}</span>
+                    )}
                   </div>
+
                   <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
                     <label className={styles.label}>E-mail *</label>
-                    <input className={styles.input} type="email" name="email" value={form.email}
-                      onChange={handleChange} placeholder="seu@email.com" required />
+                    <input
+                      {...inputProps("email")}
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="seu@email.com"
+                    />
+                    {fieldErrors.email && (
+                      <span className={styles.fieldError}>{fieldErrors.email}</span>
+                    )}
                   </div>
+
                 </div>
               </div>
             )}
 
-            {/* STEP 2 — Endereço */}
+            {/* ── STEP 2 — Endereço ── */}
             {step === 2 && (
               <div className={styles.formStep}>
                 <h3 className={styles.stepTitle}>Endereço</h3>
                 <div className={styles.grid2}>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>
-                      CEP {cepLoading && <span style={{ color: "#e30613", fontSize: "11px" }}>buscando...</span>}
+                      CEP{" "}
+                      {cepLoading && (
+                        <span style={{ color: "#e30613", fontSize: "11px" }}>
+                          buscando…
+                        </span>
+                      )}
                     </label>
-                    <input className={styles.input} type="text" name="cep" value={form.cep}
-                      onChange={handleChange} placeholder="00000-000" />
+                    <input
+                      name="cep"
+                      ref={(el) => { fieldRefs.current.cep = el; }}
+                      className={styles.input}
+                      type="text"
+                      value={form.cep}
+                      onChange={handleChange}
+                      placeholder="00000-000"
+                    />
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Estado *</label>
-                    <select className={styles.input} name="estado" value={form.estado}
-                      onChange={handleChange} required>
+                    <select
+                      {...selectProps("estado")}
+                      value={form.estado}
+                      onChange={handleChange}
+                    >
                       <option value="">Selecione</option>
-                      {["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA",
-                        "PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"].map((uf) => (
+                      {[
+                        "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA",
+                        "MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN",
+                        "RS","RO","RR","SC","SP","SE","TO",
+                      ].map((uf) => (
                         <option key={uf} value={uf}>{uf}</option>
                       ))}
                     </select>
+                    {fieldErrors.estado && (
+                      <span className={styles.fieldError}>{fieldErrors.estado}</span>
+                    )}
                   </div>
+
                   <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
                     <label className={styles.label}>Logradouro *</label>
-                    <input className={styles.input} type="text" name="logradouro" value={form.logradouro}
-                      onChange={handleChange} placeholder="Rua, Avenida..." required />
+                    <input
+                      {...inputProps("logradouro")}
+                      type="text"
+                      value={form.logradouro}
+                      onChange={handleChange}
+                      placeholder="Rua, Avenida…"
+                    />
+                    {fieldErrors.logradouro && (
+                      <span className={styles.fieldError}>{fieldErrors.logradouro}</span>
+                    )}
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Número *</label>
-                    <input className={styles.input} type="text" name="numero" value={form.numero}
-                      onChange={handleChange} placeholder="Nº" required />
+                    <input
+                      {...inputProps("numero")}
+                      type="text"
+                      value={form.numero}
+                      onChange={handleChange}
+                      placeholder="Nº"
+                    />
+                    {fieldErrors.numero && (
+                      <span className={styles.fieldError}>{fieldErrors.numero}</span>
+                    )}
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Complemento</label>
-                    <input className={styles.input} type="text" name="complemento" value={form.complemento}
-                      onChange={handleChange} placeholder="Apto, Bloco..." />
+                    <input
+                      name="complemento"
+                      ref={(el) => { fieldRefs.current.complemento = el; }}
+                      className={styles.input}
+                      type="text"
+                      value={form.complemento}
+                      onChange={handleChange}
+                      placeholder="Apto, Bloco…"
+                    />
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Bairro *</label>
-                    <input className={styles.input} type="text" name="bairro" value={form.bairro}
-                      onChange={handleChange} placeholder="Bairro" required />
+                    <input
+                      {...inputProps("bairro")}
+                      type="text"
+                      value={form.bairro}
+                      onChange={handleChange}
+                      placeholder="Bairro"
+                    />
+                    {fieldErrors.bairro && (
+                      <span className={styles.fieldError}>{fieldErrors.bairro}</span>
+                    )}
                   </div>
+
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Cidade *</label>
-                    <input className={styles.input} type="text" name="cidade" value={form.cidade}
-                      onChange={handleChange} placeholder="Cidade" required />
+                    <input
+                      {...inputProps("cidade")}
+                      type="text"
+                      value={form.cidade}
+                      onChange={handleChange}
+                      placeholder="Cidade"
+                    />
+                    {fieldErrors.cidade && (
+                      <span className={styles.fieldError}>{fieldErrors.cidade}</span>
+                    )}
                   </div>
+
                 </div>
               </div>
             )}
 
-            {/* STEP 3 — Simulação */}
+            {/* ── STEP 3 — Simulação ── */}
             {step === 3 && (
               <div className={styles.formStep}>
                 <h3 className={styles.stepTitle}>Simulação</h3>
 
-                {/* Escolha a Modalidade */}
+                {/* Modalidade */}
                 <div className={styles.fieldGroup} style={{ marginBottom: "24px" }}>
-                  <label className={styles.label} style={{ marginBottom: "12px", display: "block" }}>
+                  <label
+                    className={styles.label}
+                    style={{ marginBottom: "12px", display: "block" }}
+                    ref={(el) => { fieldRefs.current.modalidade = el; }}
+                  >
                     Escolha a Modalidade *
                   </label>
                   <div className={styles.modalidadeGrid}>
@@ -421,7 +736,13 @@ export default function PreCadastro() {
                           <span className={styles.modCheck}>
                             {isActive && (
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                                <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path
+                                  d="M20 6L9 17L4 12"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
                               </svg>
                             )}
                           </span>
@@ -429,38 +750,37 @@ export default function PreCadastro() {
                       );
                     })}
                   </div>
-                  {/* Campo hidden para validação HTML5 */}
-                  <input
-                    type="text"
-                    name="modalidade"
-                    value={form.modalidade}
-                    onChange={() => {}}
-                    required
-                    style={{ opacity: 0, height: 0, position: "absolute", pointerEvents: "none" }}
-                    tabIndex={-1}
-                  />
+                  {fieldErrors.modalidade && (
+                    <span className={styles.fieldError} style={{ marginTop: "8px", display: "block" }}>
+                      {fieldErrors.modalidade}
+                    </span>
+                  )}
                 </div>
 
-                {/* Renda */}
                 <div className={styles.grid2}>
+
                   <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
                     <label className={styles.label}>Informe a Renda Líquida *</label>
                     <input
-                      className={styles.input}
+                      {...inputProps("renda")}
                       type="text"
-                      name="renda"
                       value={form.renda}
                       onChange={handleChange}
                       placeholder="Ex: 2.500,00"
-                      required
                       inputMode="numeric"
                     />
+                    {fieldErrors.renda && (
+                      <span className={styles.fieldError}>{fieldErrors.renda}</span>
+                    )}
                   </div>
 
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Como nos conheceu? *</label>
-                    <select className={styles.input} name="comoConheceu" value={form.comoConheceu}
-                      onChange={handleChange} required>
+                    <select
+                      {...selectProps("comoConheceu")}
+                      value={form.comoConheceu}
+                      onChange={handleChange}
+                    >
                       <option value="">Selecione</option>
                       <option value="google">Google</option>
                       <option value="instagram">Instagram</option>
@@ -469,30 +789,44 @@ export default function PreCadastro() {
                       <option value="whatsapp">WhatsApp</option>
                       <option value="outro">Outro</option>
                     </select>
+                    {fieldErrors.comoConheceu && (
+                      <span className={styles.fieldError}>{fieldErrors.comoConheceu}</span>
+                    )}
                   </div>
 
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Observações</label>
                     <textarea
-                      className={`${styles.input} ${styles.textarea}`}
                       name="mensagem"
+                      ref={(el) => { fieldRefs.current.mensagem = el; }}
+                      className={`${styles.input} ${styles.textarea}`}
                       value={form.mensagem}
                       onChange={handleChange}
-                      placeholder="Informações adicionais..."
+                      placeholder="Informações adicionais…"
                       rows={3}
                     />
                   </div>
+
                 </div>
 
-                {/* Mensagem de erro */}
-                {error && (
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: "10px",
-                    background: "rgba(227,6,19,0.1)", border: "1px solid rgba(227,6,19,0.3)",
-                    borderRadius: "12px", padding: "14px 18px", marginTop: "16px",
-                  }}>
+                {/* Erro geral de submit */}
+                {submitError && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      background: "rgba(227,6,19,0.1)",
+                      border: "1px solid rgba(227,6,19,0.3)",
+                      borderRadius: "12px",
+                      padding: "14px 18px",
+                      marginTop: "16px",
+                    }}
+                  >
                     <FaExclamationCircle color="#e30613" />
-                    <span style={{ color: "#ff6b6b", fontSize: "14px" }}>{error}</span>
+                    <span style={{ color: "#ff6b6b", fontSize: "14px" }}>
+                      {submitError}
+                    </span>
                   </div>
                 )}
               </div>
@@ -501,21 +835,38 @@ export default function PreCadastro() {
             {/* Botões de Navegação */}
             <div className={styles.navButtons}>
               {step > 1 && (
-                <button type="button" className={styles.btnSecondary} onClick={handleBack}>
+                <button
+                  type="button"
+                  className={styles.btnSecondary}
+                  onClick={handleBack}
+                >
                   <FaArrowLeft /> Voltar
                 </button>
               )}
               <div style={{ flex: 1 }} />
               {step < 3 ? (
-                <button type="button" className={styles.btnPrimary} onClick={handleNext}>
+                <button
+                  type="button"
+                  className={styles.btnPrimary}
+                  onClick={handleNext}
+                >
                   Próximo <FaArrowRight />
                 </button>
               ) : (
-                <button type="submit" className={styles.btnPrimary} disabled={loading}>
-                  {loading
-                    ? <><span className={styles.spinner} /> Enviando...</>
-                    : <>Solicitar Simulação <FaArrowRight /></>
-                  }
+                <button
+                  type="submit"
+                  className={styles.btnPrimary}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className={styles.spinner} /> Enviando…
+                    </>
+                  ) : (
+                    <>
+                      Solicitar Simulação <FaArrowRight />
+                    </>
+                  )}
                 </button>
               )}
             </div>

@@ -459,3 +459,36 @@
     width: 32px;
   }
 }
+
+/* Acrescente estas classes ao final do PreCadastro.module.css existente */
+
+/* Borda vermelha no input com erro */
+.inputError {
+  border-color: rgba(227, 6, 19, 0.7) !important;
+  background: rgba(227, 6, 19, 0.05) !important;
+  box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.12) !important;
+}
+
+/* Mensagem de erro abaixo do campo */
+.fieldError {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #ff6b6b;
+  margin-top: 5px;
+  font-weight: 500;
+  line-height: 1.4;
+  animation: shakeIn 0.25s ease;
+}
+
+.fieldError::before {
+  content: "⚠";
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+@keyframes shakeIn {
+  0%   { opacity: 0; transform: translateX(-6px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
