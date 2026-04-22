@@ -190,7 +190,7 @@
   }
   
   .card:hover {
-    transform: translateY(-10px) scale(1.01);
+    transform: translateY(-6px) scale(1.01);
     border-color: rgba(227, 6, 19, 0.3);
     box-shadow:
       0 30px 60px rgba(0,0,0,0.5),
@@ -286,9 +286,10 @@
   /* ── Ações ── */
   .actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     margin-top: 8px;
+    flex-wrap: wrap;
   }
   
   .btnPrimary {
@@ -333,7 +334,393 @@
     border-color: rgba(227, 6, 19, 0.35);
     color: #fff;
   }
-  
+
+  /* ── BOTÃO SIMULE AGORA ── */
+  .btnSimuleAgora {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+    white-space: nowrap;
+  }
+
+  .btnSimuleAgora:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+    background: linear-gradient(135deg, #2be574 0%, #1aad6b 100%);
+  }
+
+  .btnSimuleAgoraActive {
+    background: rgba(255,255,255,0.07) !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.6) !important;
+  }
+
+  /* ── PAINEL DE SIMULAÇÃO ── */
+  .simPanel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+    opacity: 0;
+  }
+
+  .simPanelOpen {
+    max-height: 1000px;
+    opacity: 1;
+  }
+
+  .simPanelContent {
+    padding: 0 28px 28px;
+    border-top: 1px solid rgba(227, 6, 19, 0.15);
+    margin-top: 4px;
+    padding-top: 24px;
+  }
+
+  /* ── Formulário padrão (CPF + Renda) ── */
+  .simFormDefault {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .simFormTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+  }
+
+  .simFormHint {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    margin: -8px 0 0;
+    line-height: 1.5;
+  }
+
+  .simFormHint strong {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .simDefaultGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .simFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .simLabel {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .simInput {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    -webkit-appearance: none;
+  }
+
+  .simInput::placeholder {
+    color: rgba(255,255,255,0.22);
+  }
+
+  .simInput:focus {
+    border-color: rgba(37, 211, 102, 0.5);
+    background: rgba(37, 211, 102, 0.04);
+    box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+  }
+
+  .simInputErr {
+    border-color: rgba(255, 77, 77, 0.6) !important;
+  }
+
+  .simErro {
+    font-size: 11px;
+    color: #ff6b6b;
+    margin: 0;
+  }
+
+  .simBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+    letter-spacing: 0.01em;
+  }
+
+  .simBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.55);
+    background: linear-gradient(135deg, #2be574 0%, #1aad6b 100%);
+  }
+
+  .simBtn:active {
+    transform: translateY(0);
+  }
+
+  /* ── Formulário FGTS ── */
+  .simForm {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .simFormFields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ── Mockup do Celular FGTS ── */
+  .fgtsPhoneWrapper {
+    position: relative;
+    flex-shrink: 0;
+    width: 130px;
+  }
+
+  .fgtsPhoneMockup {
+    position: relative;
+    width: 120px;
+    height: 210px;
+    background: linear-gradient(145deg, #1a1a2e 0%, #0d0d1a 100%);
+    border-radius: 22px;
+    border: 2px solid rgba(255,255,255,0.12);
+    box-shadow:
+      0 20px 50px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(255,255,255,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .phoneNotch {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 6px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 3px;
+    z-index: 10;
+  }
+
+  .phoneHome {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 3px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+    z-index: 10;
+  }
+
+  .fgtsPhoneScreen {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #003b6b 0%, #001a30 100%);
+  }
+
+  .fgtsAppIllustration {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px 10px 14px;
+  }
+
+  .fgtsAppHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .fgtsAppLogo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .fgtsAppName {
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .fgtsAppSignal {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .fgtsAppSignal span {
+    width: 3px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 1px;
+  }
+
+  .fgtsAppSignal span:nth-child(1) { height: 4px; }
+  .fgtsAppSignal span:nth-child(2) { height: 6px; }
+  .fgtsAppSignal span:nth-child(3) { height: 8px; background: #fff; }
+
+  .fgtsAppBalance {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 10px 8px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  .fgtsBalanceLabel {
+    font-size: 9px;
+    color: rgba(255,255,255,0.55);
+    margin: 0 0 3px;
+    letter-spacing: 0.3px;
+  }
+
+  .fgtsBalanceValue {
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+
+  .fgtsBalanceBar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .fgtsBalanceFill {
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(90deg, #0066B3, #00a3e0);
+    border-radius: 2px;
+    animation: fillBar 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes fillBar {
+    from { width: 55%; }
+    to { width: 75%; }
+  }
+
+  .fgtsAppActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+
+  .fgtsAction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .fgtsActionIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .fgtsAction span {
+    font-size: 7.5px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .fgtsAppHint {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0, 102, 179, 0.15);
+    border: 1px solid rgba(0, 102, 179, 0.25);
+    border-radius: 6px;
+    padding: 5px 7px;
+    margin-top: auto;
+  }
+
+  .fgtsAppHint span {
+    font-size: 7.5px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.3;
+  }
+
+  .fgtsPhoneGlow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(0, 102, 179, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+    animation: phoneGlowPulse 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes phoneGlowPulse {
+    from { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    to   { opacity: 1;   transform: translate(-50%, -50%) scale(1.15); }
+  }
+
   /* ── Detalhes expansíveis ── */
   .details {
     max-height: 0;
@@ -502,8 +889,35 @@
   
     .btnPrimary,
     .btnSecondary { justify-content: center; }
+
+    .simForm {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .fgtsPhoneWrapper {
+      width: 120px;
+    }
+
+    .simDefaultGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .actions {
+      flex-wrap: wrap;
+    }
+
+    .btnSimuleAgora {
+      width: 100%;
+      justify-content: center;
+    }
   }
   
   @media (max-width: 480px) {
     .heroTitle { font-size: 2rem; }
+
+    .simPanelContent {
+      padding: 20px 20px 20px;
+    }
   }
