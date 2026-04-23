@@ -40,9 +40,10 @@
 }
 
 .title {
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(4rem, 4vw, 3.5rem);
   font-weight: 800;
   color: #fff;
+  margin-top: 9px;
   margin-bottom: 32px;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -56,8 +57,8 @@
 .description {
   font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.75);
-  line-height: 1.8;
-  margin-bottom: 24px;
+  line-height: 2.2;
+  margin-bottom: 34px;
 }
 
 /* Stats Cards */
@@ -361,7 +362,7 @@
   width: calc(100% + 40px);
   height: calc(100% + 40px);
   border: 2px solid rgba(227, 6, 19, 0.2);
-  animation: pulse 3s infinite;
+  animation: pulseBorder 3s infinite;
 }
 
 .imageDecor2 {
@@ -370,10 +371,17 @@
   width: calc(100% + 80px);
   height: calc(100% + 80px);
   border: 1px solid rgba(227, 6, 19, 0.1);
-  animation: pulse 3s infinite 0.5s;
+  animation: pulseBorder 3s infinite 0.5s;
 }
 
-/* ── MVV (Missão / Propósito / Visão) ── */
+@keyframes pulseBorder {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.01); }
+}
+
+/* ══════════════════════════════════════
+   MVV CARDS — redesign completo
+══════════════════════════════════════ */
 .mvvGrid {
   display: flex;
   flex-direction: column;
@@ -381,68 +389,212 @@
 }
 
 .mvvCard {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  padding: 16px 18px;
+  padding: 20px 22px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  border-left: 3px solid #e30613;
-  border-radius: 14px;
-  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: default;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease,
+    background 0.4s ease,
+    box-shadow 0.4s ease;
+  /* Entrada animada com stagger */
+  animation: mvvSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0s) backwards;
+}
+
+/* Linha vertical esquerda animada */
+.mvvCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #e30613 0%, #ff4757 100%);
+  border-radius: 0 2px 2px 0;
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Brilho topo ao hover */
+.mvvCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(227, 6, 19, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .mvvCard:hover {
-  background: rgba(227, 6, 19, 0.05);
-  transform: translateX(4px);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  transform: translateX(8px);
+  border-color: rgba(227, 6, 19, 0.28);
+  background: rgba(227, 6, 19, 0.04);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 4px 0 24px rgba(227, 6, 19, 0.08);
 }
 
+.mvvCard:hover::before {
+  transform: scaleY(1);
+}
+
+.mvvCard:hover::after {
+  opacity: 1;
+}
+
+/* Ícone do card */
 .mvvIcon {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(227, 6, 19, 0.1);
-  border: 1px solid rgba(227, 6, 19, 0.25);
-  border-radius: 10px;
+  background: rgba(227, 6, 19, 0.08);
+  border: 1px solid rgba(227, 6, 19, 0.18);
+  border-radius: 12px;
   color: #e30613;
   margin-top: 2px;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
-.mvvTitulo {
-  font-size: 0.78rem;
-  font-weight: 800;
+.mvvCard:hover .mvvIcon {
+  transform: scale(1.1) rotate(-5deg);
+  background: rgba(227, 6, 19, 0.16);
+  box-shadow: 0 6px 20px rgba(227, 6, 19, 0.22);
+}
+
+/* Corpo do card */
+.mvvBody {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Badge de categoria */
+.mvvBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  background: rgba(227, 6, 19, 0.08);
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  border-radius: 100px;
+  margin-bottom: 8px;
+}
+
+.mvvBadgeDot {
+  width: 5px;
+  height: 5px;
+  background: #e30613;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: dotBlink 2.2s ease-in-out infinite;
+}
+
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(227,6,19,0.4); }
+  50%       { opacity: 0.5; box-shadow: 0 0 0 4px rgba(227,6,19,0); }
+}
+
+.mvvBadgeLabel {
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #e30613;
-  margin: 0 0 5px;
+}
+
+/* Título e texto */
+.mvvTitulo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease;
+}
+
+.mvvCard:hover .mvvTitulo {
+  color: #e30613;
 }
 
 .mvvTexto {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.72);
-  line-height: 1.6;
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.65;
   margin: 0;
 }
 
-/* ── Valores ── */
+/* Seta discreta no hover */
+.mvvArrow {
+  flex-shrink: 0;
+  color: rgba(227, 6, 19, 0);
+  margin-top: 12px;
+  transition: color 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  align-self: center;
+}
+
+.mvvCard:hover .mvvArrow {
+  color: rgba(227, 6, 19, 0.65);
+  transform: translateX(4px);
+}
+
+@keyframes mvvSlideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ══════════════════════════════════════
+   VALORES — redesign completo
+══════════════════════════════════════ */
 .valoresWrapper {
-  /* sem margin extra — gap do rightColumn controla */
+  /* gap do rightColumn controla o espaçamento */
+}
+
+.valoresHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.valoresHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.22);
+  border-radius: 8px;
+  color: #e30613;
+  flex-shrink: 0;
 }
 
 .valoresTitulo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   color: #e30613;
-  margin-bottom: 14px;
+}
+
+.valoresDivider {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(227,6,19,0.25), transparent);
 }
 
 .valoresTags {
@@ -451,23 +603,90 @@
   gap: 8px;
 }
 
+/* Tag individual */
 .valorTag {
-  padding: 6px 14px;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 15px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 100px;
   font-size: 0.82rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
-  transition: all 0.25s ease;
+  color: rgba(255, 255, 255, 0.7);
   cursor: default;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    color 0.3s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+  /* Entrada animada */
+  animation: tagPopIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tag-delay, 0s) backwards;
+}
+
+/* Brilho interno animado */
+.valorTag::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(227,6,19,0.1), rgba(227,6,19,0.03));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 100px;
+}
+
+/* Shimmer sweep no hover */
+.valorTag::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  transition: left 0.5s ease;
 }
 
 .valorTag:hover {
-  background: rgba(227, 6, 19, 0.1);
-  border-color: rgba(227, 6, 19, 0.35);
+  transform: translateY(-4px) scale(1.05);
+  border-color: rgba(227, 6, 19, 0.45);
   color: #fff;
-  transform: translateY(-2px);
+  background: rgba(227, 6, 19, 0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(227,6,19,0.12);
+}
+
+.valorTag:hover::before {
+  opacity: 1;
+}
+
+.valorTag:hover::after {
+  left: 150%;
+}
+
+/* Ponto colorido que aparece no hover */
+.valorDot {
+  width: 5px;
+  height: 5px;
+  background: #e30613;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.valorTag:hover .valorDot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes tagPopIn {
+  from { opacity: 0; transform: scale(0.85) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Background grid */
@@ -482,7 +701,7 @@
   pointer-events: none;
 }
 
-/* Animações */
+/* Animações gerais */
 @keyframes fadeInLeft {
   from { opacity: 0; transform: translateX(-40px); }
   to   { opacity: 1; transform: translateX(0); }
@@ -496,11 +715,6 @@
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50%       { transform: scale(1.02); opacity: 0.5; }
 }
 
 /* Responsivo */
@@ -522,5 +736,5 @@
   .ctaButton, .ctaButtonSecondary { width: 100%; justify-content: center; }
   .imageContainer { max-height: 320px; }
   .imageDecor1, .imageDecor2 { display: none; }
-  .mvvCard { flex-direction: column; gap: 10px; }
+  .mvvCard:hover { transform: translateX(4px); }
 }
