@@ -66,6 +66,7 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
+        className="modalContainer" // Adicionada classe para responsividade
         style={{
           background: "#0a0a0a",
           border: "1px solid rgba(227,6,19,0.25)",
@@ -76,6 +77,8 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
           position: "relative",
           boxShadow: "0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(227,6,19,0.06)",
           animation: "modalIn 0.35s cubic-bezier(0.22,1,0.36,1)",
+          maxHeight: "90vh", // Previne que o modal fique maior que a tela verticalmente
+          overflowY: "auto", // Adiciona scroll se a tela for muito baixa
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -87,7 +90,7 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
           borderRadius: "24px 24px 0 0",
         }} />
 
-        <div style={{ marginBottom: "32px", paddingRight: "40px" }}>
+        <div className="modalHeader" style={{ marginBottom: "32px", paddingRight: "40px" }}>
           <div style={{
             display: "inline-flex",
             alignItems: "center",
@@ -109,7 +112,7 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
               Autocontratação
             </span>
           </div>
-          <h2 style={{ color: "#fff", fontWeight: 800, fontSize: "1.6rem", letterSpacing: "-0.02em", margin: "0 0 8px" }}>
+          <h2 className="modalTitle" style={{ color: "#fff", fontWeight: 800, fontSize: "1.6rem", letterSpacing: "-0.02em", margin: "0 0 8px" }}>
             Escolha o produto
           </h2>
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", margin: 0, lineHeight: 1.6 }}>
@@ -156,6 +159,7 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
               href={op.href}
               target="_blank"
               rel="noopener noreferrer"
+              className="modalOption" // Adicionada classe para responsividade
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -185,7 +189,7 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
                 el.style.boxShadow = "none";
               }}
             >
-              <div style={{
+              <div className="modalIcon" style={{ // Adicionada classe
                 width: "56px", height: "56px",
                 flexShrink: 0,
                 background: "rgba(227,6,19,0.1)",
@@ -206,7 +210,7 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
                   {op.descricao}
                 </p>
               </div>
-              <div style={{ color: "#e30613", flexShrink: 0 }}>
+              <div className="modalArrow" style={{ color: "#e30613", flexShrink: 0 }}> {/* Adicionada classe */}
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
@@ -235,10 +239,40 @@ function ContratacaoModal({ onClose }: { onClose: () => void }) {
           0%,100% { box-shadow: 0 0 0 0 rgba(227,6,19,0.5); }
           60% { box-shadow: 0 0 0 6px rgba(227,6,19,0); }
         }
+        
+        /* ── REGRAS DE RESPONSIVIDADE ── */
+        @media (max-width: 600px) {
+          .modalContainer {
+            padding: 32px 20px !important; /* Reduz o padding geral do modal no celular */
+          }
+          
+          .modalTitle {
+            font-size: 1.4rem !important; /* Reduz um pouco o tamanho da fonte do título */
+          }
+          
+          .modalHeader {
+            padding-right: 0 !important; /* Remove o padding que empurrava o botão X */
+          }
+          
+          .modalOption {
+            flex-direction: column; /* Coloca o ícone em cima e o texto embaixo */
+            text-align: center; /* Centraliza o texto */
+            gap: 12px !important;
+            padding: 20px 16px !important;
+          }
+          
+          .modalIcon {
+            margin: 0 auto; /* Centraliza o ícone */
+          }
+          
+          .modalArrow {
+            display: none; /* Esconde a setinha no celular para não poluir, já que virou um bloco */
+          }
+        }
       `}</style>
     </div>
   );
-}
+} 
 
 export default function Home() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);

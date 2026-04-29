@@ -492,3 +492,41 @@
   0%   { opacity: 0; transform: translateX(-6px); }
   100% { opacity: 1; transform: translateX(0); }
 }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .card {
+    padding: 24px 20px;
+  }
+
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+
+  .colSpan2 {
+    grid-column: 1;
+  }
+
+  .stepLabel {
+    display: none;
+  }
+
+  .stepLine {
+    width: 32px;
+  }
+
+  /* ── CORREÇÕES PARA RESPONSIVIDADE DOS BOTÕES ── */
+  
+  .navButtons {
+    /* Muda os botões para ficarem um embaixo do outro no celular */
+    flex-direction: column-reverse; /* Optei por column-reverse para o botão "Voltar" ficar embaixo do "Avançar/Simular" */
+    gap: 12px;
+    width: 100%; /* Garante que a barra não passe do limite */
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%; /* Força os botões a não vazarem da tela */
+    justify-content: center; /* Mantém o texto/ícone centralizado */
+  }
+}
