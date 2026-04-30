@@ -203,14 +203,7 @@ export default function Footer() {
                   Feedbacks
                 </a>
               </li>
-              <li className={styles.linkItem}>
-                <a
-                  href="https://auto-contratacao.nossafintech.com.br/home/RVFrUXY1cXozaHM1V1R0ZEF4M1FPbS9pNExYU3Bocm5LWHBCZmVORndMbVgxYW8vbHhTN0VLbW1ycTR3eFFGWmk2eXN0TUlxTXlqTjM1VTBPR21Zb1E9PQ=="
-                  className={styles.link}
-                >
-                  Autocontratação
-                </a>
-              </li>
+              
             </ul>
           </div>
 

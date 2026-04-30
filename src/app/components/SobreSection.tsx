@@ -12,7 +12,6 @@ const missao = [
       </svg>
     ),
     badge: "Missão",
-    titulo: "Nossa missão",
     texto: "Solucionamos problemas financeiros, possibilitando a realização de sonhos com ética e transparência.",
     stagger: "0.1s",
   },
@@ -23,7 +22,6 @@ const missao = [
       </svg>
     ),
     badge: "Propósito",
-    titulo: "Nosso propósito",
     texto: "Existimos para transformar vidas trazendo a liberdade financeira e contribuindo para uma sociedade próspera e consciente.",
     stagger: "0.2s",
   },
@@ -35,16 +33,13 @@ const missao = [
       </svg>
     ),
     badge: "Visão",
-    titulo: "Nossa visão",
     texto: "Ser a principal referência em soluções de crédito da nossa região, reconhecida pela confiança e excelência no atendimento.",
     stagger: "0.3s",
   },
 ];
 
 const valores = [
-  "Honestidade", "Responsabilidade", "Proatividade", "Otimismo",
-  "Empatia", "Criatividade", "Ética", "Transparência",
-  "Excelência no Atendimento", "Coragem", "Gratidão", "Inovação",
+  "Seus valores refletem o compromisso com a qualidade e o respeito ao cliente, sendo pautados em honestidade, responsabilidade, proatividade, otimismo, empatia, criatividade, ética, transparência, excelência no atendimento, coragem, gratidão e inovação."
 ];
 
 export default function SobreSection() {
@@ -61,11 +56,13 @@ export default function SobreSection() {
               Transformando <span className={styles.highlight}>vidas</span> através do crédito consciente
             </h2>
             <p className={styles.description}>
-            Fundada em agosto de 2013, a ConsigaCred nasceu com o propósito de democratizar o acesso ao crédito consignado, oferecendo soluções financeiras transparentes e personalizadas para milhares de brasileiros. Localizada na Avenida Senador Rodolfo Miranda, nº 284 – Centro, Pompéia/SP – CEP: 17580-029, a empresa atua com compromisso, segurança e excelência no atendimento.
+            Fundada em agosto de 2013, a ConsigaCred nasceu com o propósito de democratizar o 
+            acesso ao crédito consignado, oferecendo soluções financeiras transparentes e personalizadas para milhares de brasileiros.
+             Localizada na Avenida Senador Rodolfo Miranda, nº 284 – Centro, Pompéia/SP – CEP: 17580-029, a empresa atua com compromisso, segurança e excelência no atendimento.
             </p>
             <p className={styles.description}>
-            Com anos de experiência no mercado financeiro, nossa equipe trabalha incansavelmente para garantir que você tenha acesso às melhores 
-            taxas e condições do mercado, sempre com total transparência e confiabilidade.
+            Com anos de experiência no mercado financeiro, nossa equipe trabalha incansavelmente para garantir que você tenha acesso às 
+            melhores taxas e condições do mercado, sempre com total transparência e confiabilidade.
             </p>
 
             {/* Stats Cards */}
@@ -174,7 +171,7 @@ export default function SobreSection() {
                       <span className={styles.mvvBadgeDot} />
                       <span className={styles.mvvBadgeLabel}>{item.badge}</span>
                     </div>
-                    <h4 className={styles.mvvTitulo}>{item.titulo}</h4>
+                  
                     <p className={styles.mvvTexto}>{item.texto}</p>
                   </div>
 

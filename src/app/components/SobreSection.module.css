@@ -615,9 +615,9 @@
   padding: 7px 15px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
   cursor: default;
   transition:
@@ -669,17 +669,7 @@
   left: 150%;
 }
 
-/* Ponto colorido que aparece no hover */
-.valorDot {
-  width: 5px;
-  height: 5px;
-  background: #e30613;
-  border-radius: 50%;
-  flex-shrink: 0;
-  opacity: 0;
-  transform: scale(0);
-  transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
+
 
 .valorTag:hover .valorDot {
   opacity: 1;
