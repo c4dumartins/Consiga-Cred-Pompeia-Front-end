@@ -23,7 +23,7 @@ const products: Product[] = [
     id: "fgts",
     title: "Antecipação do FGTS",
     desc: "Antecipe seu FGTS sem comprometimento mensal, sem consulta ao SPC e Serasa, com atendimento ágil e 100% online.",
-    image: "/antecipacao.png",
+    image: "/antecipacaxo.png",
     more: {
       intro: [
         "Receba agora o valor do seu saque-aniversário do FGTS, sem parcelas mensais.",
@@ -42,7 +42,7 @@ const products: Product[] = [
     id: "consignado",
     title: "Crédito Consignado",
     desc: "Linha de crédito exclusiva para aposentados e pensionistas, com as menores taxas do mercado e parcelas fixas descontadas diretamente do benefício.",
-    image: "/creditoconsig.png",
+    image: "/credixtoconsig.png",
     more: {
       intro: [
         "O Crédito Consignado é uma modalidade com taxas reduzidas, pois as parcelas são descontadas diretamente do benefício do INSS.",
@@ -55,7 +55,7 @@ const products: Product[] = [
     id: "trabalhador",
     title: "Crédito do Trabalhador",
     desc: "Empréstimo exclusivo para trabalhadores com carteira assinada, com desconto direto na folha de pagamento.",
-    image: "/creditodotrab.png",
+    image: "/creditodotrabx.png",
     more: {
       intro: [
         "Modalidade de empréstimo destinada a trabalhadores com carteira assinada. As parcelas são descontadas diretamente na folha de pagamento, o que reduz taxas e facilita a aprovação.",
@@ -68,7 +68,7 @@ const products: Product[] = [
     id: "energia",
     title: "Empréstimo com Débito na Conta de Energia",
     desc: "Crédito pessoal vinculado à sua conta de energia. Receba até R$ 4.000,00 e parcele em até 24 meses.",
-    image: "/contadeenergia.png",
+    image: "/contadeenergiax.png",
     more: {
       intro: [
         "Crédito pessoal vinculado à conta de energia elétrica. As parcelas são cobradas junto à fatura mensal, facilitando o pagamento.",
@@ -81,7 +81,7 @@ const products: Product[] = [
     id: "cartao",
     title: "Empréstimo no Cartão de Crédito",
     desc: "Transforme o limite do seu cartão em dinheiro, em poucos minutos, para usar como quiser.",
-    image: "/cartaodecred.png",
+    image: "/cartaodecredx.png",
     more: {
       intro: [
         "Converta o limite disponível do seu cartão em dinheiro, com depósito direto na conta.",
@@ -94,7 +94,7 @@ const products: Product[] = [
     id: "veiculos",
     title: "Financiamento de Veículos",
     desc: "Vai comprar o seu tão sonhado carro? Essa é a opção ideal para você. Financiamos até 100% do valor da tabela.",
-    image: "/financiamentoveic.png",
+    image: "/financiamentoveicx.png",
     more: {
       intro: [
         "O financiamento de veículos permite que você adquira carro novo ou usado pagando em parcelas que cabem no seu orçamento.",
@@ -107,7 +107,7 @@ const products: Product[] = [
     id: "garantia",
     title: "Crédito com Garantia de Veículo",
     desc: "Seu veículo está quitado? Use-o como garantia, resgate dinheiro e aproveite como quiser.",
-    image: "/garantiadeveic.png",
+    image: "/garantiadeveicx.png",
     more: {
       intro: [
         "Utilize seu veículo quitado como garantia e consiga valores mais altos com taxas reduzidas.",
