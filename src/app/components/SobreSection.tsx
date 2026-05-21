@@ -3,7 +3,7 @@
 import Image from "next/image";
 import styles from "./SobreSection.module.css";
 
-const missao = [
+const pilaresInstitucionais = [
   {
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -36,10 +36,16 @@ const missao = [
     texto: "Ser a principal referência em soluções de crédito da nossa região, reconhecida pela confiança e excelência no atendimento.",
     stagger: "0.3s",
   },
-];
-
-const valores = [
-  "Seus valores refletem o compromisso com a qualidade e o respeito ao cliente, sendo pautados em honestidade, responsabilidade, proatividade, otimismo, empatia, criatividade, ética, transparência, excelência no atendimento, coragem, gratidão e inovação."
+  {
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    badge: "Valores",
+    texto: "Nosso compromisso é pautado em honestidade, responsabilidade, proatividade, otimismo, empatia, criatividade, ética, transparência, excelência, coragem, gratidão e inovação.",
+    stagger: "0.4s",
+  },
 ];
 
 export default function SobreSection() {
@@ -56,13 +62,13 @@ export default function SobreSection() {
               Transformando <span className={styles.highlight}>vidas</span> através do crédito consciente
             </h2>
             <p className={styles.description}>
-            Fundada em agosto de 2013, a ConsigaCred nasceu com o propósito de democratizar o 
-            acesso ao crédito consignado, oferecendo soluções financeiras transparentes e personalizadas para milhares de brasileiros.
-             Localizada na Avenida Senador Rodolfo Miranda, nº 284 – Centro, Pompéia/SP – CEP: 17580-029, a empresa atua com compromisso, segurança e excelência no atendimento.
+              Fundada em agosto de 2013, a ConsigaCred nasceu com o propósito de democratizar o 
+              acesso ao crédito consignado, oferecendo soluções financeiras transparentes e personalizadas para milhares de brasileiros.
+               Localizada na Avenida Senador Rodolfo Miranda, nº 284 – Centro, Pompéia/SP – CEP: 17580-029, a empresa atua com compromisso, segurança e excelência no atendimento.
             </p>
             <p className={styles.description}>
-            Com anos de experiência no mercado financeiro, nossa equipe trabalha incansavelmente para garantir que você tenha acesso às 
-            melhores taxas e condições do mercado, sempre com total transparência e confiabilidade.
+              Com anos de experiência no mercado financeiro, nossa equipe trabalha incansavelmente para garantir que você tenha acesso às 
+              melhores taxas e condições do mercado, sempre com total transparência e confiabilidade.
             </p>
 
             {/* Stats Cards */}
@@ -154,9 +160,9 @@ export default function SobreSection() {
               </div>
             </div>
 
-            {/* ── MISSÃO / PROPÓSITO / VISÃO ── */}
+            {/* ── MISSÃO / PROPÓSITO / VISÃO / VALORES ── */}
             <div className={styles.mvvGrid}>
-              {missao.map((item) => (
+              {pilaresInstitucionais.map((item) => (
                 <div
                   key={item.badge}
                   className={styles.mvvCard}
@@ -183,32 +189,6 @@ export default function SobreSection() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* ── VALORES ── */}
-            <div className={styles.valoresWrapper}>
-              <div className={styles.valoresHeader}>
-                <div className={styles.valoresHeaderIcon}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <span className={styles.valoresTitulo}>Valores</span>
-                <div className={styles.valoresDivider} />
-              </div>
-
-              <div className={styles.valoresTags}>
-                {valores.map((v, i) => (
-                  <span
-                    key={v}
-                    className={styles.valorTag}
-                    style={{ '--tag-delay': `${i * 0.04}s` } as React.CSSProperties}
-                  >
-                    <span className={styles.valorDot} />
-                    {v}
-                  </span>
-                ))}
-              </div>
             </div>
 
           </div>

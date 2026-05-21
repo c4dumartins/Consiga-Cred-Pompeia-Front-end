@@ -41,7 +41,6 @@
 }
 
 .title {
- 
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   color: #fff;
@@ -381,13 +380,11 @@
   50%       { opacity: 0.5; transform: scale(1.01); }
 }
 
-/* ══════════════════════════════════════
-   MVV CARDS — redesign completo
-══════════════════════════════════════ */
+/* ── MVV GRID (Cards) ── */
 .mvvGrid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .mvvCard {
@@ -406,11 +403,9 @@
     border-color 0.4s ease,
     background 0.4s ease,
     box-shadow 0.4s ease;
-  /* Entrada animada com stagger */
   animation: mvvSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger, 0s) backwards;
 }
 
-/* Linha vertical esquerda animada */
 .mvvCard::before {
   content: '';
   position: absolute;
@@ -425,7 +420,6 @@
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Brilho topo ao hover */
 .mvvCard::after {
   content: '';
   position: absolute;
@@ -445,15 +439,9 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 4px 0 24px rgba(227, 6, 19, 0.08);
 }
 
-.mvvCard:hover::before {
-  transform: scaleY(1);
-}
+.mvvCard:hover::before { transform: scaleY(1); }
+.mvvCard:hover::after { opacity: 1; }
 
-.mvvCard:hover::after {
-  opacity: 1;
-}
-
-/* Ícone do card */
 .mvvIcon {
   flex-shrink: 0;
   width: 48px;
@@ -478,13 +466,11 @@
   box-shadow: 0 6px 20px rgba(227, 6, 19, 0.22);
 }
 
-/* Corpo do card */
 .mvvBody {
   flex: 1;
   min-width: 0;
 }
 
-/* Badge de categoria */
 .mvvBadge {
   display: inline-flex;
   align-items: center;
@@ -518,20 +504,6 @@
   color: #e30613;
 }
 
-/* Título e texto */
-.mvvTitulo {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 6px;
-  letter-spacing: -0.01em;
-  transition: color 0.3s ease;
-}
-
-.mvvCard:hover .mvvTitulo {
-  color: #e30613;
-}
-
 .mvvTexto {
   font-size: 0.84rem;
   color: rgba(255, 255, 255, 0.62);
@@ -539,7 +511,6 @@
   margin: 0;
 }
 
-/* Seta discreta no hover */
 .mvvArrow {
   flex-shrink: 0;
   color: rgba(227, 6, 19, 0);
@@ -556,129 +527,6 @@
 @keyframes mvvSlideIn {
   from { opacity: 0; transform: translateX(20px); }
   to   { opacity: 1; transform: translateX(0); }
-}
-
-/* ══════════════════════════════════════
-   VALORES — redesign completo
-══════════════════════════════════════ */
-.valoresWrapper {
-  /* gap do rightColumn controla o espaçamento */
-}
-
-.valoresHeader {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.valoresHeaderIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: rgba(227, 6, 19, 0.1);
-  border: 1px solid rgba(227, 6, 19, 0.22);
-  border-radius: 8px;
-  color: #e30613;
-  flex-shrink: 0;
-}
-
-.valoresTitulo {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  color: #e30613;
-}
-
-.valoresDivider {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(227,6,19,0.25), transparent);
-}
-
-.valoresTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Tag individual */
-.valorTag {
-  position: relative;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 15px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
-  cursor: default;
-  transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s ease,
-    color 0.3s ease,
-    background 0.35s ease,
-    box-shadow 0.35s ease;
-  /* Entrada animada */
-  animation: tagPopIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--tag-delay, 0s) backwards;
-}
-
-/* Brilho interno animado */
-.valorTag::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(227,6,19,0.1), rgba(227,6,19,0.03));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: 100px;
-}
-
-/* Shimmer sweep no hover */
-.valorTag::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  transition: left 0.5s ease;
-}
-
-.valorTag:hover {
-  transform: translateY(-4px) scale(1.05);
-  border-color: rgba(227, 6, 19, 0.45);
-  color: #fff;
-  background: rgba(227, 6, 19, 0.06);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(227,6,19,0.12);
-}
-
-.valorTag:hover::before {
-  opacity: 1;
-}
-
-.valorTag:hover::after {
-  left: 150%;
-}
-
-
-
-.valorTag:hover .valorDot {
-  opacity: 1;
-  transform: scale(1);
-}
-
-@keyframes tagPopIn {
-  from { opacity: 0; transform: scale(0.85) translateY(6px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* Background grid */
@@ -709,7 +557,6 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-
 /* Responsivo */
 @media (max-width: 1024px) {
   .section { padding: 80px 0; }
@@ -717,8 +564,6 @@
   .stats { gap: 20px; }
   .statCard { padding: 28px 20px; }
   .imageContainer { max-height: 380px; }
-  
-
   .imageDecor1, .imageDecor2 { display: none; }
 }
 
@@ -732,5 +577,4 @@
   .ctaButton, .ctaButtonSecondary { width: 100%; justify-content: center; }
   .imageContainer { max-height: 320px; }
   .mvvCard:hover { transform: translateX(4px); }
-
 }
