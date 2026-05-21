@@ -25,6 +25,7 @@ interface FormData {
   estado: string;
   modalidade: string;
   renda: string;
+  contaEnergiaPropria: string;
   comoConheceu: string;
   mensagem: string;
 }
@@ -44,6 +45,7 @@ const initialForm: FormData = {
   estado: "",
   modalidade: "",
   renda: "",
+  contaEnergiaPropria: "",
   comoConheceu: "",
   mensagem: "",
 };
@@ -58,7 +60,7 @@ const steps = [
 const REQUIRED_BY_STEP: Record<number, (keyof FormData)[]> = {
   1: ["nome", "cpf", "dataNascimento", "telefone", "email"],
   2: ["logradouro", "numero", "bairro", "cidade", "estado"],
-  3: ["modalidade", "renda", "comoConheceu"],
+  3: ["modalidade", "comoConheceu"],
 };
 
 const FIELD_LABELS: Partial<Record<keyof FormData, string>> = {
@@ -74,6 +76,7 @@ const FIELD_LABELS: Partial<Record<keyof FormData, string>> = {
   estado: "Estado",
   modalidade: "Modalidade",
   renda: "Renda Líquida",
+  contaEnergiaPropria: "Conta de energia em seu nome",
   comoConheceu: "Como nos conheceu",
 };
 
@@ -249,6 +252,28 @@ export default function PreCadastro() {
   // ── Validação de uma etapa ──────────────────────────────────
   function validateStep(targetStep: number): Partial<Record<keyof FormData, string>> {
     const errors: Partial<Record<keyof FormData, string>> = {};
+
+    if (targetStep === 3) {
+      // Modalidade e comoConheceu sempre obrigatórios
+      const baseFields: (keyof FormData)[] = ["modalidade", "comoConheceu"];
+      for (const field of baseFields) {
+        if (!form[field] || form[field].toString().trim() === "") {
+          errors[field] = `${FIELD_LABELS[field] ?? field} é obrigatório`;
+        }
+      }
+      // Se energia: contaEnergiaPropria obrigatório; caso contrário: renda obrigatória
+      if (form.modalidade === "energia") {
+        if (!form.contaEnergiaPropria) {
+          errors.contaEnergiaPropria = `${FIELD_LABELS.contaEnergiaPropria} é obrigatório`;
+        }
+      } else if (form.modalidade !== "") {
+        if (!form.renda || form.renda.toString().trim() === "") {
+          errors.renda = `${FIELD_LABELS.renda} é obrigatório`;
+        }
+      }
+      return errors;
+    }
+
     for (const field of REQUIRED_BY_STEP[targetStep]) {
       if (!form[field] || form[field].toString().trim() === "") {
         errors[field] = `${FIELD_LABELS[field] ?? field} é obrigatório`;
@@ -328,9 +353,23 @@ export default function PreCadastro() {
   };
 
   const handleModalidadeSelect = (id: string) => {
-    setForm((prev) => ({ ...prev, modalidade: id }));
+    setForm((prev) => ({
+      ...prev,
+      modalidade: id,
+      // Limpa os campos condicionais ao trocar modalidade
+      renda: id === "energia" ? "" : prev.renda,
+      contaEnergiaPropria: id !== "energia" ? "" : prev.contaEnergiaPropria,
+    }));
     if (fieldErrors.modalidade) {
       setFieldErrors((prev) => ({ ...prev, modalidade: undefined }));
+    }
+    setFieldErrors((prev) => ({ ...prev, renda: undefined, contaEnergiaPropria: undefined }));
+  };
+
+  const handleContaEnergiaSelect = (value: string) => {
+    setForm((prev) => ({ ...prev, contaEnergiaPropria: value }));
+    if (fieldErrors.contaEnergiaPropria) {
+      setFieldErrors((prev) => ({ ...prev, contaEnergiaPropria: undefined }));
     }
   };
 
@@ -759,20 +798,63 @@ export default function PreCadastro() {
 
                 <div className={styles.grid2}>
 
-                  <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
-                    <label className={styles.label}>Informe a Renda Líquida *</label>
-                    <input
-                      {...inputProps("renda")}
-                      type="text"
-                      value={form.renda}
-                      onChange={handleChange}
-                      placeholder="Ex: 2.500,00"
-                      inputMode="numeric"
-                    />
-                    {fieldErrors.renda && (
-                      <span className={styles.fieldError}>{fieldErrors.renda}</span>
-                    )}
-                  </div>
+                  {form.modalidade === "energia" ? (
+                    /* Conta de Energia em seu nome — Sim / Não */
+                    <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
+                      <label
+                        className={styles.label}
+                        ref={(el) => { fieldRefs.current.contaEnergiaPropria = el; }}
+                      >
+                        Possui conta de energia em seu nome? *
+                      </label>
+                      <div style={{ display: "flex", gap: "12px", marginTop: "4px" }}>
+                        {(["sim", "nao"] as const).map((opt) => {
+                          const isActive = form.contaEnergiaPropria === opt;
+                          return (
+                            <button
+                              key={opt}
+                              type="button"
+                              onClick={() => handleContaEnergiaSelect(opt)}
+                              className={`${styles.modBtn} ${isActive ? styles.modBtnActive : ""}`}
+                              style={{ flex: 1, justifyContent: "center", padding: "13px 16px" }}
+                            >
+                              <span className={styles.modTexts} style={{ alignItems: "center" }}>
+                                <span className={styles.modLabel} style={{ fontSize: "0.95rem" }}>
+                                  {opt === "sim" ? "Sim" : "Não"}
+                                </span>
+                              </span>
+                              {isActive && (
+                                <span className={styles.modCheck}>
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                  </svg>
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {fieldErrors.contaEnergiaPropria && (
+                        <span className={styles.fieldError}>{fieldErrors.contaEnergiaPropria}</span>
+                      )}
+                    </div>
+                  ) : (
+                    /* Campo padrão de Renda Líquida */
+                    <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
+                      <label className={styles.label}>Informe a Renda Líquida *</label>
+                      <input
+                        {...inputProps("renda")}
+                        type="text"
+                        value={form.renda}
+                        onChange={handleChange}
+                        placeholder="Ex: 2.500,00"
+                        inputMode="numeric"
+                      />
+                      {fieldErrors.renda && (
+                        <span className={styles.fieldError}>{fieldErrors.renda}</span>
+                      )}
+                    </div>
+                  )}
 
                   <div className={styles.fieldGroup}>
                     <label className={styles.label}>Como nos conheceu? *</label>
