@@ -41,14 +41,8 @@
   }
   
   .bgGrid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-    background-size: 56px 56px;
-    pointer-events: none;
-  }
+  display: none;
+}
   
   @keyframes driftA {
     from { transform: translate(0,0) scale(1); }
@@ -174,23 +168,24 @@
     align-items: start;
   }
   
-  /* ── Card ── */
-  .card {
+  /* ── Card Shell (container visual que inclui painéis expansíveis) ── */
+  .cardShell {
     position: relative;
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.07);
     border-radius: 24px;
-    overflow: hidden;
+    /* sem overflow:hidden — os painéis precisam expandir verticalmente */
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
     transition:
       transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
       border-color 0.5s ease,
       box-shadow 0.5s ease;
     animation: riseIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) backwards;
   }
-  
-  .card:hover {
+
+  .cardShell:hover {
     transform: translateY(-6px) scale(1.01);
     border-color: rgba(227, 6, 19, 0.3);
     box-shadow:
@@ -198,7 +193,32 @@
       0 0 0 1px rgba(227, 6, 19, 0.1),
       0 0 50px rgba(227, 6, 19, 0.08);
   }
-  
+
+  /* Quando aberto, não sobe/escala para não ficar estranho */
+  .cardShellOpen,
+  .cardShellSimOpen {
+    transform: none !important;
+    border-color: rgba(227, 6, 19, 0.25) !important;
+    box-shadow:
+      0 20px 50px rgba(0,0,0,0.5),
+      0 0 40px rgba(227, 6, 19, 0.07) !important;
+    flex: 1 1 auto;
+  }
+
+  /* Wrapper do card (usado no JSX) */
+  .cardWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-self: start;
+    /* keep wrappers flexible; collapsed cards get fixed height below */
+  }
+
+  /* Fixed height for collapsed cards so siblings match visually */
+  .cardShell:not(.cardShellOpen):not(.cardShellSimOpen) {
+    height: 460px;
+  }
+
   /* Barra superior animada */
   .cardTopBar {
     position: absolute;
@@ -211,12 +231,16 @@
     transform-origin: left;
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 10;
+    border-radius: 24px 24px 0 0;
+    overflow: hidden;
   }
-  
-  .card:hover .cardTopBar {
+
+  .cardShell:hover .cardTopBar,
+  .cardShellOpen .cardTopBar,
+  .cardShellSimOpen .cardTopBar {
     transform: scaleX(1);
   }
-  
+
   /* Glow interno */
   .cardGlow {
     position: absolute;
@@ -226,8 +250,10 @@
     opacity: 0;
     transition: opacity 0.5s ease;
   }
-  
-  .card:hover .cardGlow {
+
+  .cardShell:hover .cardGlow,
+  .cardShellOpen .cardGlow,
+  .cardShellSimOpen .cardGlow {
     opacity: 1;
   }
   
@@ -238,6 +264,7 @@
     aspect-ratio: 16 / 9;
     background: rgba(255,255,255,0.02);
     overflow: hidden;
+    border-radius: 23px 23px 0 0;
   }
   
   .media::after {
@@ -282,6 +309,8 @@
     line-height: 1.65;
     margin: 0;
     flex: 1;
+    /* Reserva altura mínima para descrições curtas */
+    min-height: 4.8em;
   }
   
   /* ── Ações ── */
@@ -336,6 +365,12 @@
     color: #fff;
   }
 
+  .btnSecondaryActive {
+    background: rgba(227, 6, 19, 0.08) !important;
+    border-color: rgba(227, 6, 19, 0.3) !important;
+    color: #fff !important;
+  }
+
   /* ── BOTÃO SIMULE AGORA ── */
   .btnSimuleAgora {
     display: inline-flex;
@@ -381,10 +416,10 @@
   }
 
   .simPanelContent {
-    padding: 0 28px 28px;
+    padding: 24px 28px 28px;
     border-top: 1px solid rgba(227, 6, 19, 0.15);
-    margin-top: 4px;
-    padding-top: 24px;
+    background: rgba(37, 211, 102, 0.02);
+    border-radius: 0 0 23px 23px;
   }
 
   /* ── Formulário padrão (CPF + Renda) ── */
@@ -737,8 +772,9 @@
   
   .detailsContent {
     padding: 20px 28px 28px;
-    border-top: 1px solid rgba(255,255,255,0.07);
-    background: rgba(227, 6, 19, 0.02);
+    border-top: 1px solid rgba(227, 6, 19, 0.15);
+    background: rgba(227, 6, 19, 0.025);
+    border-radius: 0 0 23px 23px;
   }
   
   .detailsContent p {
