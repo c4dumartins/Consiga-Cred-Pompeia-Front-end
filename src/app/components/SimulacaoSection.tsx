@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./SimulacaoSection.module.css";
 
@@ -26,6 +26,7 @@ function CardInner({ card }: { card: SimulacaoCard }) {
         <div className={styles.tooltip}>
           <span className={styles.tooltipLabel}>Saiba mais</span>
           <p className={styles.tooltipText}>{card.tooltip}</p>
+          <span className={styles.mobileHint}>Toque novamente para acessar</span>
         </div>
       )}
       <div className={styles.cardContent}>
@@ -46,6 +47,34 @@ function CardInner({ card }: { card: SimulacaoCard }) {
 }
 
 export default function SimulacaoSection({ cards, onContratacaoClick }: SimulacaoSectionProps) {
+  const [activeCardMobile, setActiveCardMobile] = useState<number | null>(null);
+
+  // Fecha o tooltip caso o usuário clique em qualquer outra parte da tela
+  useEffect(() => {
+    const handleOutsideClick = () => setActiveCardMobile(null);
+    window.addEventListener("click", handleOutsideClick);
+    return () => window.removeEventListener("click", handleOutsideClick);
+  }, []);
+
+  const handleCardClick = (e: React.MouseEvent, idx: number, isContratacao: boolean) => {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      if (activeCardMobile !== idx) {
+        e.preventDefault();
+        e.stopPropagation(); // Evita fechar imediatamente pelo efeito do useEffect acima
+        setActiveCardMobile(idx);
+        return;
+      }
+    }
+
+    // Executa a ação se não for mobile ou se for o segundo toque no mobile
+    if (isContratacao && onContratacaoClick) {
+      e.preventDefault();
+      onContratacaoClick();
+    }
+  };
+
   return (
     <section id="simulacao" className={styles.section}>
       <div className={styles.container}>
@@ -62,13 +91,16 @@ export default function SimulacaoSection({ cards, onContratacaoClick }: Simulaca
         <div className={styles.grid}>
           {cards.map((card, idx) => {
             const isContratacao = card.href === "#contratacao";
+            const isActiveTouch = activeCardMobile === idx;
+            const cardClasses = `${styles.card} ${isActiveTouch ? styles.cardActiveTouch : ""}`;
+
             if (isContratacao) {
               return (
                 <div
                   key={idx}
-                  className={styles.card}
+                  className={cardClasses}
                   style={{ animationDelay: `${(idx + 1) * 0.15}s`, cursor: "pointer" }}
-                  onClick={onContratacaoClick}
+                  onClick={(e) => handleCardClick(e, idx, true)}
                 >
                   <CardInner card={card} />
                 </div>
@@ -78,10 +110,11 @@ export default function SimulacaoSection({ cards, onContratacaoClick }: Simulaca
               <Link
                 key={idx}
                 href={card.href}
-                className={styles.card}
+                className={cardClasses}
                 style={{ animationDelay: `${(idx + 1) * 0.15}s` }}
                 target={card.href.startsWith("http") ? "_blank" : undefined}
                 rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                onClick={(e) => handleCardClick(e, idx, false)}
               >
                 <CardInner card={card} />
               </Link>

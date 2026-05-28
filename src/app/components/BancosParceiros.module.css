@@ -147,7 +147,6 @@
   right: 0;
   background: linear-gradient(-90deg, #050505 0%, transparent 100%);
 }
-
 .carrosselScroll {
   overflow-x: auto;
   overflow-y: visible;
@@ -155,7 +154,7 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 24px 80px;
+  padding: 24px 0; 
 }
 
 .carrosselScroll::-webkit-scrollbar {
@@ -165,6 +164,8 @@
 .carrosselTrack {
   display: flex;
   gap: 20px;
+  padding: 0 100px; 
+  width: max-content; 
 }
 
 /* ── Card ── */
@@ -496,12 +497,12 @@
 
 @media (max-width: 768px) {
   .section { padding: 80px 0 70px; }
-
   .container { padding: 0 20px; }
-
   .header { margin-bottom: 52px; }
 
-  .carrosselScroll { padding: 20px 16px; }
+
+  .carrosselScroll { padding: 20px 0; }
+  .carrosselTrack { padding: 0 40px; } 
 
   .fadeLeft, .fadeRight { width: 40px; }
 
@@ -512,13 +513,9 @@
   }
 
   .logoRing { width: 82px; height: 82px; }
-
   .navLeft, .navRight { display: none; }
-
   .footer { flex-direction: column; gap: 10px; }
-
   .footerTexto { white-space: normal; text-align: center; }
-
   .footerDivider { width: 60%; flex: none; }
 }
 
