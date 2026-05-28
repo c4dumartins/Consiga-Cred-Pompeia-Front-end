@@ -103,7 +103,8 @@
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover::before {
+.card:hover::before,
+.cardActiveTouch::before {
   transform: translateX(100%);
 }
 
@@ -120,11 +121,13 @@
   pointer-events: none;
 }
 
-.card:hover .cardGlow {
+.card:hover .cardGlow,
+.cardActiveTouch .cardGlow {
   opacity: 1;
 }
 
-.card:hover {
+.card:hover,
+.cardActiveTouch {
   transform: translateY(-12px) scale(1.02);
   border-color: rgba(227, 6, 19, 0.3);
   background: rgba(255, 255, 255, 0.05);
@@ -164,7 +167,8 @@
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover .iconBg {
+.card:hover .iconBg,
+.cardActiveTouch .iconBg {
   transform: rotate(10deg) scale(1.1);
   background: linear-gradient(135deg, rgba(227, 6, 19, 0.2), rgba(227, 6, 19, 0.1));
   box-shadow: 0 10px 30px rgba(227, 6, 19, 0.3);
@@ -178,7 +182,9 @@
 }
 
 .card:hover .iconWrapper svg,
-.card:hover .iconWrapper > :not(.iconBg) {
+.card:hover .iconWrapper > :not(.iconBg),
+.cardActiveTouch .iconWrapper svg,
+.cardActiveTouch .iconWrapper > :not(.iconBg) {
   transform: scale(1.1) translateY(-2px);
 }
 
@@ -192,7 +198,8 @@
   transition: color 0.3s ease;
 }
 
-.card:hover .cardTitle {
+.card:hover .cardTitle,
+.cardActiveTouch .cardTitle {
   color: #e30613;
 }
 
@@ -214,7 +221,8 @@
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover .cardArrow {
+.card:hover .cardArrow,
+.cardActiveTouch .cardArrow {
   transform: translateX(8px);
 }
 
@@ -245,57 +253,13 @@
   animation: float 15s infinite ease-in-out reverse;
 }
 
-/* Animações */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  33% {
-    transform: translate(30px, -30px) rotate(120deg);
-  }
-  66% {
-    transform: translate(-20px, 20px) rotate(240deg);
-  }
-}
-
-/* Tooltip overlay — fica dentro do card, aparece sobre o conteúdo no hover */
+/* Tooltip overlay — fica dentro do card, aparece sobre o conteúdo no hover/touch */
 .tooltip {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: rgba(6, 4, 4, 0.93);
-  backdrop-filter: blur(6px);
+  background: rgba(6, 4, 4, 0.95);
+  backdrop-filter: blur(8px);
   z-index: 5;
   pointer-events: none;
   opacity: 0;
@@ -321,12 +285,9 @@
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover .tooltip::before {
+.card:hover .tooltip::before,
+.cardActiveTouch .tooltip::before {
   transform: translateX(100%);
-}
-
-.tooltipArrow {
-  display: none;
 }
 
 .tooltipLabel {
@@ -345,56 +306,57 @@
   font-weight: 400;
 }
 
-.card:hover .tooltip {
+/* Pequeno aviso exclusivo para telas touch informando a dupla ação */
+.mobileHint {
+  display: none;
+  font-size: 11px;
+  color: #e30613;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.card:hover .tooltip,
+.cardActiveTouch .tooltip {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .tooltip {
-    display: none;
-  }
+/* Animações */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(120deg); }
+  66% { transform: translate(-20px, 20px) rotate(240deg); }
 }
 
 /* Responsivo */
 @media (max-width: 1024px) {
-  .section {
-    padding: 80px 0;
-  }
-
-  .container {
-    padding: 0 24px;
-  }
-
-  .header {
-    margin-bottom: 60px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
+  .section { padding: 80px 0; }
+  .container { padding: 0 24px; }
+  .header { margin-bottom: 60px; }
+  .grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 }
 
 @media (max-width: 768px) {
-  .section {
-    padding: 60px 0;
-  }
-
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .card {
-    padding: 32px 24px;
-  }
-
-  .decorCircle1,
-  .decorCircle2 {
-    display: none;
-  }
-
-  .tooltip {
-    display: none;
-  }
+  .section { padding: 60px 0; }
+  .grid { grid-template-columns: 1fr; gap: 20px; }
+  .card { padding: 32px 24px; }
+  .decorCircle1, .decorCircle2 { display: none; }
+  
+  /* Mantemos o flex ativo no mobile para renderizar sobre o card */
+  .tooltip { padding: 24px; }
+  .mobileHint { display: block; }
 }
