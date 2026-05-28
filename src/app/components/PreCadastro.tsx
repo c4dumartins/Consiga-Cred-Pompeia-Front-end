@@ -56,7 +56,6 @@ const steps = [
   { label: "Simulação", number: 3 },
 ];
 
-// Campos obrigatórios por etapa
 const REQUIRED_BY_STEP: Record<number, (keyof FormData)[]> = {
   1: ["nome", "cpf", "dataNascimento", "telefone", "email"],
   2: ["logradouro", "numero", "bairro", "cidade", "estado"],
@@ -80,11 +79,12 @@ const FIELD_LABELS: Partial<Record<keyof FormData, string>> = {
   comoConheceu: "Como nos conheceu",
 };
 
-// Modalidades
+// ── Tipo Modalidade ──────────────────────────────────────────
 type Modalidade = {
   id: string;
   label: string;
   sub: string;
+  descricao: string; // ← breve resumo exibido no hover/active
   icon: React.ReactNode;
 };
 
@@ -93,6 +93,8 @@ const MODALIDADES: Modalidade[] = [
     id: "inss",
     label: "Consignado INSS",
     sub: "Aposentados e pensionistas",
+    descricao:
+      "Linha de crédito exclusiva para aposentados e pensionistas, com as menores taxas do mercado e parcelas fixas descontadas diretamente do benefício.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M17 21V19C17 16.791 15.209 15 13 15H5C2.791 15 1 16.791 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -106,6 +108,8 @@ const MODALIDADES: Modalidade[] = [
     id: "servidor",
     label: "Consignado Servidor Público",
     sub: "Federal, estadual ou municipal",
+    descricao:
+      "Empréstimo com desconto direto em folha para servidores públicos, com taxas diferenciadas e prazos mais longos de pagamento.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M3 9L12 2L21 9V20C21 21.105 20.105 22 19 22H5C3.895 22 3 21.105 3 20V9Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -117,6 +121,8 @@ const MODALIDADES: Modalidade[] = [
     id: "clt",
     label: "Crédito do Trabalhador",
     sub: "Trabalhadores com carteira assinada",
+    descricao:
+      "Empréstimo exclusivo para trabalhadores com carteira assinada, com desconto direto na folha de pagamento e processo simplificado.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
@@ -129,6 +135,8 @@ const MODALIDADES: Modalidade[] = [
     id: "fgts",
     label: "Antecipação do FGTS",
     sub: "Sem consulta ao SPC/Serasa",
+    descricao:
+      "Antecipe seu FGTS sem comprometimento mensal e sem consulta ao SPC e Serasa. O desconto é feito diretamente no saldo do FGTS.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" strokeWidth="2"/>
@@ -140,6 +148,8 @@ const MODALIDADES: Modalidade[] = [
     id: "energia",
     label: "Empréstimo — Conta de Energia",
     sub: "Desconto na fatura de energia elétrica",
+    descricao:
+      "Crédito pessoal vinculado à sua conta de energia. Receba até R$ 4.000,00 e parcele em até 24 meses, com o desconto na própria fatura mensal.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -150,6 +160,8 @@ const MODALIDADES: Modalidade[] = [
     id: "cartao",
     label: "Empréstimo no Cartão",
     sub: "Converta seu limite em dinheiro",
+    descricao:
+      "Transforme o limite disponível do seu cartão de crédito em dinheiro na hora, sem burocracia, para usar como quiser.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <rect x="1" y="4" width="22" height="16" rx="2" stroke="currentColor" strokeWidth="2"/>
@@ -162,6 +174,8 @@ const MODALIDADES: Modalidade[] = [
     id: "veiculos",
     label: "Financiamento de Veículos",
     sub: "Financiamento de até 100% da tabela",
+    descricao:
+      "Financiamos até 100% do valor da tabela para carros novos ou usados, com prazos flexíveis e condições personalizadas para o seu perfil.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M5 17H3a2 2 0 01-2-2V9l3-6h14l3 6v6a2 2 0 01-2 2h-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -175,6 +189,8 @@ const MODALIDADES: Modalidade[] = [
     id: "garantia",
     label: "Crédito com Garantia de Veículo",
     sub: "Use seu veículo quitado como garantia",
+    descricao:
+      "Use seu veículo quitado como garantia e acesse valores mais altos com taxas reduzidas. Você continua usando o carro normalmente.",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -215,7 +231,6 @@ function maskMoney(v: string) {
   });
 }
 
-// ── Busca endereço pelo CEP ───────────────────────────────────
 async function buscarCEP(cep: string): Promise<Partial<FormData> | null> {
   const clean = cep.replace(/\D/g, "");
   if (clean.length !== 8) return null;
@@ -245,23 +260,21 @@ export default function PreCadastro() {
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [cepLoading, setCepLoading] = useState(false);
+  // Controla qual modalidade está com tooltip expandido (hover ou foco)
+  const [hoveredMod, setHoveredMod] = useState<string | null>(null);
 
-  // Refs para focar o primeiro campo com erro
   const fieldRefs = useRef<Partial<Record<keyof FormData, HTMLElement | null>>>({});
 
-  // ── Validação de uma etapa ──────────────────────────────────
   function validateStep(targetStep: number): Partial<Record<keyof FormData, string>> {
     const errors: Partial<Record<keyof FormData, string>> = {};
 
     if (targetStep === 3) {
-      // Modalidade e comoConheceu sempre obrigatórios
       const baseFields: (keyof FormData)[] = ["modalidade", "comoConheceu"];
       for (const field of baseFields) {
         if (!form[field] || form[field].toString().trim() === "") {
           errors[field] = `${FIELD_LABELS[field] ?? field} é obrigatório`;
         }
       }
-      // Se energia: contaEnergiaPropria obrigatório; caso contrário: renda obrigatória
       if (form.modalidade === "energia") {
         if (!form.contaEnergiaPropria) {
           errors.contaEnergiaPropria = `${FIELD_LABELS.contaEnergiaPropria} é obrigatório`;
@@ -282,7 +295,6 @@ export default function PreCadastro() {
     return errors;
   }
 
-  // ── Foca o primeiro campo com erro ─────────────────────────
   function focusFirstError(errors: Partial<Record<keyof FormData, string>>) {
     const firstKey = Object.keys(errors)[0] as keyof FormData | undefined;
     if (!firstKey) return;
@@ -295,7 +307,6 @@ export default function PreCadastro() {
     }, 80);
   }
 
-  // ── Avançar etapa com validação ─────────────────────────────
   const handleNext = () => {
     const errors = validateStep(step);
     if (Object.keys(errors).length > 0) {
@@ -311,11 +322,8 @@ export default function PreCadastro() {
     setStep((s) => s - 1);
   };
 
-  // ── Handlers de mudança ─────────────────────────────────────
   const handleChange = async (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     const key = name as keyof FormData;
@@ -332,12 +340,9 @@ export default function PreCadastro() {
         setCepLoading(false);
         if (endereco) {
           setForm((prev) => ({ ...prev, cep: masked, ...endereco }));
-          // Limpa erros dos campos preenchidos pelo CEP
           setFieldErrors((prev) => {
             const next = { ...prev };
-            (
-              Object.keys(endereco) as (keyof FormData)[]
-            ).forEach((k) => delete next[k]);
+            (Object.keys(endereco) as (keyof FormData)[]).forEach((k) => delete next[k]);
             return next;
           });
           return;
@@ -346,7 +351,6 @@ export default function PreCadastro() {
     }
 
     setForm((prev) => ({ ...prev, [key]: masked }));
-    // Limpa o erro do campo ao digitar
     if (fieldErrors[key]) {
       setFieldErrors((prev) => ({ ...prev, [key]: undefined }));
     }
@@ -356,7 +360,6 @@ export default function PreCadastro() {
     setForm((prev) => ({
       ...prev,
       modalidade: id,
-      // Limpa os campos condicionais ao trocar modalidade
       renda: id === "energia" ? "" : prev.renda,
       contaEnergiaPropria: id !== "energia" ? "" : prev.contaEnergiaPropria,
     }));
@@ -373,12 +376,10 @@ export default function PreCadastro() {
     }
   };
 
-  // ── Submit ──────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
 
-    // Valida todas as etapas antes de enviar
     let allErrors: Partial<Record<keyof FormData, string>> = {};
     let firstStepWithError = 0;
 
@@ -395,11 +396,8 @@ export default function PreCadastro() {
       setStep(firstStepWithError);
       focusFirstError(
         Object.fromEntries(
-          Object.entries(allErrors).filter(
-            ([k]) =>
-              REQUIRED_BY_STEP[firstStepWithError].includes(
-                k as keyof FormData
-              )
+          Object.entries(allErrors).filter(([k]) =>
+            REQUIRED_BY_STEP[firstStepWithError].includes(k as keyof FormData)
           )
         ) as Partial<Record<keyof FormData, string>>
       );
@@ -427,7 +425,6 @@ export default function PreCadastro() {
     }
   };
 
-  // ── Helper: props de campo com erro ────────────────────────
   function inputProps(name: keyof FormData) {
     return {
       name,
@@ -448,7 +445,6 @@ export default function PreCadastro() {
     };
   }
 
-  // ── Tela de sucesso ─────────────────────────────────────────
   if (submitted) {
     return (
       <div className={styles.page}>
@@ -488,7 +484,6 @@ export default function PreCadastro() {
     );
   }
 
-  // ── Render ──────────────────────────────────────────────────
   return (
     <div className={styles.page}>
       <div className={styles.bgGlow} />
@@ -757,21 +752,39 @@ export default function PreCadastro() {
                   >
                     Escolha a Modalidade *
                   </label>
+
                   <div className={styles.modalidadeGrid}>
                     {MODALIDADES.map((mod) => {
                       const isActive = form.modalidade === mod.id;
+                      // Descrição visível quando hovering OU quando o item está ativo/selecionado
+                      const showDesc = hoveredMod === mod.id || isActive;
+
                       return (
                         <button
                           key={mod.id}
                           type="button"
                           onClick={() => handleModalidadeSelect(mod.id)}
+                          onMouseEnter={() => setHoveredMod(mod.id)}
+                          onMouseLeave={() => setHoveredMod(null)}
+                          onFocus={() => setHoveredMod(mod.id)}
+                          onBlur={() => setHoveredMod(null)}
                           className={`${styles.modBtn} ${isActive ? styles.modBtnActive : ""}`}
                         >
                           <span className={styles.modIcon}>{mod.icon}</span>
+
                           <span className={styles.modTexts}>
                             <span className={styles.modLabel}>{mod.label}</span>
                             <span className={styles.modSub}>{mod.sub}</span>
+                            {/* Descrição — expande suavemente no hover/active */}
+                            <span
+                              className={`${styles.modDesc} ${
+                                showDesc ? styles.modDescVisible : ""
+                              }`}
+                            >
+                              {mod.descricao}
+                            </span>
                           </span>
+
                           <span className={styles.modCheck}>
                             {isActive && (
                               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -789,6 +802,7 @@ export default function PreCadastro() {
                       );
                     })}
                   </div>
+
                   {fieldErrors.modalidade && (
                     <span className={styles.fieldError} style={{ marginTop: "8px", display: "block" }}>
                       {fieldErrors.modalidade}
@@ -799,7 +813,6 @@ export default function PreCadastro() {
                 <div className={styles.grid2}>
 
                   {form.modalidade === "energia" ? (
-                    /* Conta de Energia em seu nome — Sim / Não */
                     <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
                       <label
                         className={styles.label}
@@ -839,7 +852,6 @@ export default function PreCadastro() {
                       )}
                     </div>
                   ) : (
-                    /* Campo padrão de Renda Líquida */
                     <div className={`${styles.fieldGroup} ${styles.colSpan2}`}>
                       <label className={styles.label}>Informe a Renda Líquida *</label>
                       <input
@@ -891,7 +903,6 @@ export default function PreCadastro() {
 
                 </div>
 
-                {/* Erro geral de submit */}
                 {submitError && (
                   <div
                     style={{
