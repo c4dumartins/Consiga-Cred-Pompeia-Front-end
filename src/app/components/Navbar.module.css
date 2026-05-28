@@ -16,6 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Gradiente sutil no topo */
@@ -75,19 +76,6 @@
   height: 50px;
 }
 
-/* Logo responsiva */
-@media (max-width: 768px) {
-  .logo {
-    width: 120px;
-    height: 44px;
-  }
-  
-  .navbar.scrolled .logo {
-    width: 110px;
-    height: 40px;
-  }
-}
-
 /* =========================
    Menu desktop
    ========================= */
@@ -98,6 +86,9 @@
   padding: 0;
   margin: 0;
   align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .menuDesktop li {
@@ -156,7 +147,6 @@
    Hamburger mobile
    ========================= */
 .hamburger {
-  display: none;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -168,9 +158,9 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 48px;
   height: 48px;
-  display: flex;
   align-items: center;
   justify-content: center;
+  display: none; /* escondido no desktop — deve ser a ÚLTIMA propriedade display */
 }
 
 .hamburger:hover {
@@ -183,9 +173,17 @@
   transform: scale(0.95);
 }
 
+/* =========================
+   Breakpoint 900px
+   ========================= */
 @media (max-width: 900px) {
-  .menuDesktop { display: none; }
-  .hamburger { display: flex; }
+  .menuDesktop {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex; /* aparece só no mobile */
+  }
 }
 
 /* =========================
@@ -208,8 +206,8 @@
   box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
 }
 
-.sidebar.open { 
-  right: 0; 
+.sidebar.open {
+  right: 0;
 }
 
 /* Header do Sidebar */
@@ -311,7 +309,7 @@
 }
 
 /* =========================
-   Responsivo
+   Responsivo 768px
    ========================= */
 @media (max-width: 768px) {
   .navbar {
@@ -320,6 +318,16 @@
 
   .navbar.scrolled {
     padding: 12px 20px;
+  }
+
+  .logo {
+    width: 120px;
+    height: 44px;
+  }
+
+  .navbar.scrolled .logo {
+    width: 110px;
+    height: 40px;
   }
 
   .sidebar {
@@ -341,8 +349,4 @@
     transform: translateY(0);
     opacity: 1;
   }
-}
-
-.navbar {
-  animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
