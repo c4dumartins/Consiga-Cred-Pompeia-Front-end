@@ -9,12 +9,40 @@ interface SimulacaoCard {
   description: string;
   icon: ReactNode;
   href: string;
+  tooltip?: string;
   delay?: number;
 }
 
 interface SimulacaoSectionProps {
   cards: SimulacaoCard[];
   onContratacaoClick?: () => void;
+}
+
+function CardInner({ card }: { card: SimulacaoCard }) {
+  return (
+    <>
+      <div className={styles.cardGlow} />
+      {card.tooltip && (
+        <div className={styles.tooltip}>
+          <span className={styles.tooltipLabel}>Saiba mais</span>
+          <p className={styles.tooltipText}>{card.tooltip}</p>
+        </div>
+      )}
+      <div className={styles.cardContent}>
+        <div className={styles.iconWrapper}>
+          <div className={styles.iconBg} />
+          {card.icon}
+        </div>
+        <h3 className={styles.cardTitle}>{card.title}</h3>
+        <p className={styles.cardDesc}>{card.description}</p>
+        <div className={styles.cardArrow}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default function SimulacaoSection({ cards, onContratacaoClick }: SimulacaoSectionProps) {
@@ -42,20 +70,7 @@ export default function SimulacaoSection({ cards, onContratacaoClick }: Simulaca
                   style={{ animationDelay: `${(idx + 1) * 0.15}s`, cursor: "pointer" }}
                   onClick={onContratacaoClick}
                 >
-                  <div className={styles.cardGlow} />
-                  <div className={styles.cardContent}>
-                    <div className={styles.iconWrapper}>
-                      <div className={styles.iconBg} />
-                      {card.icon}
-                    </div>
-                    <h3 className={styles.cardTitle}>{card.title}</h3>
-                    <p className={styles.cardDesc}>{card.description}</p>
-                    <div className={styles.cardArrow}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
+                  <CardInner card={card} />
                 </div>
               );
             }
@@ -68,20 +83,7 @@ export default function SimulacaoSection({ cards, onContratacaoClick }: Simulaca
                 target={card.href.startsWith("http") ? "_blank" : undefined}
                 rel={card.href.startsWith("http") ? "noopener noreferrer" : undefined}
               >
-                <div className={styles.cardGlow} />
-                <div className={styles.cardContent}>
-                  <div className={styles.iconWrapper}>
-                    <div className={styles.iconBg} />
-                    {card.icon}
-                  </div>
-                  <h3 className={styles.cardTitle}>{card.title}</h3>
-                  <p className={styles.cardDesc}>{card.description}</p>
-                  <div className={styles.cardArrow}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
-                </div>
+                <CardInner card={card} />
               </Link>
             );
           })}

@@ -345,18 +345,21 @@ export default function Home() {
       description: "Simule seu crédito agora.",
       icon: <FaCalculator size={40} />,
       href: "/precadastro",
-    },
-    {
-      title: "WhatsApp",
-      description: "Fale conosco.",
-      icon: <FaWhatsapp size={40} />,
-      href: "https://wa.me/5514998471839",
+      tooltip: "Faça um pré-cadastro rápido e sem compromisso. Com ele, nossos consultores já chegam preparados para o seu atendimento — sem burocracia, sem perda de tempo.",
     },
     {
       title: "Contratação",
       description: "Contrate online.",
       icon: <FaFileContract size={40} />,
       href: "#contratacao",
+      tooltip: "Para quem quer contratar direto, sem esperar. Disponível para Antecipação do FGTS e Crédito do Trabalhador — tudo 100% online em poucos minutos.",
+    },
+    {
+      title: "WhatsApp",
+      description: "Fale conosco.",
+      icon: <FaWhatsapp size={40} />,
+      href: "https://wa.me/5514998471839",
+      tooltip: "Não encontrou o que procurava? Fala com a gente pelo WhatsApp! Nossos consultores estão prontos para te ajudar a encontrar a melhor opção.",
     },
   ];
 

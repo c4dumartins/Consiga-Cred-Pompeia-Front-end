@@ -289,6 +289,72 @@
   }
 }
 
+/* Tooltip overlay — fica dentro do card, aparece sobre o conteúdo no hover */
+.tooltip {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: rgba(6, 4, 4, 0.93);
+  backdrop-filter: blur(6px);
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px;
+  gap: 12px;
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e30613, transparent);
+  border-radius: 24px 24px 0 0;
+  transform: translateX(-100%);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .tooltip::before {
+  transform: translateX(100%);
+}
+
+.tooltipArrow {
+  display: none;
+}
+
+.tooltipLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e30613;
+}
+
+.tooltipText {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 400;
+}
+
+.card:hover .tooltip {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .tooltip {
+    display: none;
+  }
+}
+
 /* Responsivo */
 @media (max-width: 1024px) {
   .section {
@@ -325,6 +391,10 @@
 
   .decorCircle1,
   .decorCircle2 {
+    display: none;
+  }
+
+  .tooltip {
     display: none;
   }
 }
