@@ -144,6 +144,58 @@
 }
 
 /* =========================
+   Área Admin — Desktop
+   ========================= */
+.adminArea {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.adminBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(227, 6, 19, 0.08);
+  border: 1px solid rgba(227, 6, 19, 0.25);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.adminBtn:hover {
+  background: rgba(227, 6, 19, 0.18);
+  border-color: rgba(227, 6, 19, 0.5);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(227, 6, 19, 0.2);
+}
+
+.logoutBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.logoutBtn:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* =========================
    Hamburger mobile
    ========================= */
 .hamburger {
@@ -178,6 +230,10 @@
    ========================= */
 @media (max-width: 900px) {
   .menuDesktop {
+    display: none;
+  }
+
+  .adminArea {
     display: none;
   }
 
@@ -287,6 +343,61 @@
 
 .sidebarNav a:hover::before {
   transform: translateX(0);
+}
+
+/* Área Admin no Sidebar */
+.sidebarDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 24px 0 20px;
+}
+
+.sidebarAdminArea {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.sidebarAdminBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  border-radius: 12px;
+  color: rgba(255, 100, 100, 0.9);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 14px 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebarAdminBtn:hover {
+  background: rgba(227, 6, 19, 0.2);
+  border-color: rgba(227, 6, 19, 0.4);
+  color: #fff;
+}
+
+.sidebarLogoutBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.sidebarLogoutBtn:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* =========================

@@ -9,6 +9,7 @@ import { useRouter, usePathname } from "next/navigation";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -18,6 +19,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Verifica se há sessão admin ativa (sessionStorage some ao fechar a aba)
+  useEffect(() => {
+    const token = sessionStorage.getItem("adminToken");
+    setIsAdmin(!!token);
+  }, [pathname]); // re-verifica a cada mudança de rota
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("adminToken");
+    sessionStorage.removeItem("adminData");
+    setIsAdmin(false);
+    router.push("/");
+  };
+
   const handleSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
     sectionId: string
@@ -26,11 +40,9 @@ export default function Navbar() {
     setOpen(false);
 
     if (pathname === "/") {
-      // Já está na home — só scrolla
       const el = document.querySelector(sectionId);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      // Em outra página — vai para a home com hash
       router.push(`/${sectionId}`);
     }
   };
@@ -70,13 +82,30 @@ export default function Navbar() {
               Simulação
             </a>
           </li>
-        
           <li>
             <a href="/#feedback" onClick={(e) => handleSection(e, "#feedback")}>
               Feedbacks
             </a>
           </li>
         </ul>
+
+        {/* Área Admin — Desktop */}
+        <div className={styles.adminArea}>
+          {isAdmin ? (
+            <>
+              <Link href="/admin" className={styles.adminBtn}>
+                ⚙️ Painel
+              </Link>
+              <button className={styles.logoutBtn} onClick={handleLogout}>
+                Sair
+              </button>
+            </>
+          ) : (
+            <Link href="/admin/login" className={styles.adminBtn}>
+              🔐 Admin
+            </Link>
+          )}
+        </div>
 
         {/* Hamburger */}
         <button
@@ -115,6 +144,36 @@ export default function Navbar() {
           <a href="/#feedback" onClick={(e) => handleSection(e, "#feedback")}>Feedbacks</a>
           <a href="#bancosparceiros" onClick={(e) => handleSection(e, "#bancosparceiros")}>Parceiros</a>
         </nav>
+
+        {/* Separador Admin no mobile */}
+        <div className={styles.sidebarDivider} />
+        <div className={styles.sidebarAdminArea}>
+          {isAdmin ? (
+            <>
+              <Link
+                href="/admin"
+                className={styles.sidebarAdminBtn}
+                onClick={() => setOpen(false)}
+              >
+                ⚙️ Painel Admin
+              </Link>
+              <button
+                className={styles.sidebarLogoutBtn}
+                onClick={() => { setOpen(false); handleLogout(); }}
+              >
+                Sair da conta
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/admin/login"
+              className={styles.sidebarAdminBtn}
+              onClick={() => setOpen(false)}
+            >
+              🔐 Área Admin
+            </Link>
+          )}
+        </div>
       </aside>
     </>
   );
