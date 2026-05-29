@@ -146,55 +146,59 @@
 /* =========================
    Área Admin — Desktop
    ========================= */
-.adminArea {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
+/* Botão de Admin Especial na Navbar */
 .adminBtn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(227, 6, 19, 0.08);
-  border: 1px solid rgba(227, 6, 19, 0.25);
+  gap: 8px;
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.3);
+  color: #fff;
+  padding: 8px 16px;
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  font-size: 0.8125rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  padding: 8px 14px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: 0.2px;
-  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .adminBtn:hover {
-  background: rgba(227, 6, 19, 0.18);
-  border-color: rgba(227, 6, 19, 0.5);
-  color: #fff;
-  box-shadow: 0 0 16px rgba(227, 6, 19, 0.2);
+  background: #e30613;
+  border-color: #e30613;
+  box-shadow: 0 0 15px rgba(227, 6, 19, 0.4);
+  transform: translateY(-1px);
 }
 
+.adminIcon {
+  color: #e30613;
+  transition: color 0.3s ease;
+}
+
+.adminBtn:hover .adminIcon {
+  color: #fff; /* O ícone fica branco quando o botão encher de vermelho */
+}
+
+/* Botão de Sair (Logout) para acompanhar o nível visual */
 .logoutBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 14px;
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.25s ease;
-  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 .logoutBtn:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ff4757;
+  border-color: rgba(255, 247, 247, 0.2);
 }
-
 /* =========================
    Hamburger mobile
    ========================= */

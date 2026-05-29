@@ -1,0 +1,239 @@
+/* admin.module.css */
+
+.page {
+  min-height: 100vh;
+  background: #060606;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho de fundo (igual ao login) */
+.bgGlow {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(227, 6, 19, 0.15) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  z-index: 1;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.highlight {
+  color: #e30613;
+}
+
+.subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 40px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #e30613;
+  box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.15);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.btn {
+  width: 100%;
+  background: linear-gradient(135deg, #e30613, #c00010);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(227, 6, 19, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(227, 6, 19, 0.45);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Spinner de carregamento */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Alertas de Sucesso e Erro */
+.alertBox {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  animation: fadeInUp 0.4s ease;
+}
+
+.alertSuccess {
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+}
+
+.alertError {
+  background: rgba(227, 6, 19, 0.1);
+  border: 1px solid rgba(227, 6, 19, 0.2);
+  color: #ff4757;
+}
+
+/* Animações */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsividade Mobile */
+@media (max-width: 600px) {
+  .page {
+    padding: 40px 16px;
+  }
+  .card {
+    padding: 24px;
+  }
+}
+/* Botão de Voltar */
+.backBtn {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.backBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px); /* Efeito de deslizar para trás */
+}
+
+/* =======================================
+   Responsividade Mobile
+   ======================================= */
+@media (max-width: 768px) {
+  .backBtn {
+    top: 20px;
+    left: 20px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .page {
+    /* O segredo está aqui: 90px de espaço no topo para o texto fugir do botão! */
+    padding: 90px 16px 40px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 24px;
+  }
+  
+  .title {
+    font-size: 1.8rem; /* Diminui um pouco o título no celular para caber melhor */
+  }
+}

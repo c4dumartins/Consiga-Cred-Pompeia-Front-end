@@ -15,6 +15,7 @@ interface Feedback {
 interface FeedbackSectionProps {
   feedbacks: Feedback[];
   currentUserId: string;
+  isAdmin?: boolean; // <-- ADICIONADO: Propriedade opcional para saber se é Admin
   onSubmit: (name: string, email: string, message: string) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
 }
@@ -22,6 +23,7 @@ interface FeedbackSectionProps {
 export default function FeedbackSection({
   feedbacks,
   currentUserId,
+  isAdmin = false, // <-- ADICIONADO: Valor padrão é falso
   onSubmit,
   onDelete,
 }: FeedbackSectionProps) {
@@ -146,7 +148,9 @@ export default function FeedbackSection({
                   </div>
                 </div>
                 <p className={styles.cardMessage}>{fb.message}</p>
-                {fb.user_id === currentUserId && (
+                
+                {/* ALTERADO: Agora exibe se for o dono OU se for Admin */}
+                {(fb.user_id === currentUserId || isAdmin) && (
                   <button
                     className={styles.deleteBtn}
                     onClick={() => onDelete(fb.id)}

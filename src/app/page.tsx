@@ -279,17 +279,27 @@ export default function Home() {
   const [userId, setUserId] = useState<string>("1");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showContratacaoModal, setShowContratacaoModal] = useState(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const API_URL = "http://localhost:3001/feedbacks";
 
-  useEffect(() => {
-    let savedId = Cookies.get("userId");
-    if (!savedId) {
-      savedId = "1";
-      Cookies.set("userId", savedId, { expires: 365 });
-    }
-    setUserId(savedId);
-  }, []);
+useEffect(() => {
+  let savedId = Cookies.get("userId");
+  
+  if (!savedId) {
+    // Agora ele gera um ID aleatório único (Exemplo: "usr_5g9x2p1k")
+    savedId = "usr_" + Math.random().toString(36).substring(2, 11);
+    Cookies.set("userId", savedId, { expires: 365 });
+  }
+  
+  setUserId(savedId);
+
+  // Verificação do Admin continua aqui (se você já adicionou)
+  const token = localStorage.getItem("token_admin") || Cookies.get("token_admin");
+  if (token) {
+    setIsAdmin(true);
+  }
+}, []);
 
   useEffect(() => {
     fetch(API_URL)
@@ -318,18 +328,39 @@ export default function Home() {
     }
   };
 
-  const handleDeleteFeedback = async (id: number) => {
-    try {
-      const res = await fetch(`${API_URL}/${id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: userId }),
-      });
-      if (res.ok) setFeedbacks((prev) => prev.filter((fb) => fb.id !== id));
-    } catch (err) {
-      console.error("Erro ao deletar:", err);
+ const handleDeleteFeedback = async (id: number) => {
+  const confirmar = confirm("Deseja realmente excluir este comentário?");
+  if (!confirmar) return;
+
+  try {
+    const token = localStorage.getItem("token_admin") || Cookies.get("token_admin");
+    const headers: HeadersInit = {};
+    let body = undefined;
+
+    if (token) {
+      // Se for admin, autentica via Header (Poder Supremo)
+      headers["Authorization"] = `Bearer ${token}`;
+    } else {
+      // Se for usuário comum, valida enviando o user_id no Body
+      headers["Content-Type"] = "application/json";
+      body = JSON.stringify({ user_id: userId });
     }
-  };
+
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+      headers,
+      body,
+    });
+
+    if (res.status === 204 || res.ok) {
+      setFeedbacks((prev) => prev.filter((fb) => fb.id !== id));
+    } else if (res.status === 403) {
+      alert("Você não tem permissão para excluir este comentário.");
+    }
+  } catch (err) {
+    console.error("Erro ao deletar:", err);
+  }
+};
 
   const heroSlides = [
     { image: "/Banner1.jpeg" },
@@ -450,6 +481,7 @@ export default function Home() {
         <FeedbackSection
           feedbacks={feedbacks}
           currentUserId={userId}
+          isAdmin={isAdmin}
           onSubmit={handleSubmitFeedback}
           onDelete={handleDeleteFeedback}
         />

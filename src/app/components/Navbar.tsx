@@ -19,17 +19,28 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Verifica se há sessão admin ativa (sessionStorage some ao fechar a aba)
+  // Verifica se há sessão admin ativa tanto no sessionStorage quanto no localStorage
   useEffect(() => {
-    const token = sessionStorage.getItem("adminToken");
+    const token = sessionStorage.getItem("adminToken") || localStorage.getItem("token_admin");
     setIsAdmin(!!token);
   }, [pathname]); // re-verifica a cada mudança de rota
 
+  // Função de Logout completa limpando todas as frentes
   const handleLogout = () => {
+    // 1. Limpa o Session Storage
     sessionStorage.removeItem("adminToken");
     sessionStorage.removeItem("adminData");
+
+    // 2. Limpa o Local Storage
+    localStorage.removeItem("token_admin");
+
+    // 3. Limpa o Cookie por segurança
+    document.cookie = "adminToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict";
+
     setIsAdmin(false);
-    router.push("/");
+
+    // 4. Força a página a dar um "F5" ao voltar pra Home
+    window.location.href = "/";
   };
 
   const handleSection = (
@@ -92,20 +103,62 @@ export default function Navbar() {
         {/* Área Admin — Desktop */}
         <div className={styles.adminArea}>
           {isAdmin ? (
-            <>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <Link href="/admin" className={styles.adminBtn}>
-                ⚙️ Painel
+                <svg 
+                  className={styles.adminIcon} 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2.2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                Painel Admin
               </Link>
-              <button className={styles.logoutBtn} onClick={handleLogout}>
+              
+              <button onClick={handleLogout} className={styles.logoutBtn}>
+                <svg 
+                  width="16" 
+                  height="16" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
                 Sair
               </button>
-            </>
+            </div>
           ) : (
-            <Link href="/admin/login" className={styles.adminBtn}>
-              🔐 Admin
+            <Link href="/admin" className={styles.adminBtn}>
+              <svg 
+                className={styles.adminIcon} 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2.2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              Área Admin
             </Link>
           )}
-        </div>
+        </div> {/* 🟢 DIV FECHADA AQUI CORRETAMENTE */}
 
         {/* Hamburger */}
         <button
@@ -155,7 +208,19 @@ export default function Navbar() {
                 className={styles.sidebarAdminBtn}
                 onClick={() => setOpen(false)}
               >
-                ⚙️ Painel Admin
+                <svg 
+                  width="14" 
+                  height="14" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2"
+                  style={{ marginRight: '6px', verticalAlign: 'middle' }}
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                </svg>
+                Painel Admin
               </Link>
               <button
                 className={styles.sidebarLogoutBtn}
@@ -170,7 +235,19 @@ export default function Navbar() {
               className={styles.sidebarAdminBtn}
               onClick={() => setOpen(false)}
             >
-              🔐 Área Admin
+              <svg 
+                width="14" 
+                height="14" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                style={{ marginRight: '6px', verticalAlign: 'middle' }}
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              Área Admin
             </Link>
           )}
         </div>
