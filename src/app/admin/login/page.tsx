@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react"; // 🟢 Importado o Suspense
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./login.module.css";
 import Image from "next/image";
@@ -42,7 +42,7 @@ function EyeOffIcon() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M10.7429 5.09232C11.1494 5.03223 11.5686 5 12.0004 5C17.1054 5 20.4553 9.50484 21.5807 11.2868C21.7169 11.5025 21.785 11.6103 21.8231 11.7767C21.8517 11.9016 21.8517 12.0987 21.8231 12.2236C21.7849 12.3899 21.7164 12.4985 21.5792 12.7156C21.2793 13.1901 20.8222 13.8571 20.2165 14.5805M6.72432 6.71504C4.56225 8.1817 3.09445 10.2194 2.42012 11.2868C2.28428 11.5025 2.21584 11.6103 2.17772 11.7767C2.14909 11.9016 2.14909 12.0987 2.17772 12.2236C2.21584 12.3899 2.28394 12.4977 2.42012 12.7134C3.54553 14.4954 6.89541 19 12.0004 19C14.0588 19 15.8319 18.2676 17.2888 17.2772M3.00042 3L21.0004 21M9.8791 9.87868C9.3362 10.4216 9.00042 11.1716 9.00042 12C9.00042 13.6569 10.3436 15 12.0004 15C12.8288 15 13.5788 14.6642 14.1217 14.1213"
+        d="M10.7429 5.09232C11.1494 5.03223 11.5686 5 12.0004 5C17.1054 5 20.4553 9.50484 21.5807 11.2868C21.7169 11.5025 21.785 11.6103 21.8231 11.7767C21.8517 11.9016 21.8517 12.0987 21.8231 12.2236C21.7489 12.3899 21.7164 12.4985 21.5792 12.7156C21.2793 13.1901 20.8222 13.8571 20.2165 14.5805M6.72432 6.71504C4.56225 8.1817 3.09445 10.2194 2.42012 11.2868C2.28428 11.5025 2.21584 11.6103 2.17772 11.7767C2.14909 11.9016 2.14909 12.0987 2.17772 12.2236C2.21584 12.3899 2.28394 12.4977 2.42012 12.7134C3.54553 14.4954 6.89541 19 12.0004 19C14.0588 19 15.8319 18.2676 17.2888 17.2772M3.00042 3L21.0004 21M9.8791 9.87868C9.3362 10.4216 9.00042 11.1716 9.00042 12C9.00042 13.6569 10.3436 15 12.0004 15C12.8288 15 13.5788 14.6642 14.1217 14.1213"
         stroke="#e30613"
         strokeWidth="1.8"
         strokeLinecap="round"
@@ -52,7 +52,8 @@ function EyeOffIcon() {
   );
 }
 
-export default function AdminLoginPage() {
+// 🟢 O TEU COMPONENTE ORIGINAL IDENTICO (Nenhuma classe ou estrutura alterada)
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
@@ -195,5 +196,14 @@ export default function AdminLoginPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+// 🟢 O EXPORT PRINCIPAL QUE RESOLVE O BUG DA VERCEL SEM ALTERAR O TEU LAYOUT
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   );
 }
